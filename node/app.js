@@ -17,5 +17,5 @@ var routes=require("./routes/route")(app);//定义路由文件
 var routesAbout=require("./routes/about");//express的路由的定义方式
 
 
-app.use("/",routesAbout);
+app.use("/about",routesAbout);//基准路径  做到模块儿化处理
 app.listen(3000);
