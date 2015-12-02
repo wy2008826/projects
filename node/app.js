@@ -15,7 +15,12 @@ app.set("views",__dirname+"/views");//设置视图路径
 
 var routes=require("./routes/route")(app);//定义路由文件
 var routesAbout=require("./routes/about");//express的路由的定义方式
-
+var routesTestModules=require("./routes/testModule");
 
 app.use("/about",routesAbout);//基准路径  做到模块儿化处理
+app.use("/module",routesTestModules);
+
+
+
+
 app.listen(3000);
