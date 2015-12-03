@@ -9,9 +9,9 @@ plugins.minifyCss=require("gulp-minify-css");
 
 gulp.task("scss",function(){
 	
-	gulp.src(["./src/sass/***.scss","!./src/sass/ignore/***"])
+	gulp.src(["./src/sass/***/*.scss","!./src/sass/ignore/***"])
 	.pipe(plugins.scss())
-	// .pipe(plugins.minifyCss())
+	.pipe(plugins.minifyCss())
 	.pipe(gulp.dest("./public/css/"));
 });
 

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no,minimum-scale=1.0, maximum-scale=1.0">
+	<title>爬虫系统</title>
+	<link rel="stylesheet" href="css/base.css">
+	<link rel="stylesheet" href="css/page/index.css">
+</head>
+<body>
+	<h3 class="text-center">{{title}}</h3>
+	
+
+	<div class="">
+		<input class="" type="text" id="target" value="https://cnodejs.org/">
+		<input value="搜索" type="button" id="sendDataBtn">
+	</div>
+	<div id="avatarWraper">
+		
+	</div>
+	<script type="text/x-handlebars-template" id="avatarImgTpl">
+		
+		<ul class="avatar-ul">
+			<% _.forEach(lists,function(item,index){%>
+				<li>
+					<img src=<%=item.url%> />
+				</li>
+			<%})%>
+		</ul>
+		
+	</script>
+	
+
+	<script src="js/lib/jquery-2.1.4.js"></script>
+	<script src="js/plugins/underscore/underscore.min.js"></script>
+	<script src="js/index.js"></script>
+</body>
+</html>
