@@ -19,6 +19,4 @@ app.get("/about",routesAbout);//基准路径  做到模块儿化处理
 app.use("/module",routesTestModules);
 
 
-
-
 app.listen(3000);

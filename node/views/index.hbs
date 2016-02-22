@@ -19,5 +19,24 @@
 	<h3>module.loaded : {{loaded}}</h3>
 	<h3>module.parent : {{parent}}</h3>
 	<h3>module.children : {{children}}</h3>
+	<br>
+	<h4>
+		exports=module.exports
+		<br>
+		如果一个模块的对外输出是一个单值，只能通过module.exports=123；而不是exports=123
+	</h4>
+	<br>
+	<h4>
+		commonjs规范与amd规范的区别？能否兼容？
+	</h4>
+
+	<br>
+	<h4>
+		模块缓存
+		require("a");<br>
+		require("a").message=123;<br>
+		require("a").message;//123<br>
+		删除某个模块的缓存：delete require.cache[moduleName]
+	</h4>
 </body>
 </html>
