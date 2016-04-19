@@ -16,17 +16,17 @@ app.use("/index",function(req,res){
 	res.render("index.hbs",{title:"测试测试"});
 });
 
-// app.use("/chat",function(req,res){
-// 	res.writeHead(200,{"Content-Type":"text/html;charset:utf-8"});
-// 	res.end("213213");
-// });
+app.use("/socket.io/",function(req,res){
+	res.writeHead(200,{"Content-Type":"text/html;charset:utf-8"});
+	res.end("213213");
+});
 
-// io.on('connection', function (socket) {
-//   socket.emit('news', { hello: 'world' });
-//   socket.on('sendData', function (data) {
-//     console.log(data);
-//   });
-// });
+io.on('connection', function (socket) {
+  socket.emit('data', { hello: 'world' });
+  socket.on('sendData', function (data) {
+    console.log(data);
+  });
+});
 
 
 
