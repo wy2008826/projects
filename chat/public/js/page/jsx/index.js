@@ -1,7 +1,8 @@
 (function(){
 
 
-	var BottomMenuComponent=React.createClass({displayName: "BottomMenuComponent",
+	BottomMenuComponent=React.createClass({displayName: "BottomMenuComponent",
+
 		getInitialState:function(){
 			return {
 				color:"#f33"
@@ -14,5 +15,5 @@
 		}
 	});
 
-	React.render(React.createElement(BottomMenuComponent, null),document.getElementById("bottomMenu"))
+	React.render(React.createElement(BottomMenuComponent, null),document.getElementById("bottomMenu"));
 })();

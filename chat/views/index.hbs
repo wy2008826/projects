@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta content="yes" name="apple-mobile-web-app-capable"> 
+	<meta content="yes" name="apple-touch-fullscreen"> 
+	<meta content="telephone=no,email=no" name="format-detection"> 	
+	<meta content="yes" name="apple-mobile-web-app-capable">
+	<meta content="black" name="apple-mobile-web-app-status-bar-style">
+	<meta name="x5-fullscreen"content="true"/>
+	<meta name="full-screen"content="yes">
+	<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no,minimum-scale=1.0, maximum-scale=1.0"> -->
+	<title>{{title}}</title>
+	
+	<link rel="stylesheet" href="css/page/index.min.css">
+	<script src="js/lib/flexible.js"></script>
+</head>
+<body>
+	
+
+	<section class="chat_section">
+		<ul class="chat_ul">
+			<li class="left_list chat_li">
+				<div class="user_mes">
+					<img src="images/user_head_img/a.jpg"  class="user_img">
+					<p class="user_nickname">小强小强小强</p>
+				</div>
+				<div class="user_cont">
+					哈哈哈哈哈
+				</div>
+			</li>
+			<li class="right_list chat_li">
+				<div class="user_mes">
+					<img src="images/user_head_img/b.jpg"  class="user_img">
+					<p class="user_nickname">小强小强小强</p>
+				</div>
+				<div class="user_cont">
+					哈哈哈哈哈
+				</div>
+			</li>
+		</ul>
+	</section>
+	
+	<div class="footer_wraper">
+		<input type="text" class="footer_input" id="footer_input">
+		<span class="submit_btn" id="submit_btn">发送</span>
+	</div>
+	
+
+	<script src="js/lib/socket.io/socket.io-1.4.5.js"></script>
+	<script src="js/sea.js"></script>
+	<script src="js/sea-config.js"></script>
+
+	<script>
+		seajs.use("page/js/index.min.js")
+	</script>
+	
+</body>
+</html>
