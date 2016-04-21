@@ -82,6 +82,8 @@
 
 
 
+@include DPR(".footer_wraper .footer_input",14px);
+
 .footer_wraper{
 	$h:pxToRem(80);
 	position: fixed;
