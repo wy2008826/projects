@@ -12,26 +12,38 @@ app.set("views",__dirname+"/views");
 
 
 app.use("/index",function(req,res){
-	
-	res.render("index.hbs",{title:"测试测试"});
+	res.render("index.hbs",{title:"自制聊天室"});
 });
 
-// app.use("/",function(req,res){
-// 	res.writeHead(200,{"Content-Type":"text/plain;charset:utf-8"});
-// 	res.end("213213");
-// });
+app.use("/passport/reg",function(req,res){
+	res.render("passport/reg.hbs");
+});
+
+
 
 io.on('connection', function (socket) {
-  socket.emit('data',"213123");
-  socket.on('sendData', function (data) {
-    console.log(data);
-  });
-});
 
+	socket.emit('serverData',{
+	  	randomNum:Math.round(Math.random()*100),
+	  	result:true,
+	  	isLogin:true
+	});
+
+	socket.on('clientData', function (data) {
+	    console.log(data);
+
+	    socket.emit('serverData',{
+		  	randomNum:Math.round(Math.random()*100),
+		  	result:true,
+		});
+
+	});
+});
 
 
 server.listen(9000,function(){
 	console.log("server is start on port 9000");
-})
+});
+
 
 

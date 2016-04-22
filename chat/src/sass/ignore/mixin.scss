@@ -43,6 +43,12 @@
 	-moz-box-sizing:$sizing;
 }
 
+
+@mixin disBox(){
+	display:box;
+	display:-webkit-box;
+	display:-moz-box;
+}
 // pixels to rems 
 @function pxToRem($px){
     @return $px / 75 * 1rem;

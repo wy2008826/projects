@@ -3,6 +3,7 @@ var gulpRename=require("gulp-rename");
 
 var plugins=require("gulp-load-plugins");
 plugins.scss=require("gulp-scss");
+plugins.sass=require("gulp-sass");
 plugins.minifyCss=require("gulp-minify-css");
 var uglify=require("gulp-uglify");
 var rename=require("gulp-rename");
@@ -12,13 +13,13 @@ var reactTrans=require("gulp-react");
 
 gulp.task("scss",function(){
 	
-	gulp.src(["./src/sass/***.scss","!./src/sass/ignore/***"])
-	.pipe(plugins.scss())
+	gulp.src(["./src/sass/**/*.scss","!./src/sass/ignore/***"])
+	.pipe(plugins.sass())
 	.pipe(plugins.minifyCss())
 	.pipe(gulpRename(function(path){
 		path.extname=".min.css";//扩展名
 	}))
-	.pipe(gulp.dest("./public/css/page"));
+	.pipe(gulp.dest("./public/css/page/"));
 });
 
 gulp.task("jsx",function(){
@@ -50,8 +51,8 @@ gulp.task("watch",function(){
 
 
 gulp.task("scssWatch",function(){
-	gulp.watch(["src/sass/***.scss"],function(){
-		gulp.run("scss");
+	gulp.watch(["src/sass/**/*.scss"],["scss"],function(){
+		//gulp.run("scss");
 	});
 });
 
@@ -70,3 +71,9 @@ gulp.task("jsWatch",function(){
 gulp.task("allWatch",function(){
 	gulp.run(["scssWatch","jsxWatch","jsWatch"]);
 });
+
+
+gulp.task("default",function(){
+	console.log("js压缩、css压缩：gulp allWatch");
+});
+
