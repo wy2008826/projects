@@ -1,25 +1,49 @@
-var express=require("express");
-var app=express();
+var koa=require("koa");
+var app=koa();
 
-var server=require("http").createServer(app);
+var koaStatic=require("koa-static");//静态文件
+var koaRouter=require("koa-router");//koa路由
+var router=new koaRouter();
+var koaViews=require("koa-views");//koa页面指定
+var koaHbs=require("koa-hbs");//模板引擎
+
+
+var server=require("http").createServer(app.callback());
 var io=require("socket.io").listen(server);
-var hbs=require("hbs");
 
 
-app.use(express.static(__dirname+"/public"));
-app.set("view engine","hbs");
-app.set("views",__dirname+"/views");
+app.use(koaStatic(__dirname+"/public"));//设置静态资源路径
+
+app.use(koaViews(__dirname+"/views",{//设置模板页面位置
+	map:{
+		html:"hbs"
+	}
+}));
+
+app.use(koaHbs.middleware({
+	viewPath:__dirname+"/views"
+}));
 
 
-app.use("/index",function(req,res){
-	res.render("index.hbs",{title:"自制聊天室"});
+router.get("/index.html",function*(next){
+	console.log(this.path);
+	var pageData={
+		title:"哈哈"
+	};
+	yield this.render("index",pageData);//必须使用yield
+	
 });
 
-app.use("/passport/reg",function(req,res){
-	res.render("passport/reg.hbs");
+
+router.get("/passport/reg.html",function*(next){
+
+	yield this.render("passport/reg");
 });
 
 
+
+
+app.use(router.routes());
 
 io.on('connection', function (socket) {
 
