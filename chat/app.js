@@ -40,11 +40,10 @@ router.get("/passport/reg.html",function*(next){
 	yield this.render("passport/reg");
 });
 
-
-
-
 app.use(router.routes());
 
+
+//那么问题来了  如果一个网站有很多地方用到实时通信怎么玩？
 io.on('connection', function (socket) {
 
 	socket.emit('serverData',{
