@@ -1,30 +1,78 @@
 function canvasUtil(){//canvas常用的绘图api
-	this.drawImg=function(img,option){//img img_x img_y img_w img_h c_x c_y c_w c_h ctx canvas
+	this._drawImg=function(img,option){//img img_x img_y img_w img_h c_x c_y c_w c_h ctx canvas
 		var o=option;
 		var ctx=o.ctx;
 		img.onload=function(){
 			console.log("loaded");
-			var width=img.width;
-			var height=img.height;
 			ctx.save();
-			ctx.drawImage(img,o.img_x,o.img_y,o.img_w,o.img_h,o.c_x,o.c_y,o.c_w,o.c_h);
+			ctx.drawImage(img,o.img_x||0,o.img_y||0,o.img_w||img.width,o.img_h||img.height,o.c_x,o.c_y,o.c_w,o.c_h);
 			ctx.restore();
 		}
+	},
+	this._line=function(option){//绘制线条
+		var o=option
+		var ctx=o.ctx;
+		ctx.save();
+
+		ctx.beginPath();
+		ctx.moveTo();
+		ctx.lineTo();
+		ctx.lineWidth=12;
+		ctx.restore();
 	}
 };
 var canvasUtil=new canvasUtil();
 
+var Background=function(){
 
+}
+
+var Ane=function(option){//海葵对象 canvas ctx
+	var o=option;
+	this.canvas=o.canvas;
+	this.ctx=o.ctx;
+	this.c_w=o.canvas.width;
+	this.c_h=o.canvas.height;
+	this.num=30;
+	this.aver=this.c_w / this.num;
+	this.x=[];
+	this.y=[];
+	this.len=[];
+
+	this.init();//初始化 需要在生成对象的时候自动调用
+};
+Ane.prototype={
+	init:function(){//生成海葵的各种坐标信息
+		var self=this;
+		var baseLen=self.c_h * 0.25;
+
+		for(var i=0;i<self.num;i++){
+			self.x[i]=i*self.aver+(Math.random()-0.5)*self.aver*0.7;
+			self.len[i]=baseLen+Math.random()*baseLen*0.3;
+			self.y[i]=self.c_h-self.len[i];
+		}
+		console.log(self.x,self.y,self.len);
+	},
+	draw:function(){
+		var self=this;
+		var ctx=self.ctx;
+		ctx.save();
+		ctx.globalAlpha=0.2;
+		ctx.lineWidth=self.aver * 0.7;
+		ctx.strokeStyle="#3be54e";
+		ctx.lineCap="round";
+
+		for(var i=0;i<self.num;i++){
+			ctx.beginPath();
+			ctx.moveTo(self.x[i],self.c_h);
+			ctx.lineTo(self.x[i],self.y[i]);
+			ctx.stroke();
+		}
+		ctx.restore();
+	}
+};
 
 (function(){
-	var Anemone=function(){//海葵对象
-
-	};
-	Anemone.prototype={
-		draw:function(){
-
-		}
-	};
 
 	var App=function (){
 
@@ -38,8 +86,9 @@ var canvasUtil=new canvasUtil();
 		this.canvas1=document.getElementById("canvas1");
 		this.canvas2=document.getElementById("canvas2");
 		
+		
 		this.init();
-		this.drawCanvas1();//绘制背景  海葵  果实等
+		this.gameLoop();
 	};
 	App.prototype={
 		init:function(){
@@ -57,32 +106,43 @@ var canvasUtil=new canvasUtil();
 			this.ctx1=self.canvas1.getContext("2d");
 			this.ctx2=self.canvas2.getContext("2d");
 
+			this.ane=new Ane({
+				canvas:self.canvas1,
+				ctx:self.ctx2
+			});
 		},
-		drawCanvas1:function(){
+		drawBackground:function(){
 			var self=this;
 			var ctx1=self.ctx1;
 
 			var big_bg=new Image();
 			big_bg.src="./public/images/background.jpg";
-			canvasUtil.drawImg(big_bg,{
+			
+			canvasUtil._drawImg(big_bg,{//img_x img_y img_w img_h c_x c_y c_w c_h ctx canvas
+				c_x:0,
+				c_y:0,
+				c_w:self.dprWidth,
+				c_h:self.dprHeight,
 				ctx:ctx1,
-				canvas:self.canvas1,
-
+				canvas:self.canvas1
 			});
-
-
-			big_bg.onload=function(){
-				var width=big_bg.width;
-				var height=big_bg.height;
-				ctx1.save();
-				ctx1.drawImage(big_bg,0,0,width,height,0,0,self.dprWidth,self.dprHeight);
-				ctx1.restore();
+		},
+		gameLoop:function(){
+			var self=this;
+			self.lastTime=new Date().getTime();
+			function loop(){
+				// self.ctx1.clearRect(0,0,self.dprWidth,self.dprHeight);
+				self.drawBackground();
+				self.ane.draw();
+				window.requestAnimationFrame(loop);
+				var now=new Date().getTime();
+				console.log(now-self.lastTime);
+				self.lastTime=new Date().getTime();
 			}
+			loop();
 		}
 	};
 
-
-
 	app=new App();
-
+	
 })();
