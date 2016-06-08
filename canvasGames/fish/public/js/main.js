@@ -144,7 +144,7 @@ Fruit.prototype={
 			
 			var fruitImg=(fruit.type=="blue"?self.blueFruit:self.orangeFruit);
 			if(fruit.size<=30){//未成熟
-				fruit.size+=0.4;
+				fruit.size+=fruit.spd*0.2;
 			}
 			else{//成熟果实
 				fruit.y-=fruit.spd;
