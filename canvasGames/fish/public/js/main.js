@@ -3,21 +3,21 @@
 // 3.不同canvas之间对象的交互  以及碰撞检测问题
 // 4.合理的布局应该是各种对象是分离的  app对象只负责将各种对象组织到一起，形成一个完整的业务逻辑
 
+//图片加载完成才能确定图片的尺寸 图片的缩放问题怎么搞？
 
 //canvas常用的绘图api  绘制图片  线条  圆弧 。。。。
 function canvasUtil(){
 	this._drawImg=function(img,option){//img img_x img_y img_w img_h c_x c_y c_w c_h ctx canvas
 		var o=option;
 		var ctx=o.ctx;
-		img.onload=function(){
-			console.log("loaded");
+		// img.onload=function(){//这样的话只能绘制一次
 			ctx.save();
 			ctx.drawImage(img,o.img_x||0,o.img_y||0,o.img_w||img.width,o.img_h||img.height,o.c_x,o.c_y,o.c_w,o.c_h);
 			ctx.restore();
-		}
+		// }
 	},
 	this._line=function(option){//绘制线条
-		var o=option
+		var o=option;
 		var ctx=o.ctx;
 		ctx.save();
 
@@ -31,15 +31,12 @@ function canvasUtil(){
 var canvasUtil=new canvasUtil();
 
 
-
 var Background=function(option){//背景
 	var o=this.o=option;
 	this.ctx=o.ctx;
 	this.canvas=o.canvas;
 	this.init();
 };
-
-
 Background.prototype={
 	init:function(){
 		this.bg=new Image();
@@ -84,15 +81,15 @@ Ane.prototype={
 			self.len[i]=baseLen+Math.random()*baseLen*0.3;
 			self.y[i]=self.c_h-self.len[i];
 		}
-		console.log(self.x,self.y,self.len);
+		// console.log(self.x,self.y,self.len);
 	},
 	draw:function(){
 		var self=this;
 		var ctx=self.ctx;
 		ctx.save();
-		ctx.globalAlpha=0.2;
+		ctx.globalAlpha=0.4;
 		ctx.lineWidth=self.aver * 0.7;
-		ctx.strokeStyle="#3be54e";
+		ctx.strokeStyle="#2bae95";
 		ctx.lineCap="round";
 
 		for(var i=0;i<self.num;i++){
@@ -105,27 +102,71 @@ Ane.prototype={
 	}
 };
 
+
 //果实对象
 var Fruit=function(o){
-
 	this.num=30;//果实数量
+	this.canvas=o.canvas;
+	this.ctx=o.ctx;
+	this.createFruit=function(id){
+		var x=(this.canvas.width / this.num )*(id+(Math.random()-0.5)*2);
+		var y=this.canvas.height*0.75+Math.random()*50;
+		return {//放置果实对象
+				type:Math.random()>0.7?"orange":"blue",//果实类型
+				x:x,
+				y:y,
+				size:0,
+				alive:true,//是否是活动的
+				id:id,
+				ripe:false,//是否成熟
+				spd:0.8+Math.random(),//果实的移动速度[0.8,1.8)
+		};
+	}
 	this.fruit=[];
+	this.init();
 };
-
 Fruit.prototype={
 	init:function(){
 		var self=this;
+		this.orangeFruit=new Image();
+		this.orangeFruit.src="./public/images/orange.png";
+		this.blueFruit=new Image();
+		this.blueFruit.src="./public/images/blue.png";
+
 		for(var i=0;i<self.num;i++){
-			self.fruit[i]={//放置果实对象
-				type:"",//果实类型
-				x:"",
-				y:"",
-				alive:false,//是否是活动的
-			};
+			self.fruit[i]=self.createFruit(i);
 		}
 	},
 	draw:function(){
-
+		var self=this;
+		for(var i=0;i<self.num;i++){
+			var fruit=self.fruit[i];
+			
+			var fruitImg=(fruit.type=="blue"?self.blueFruit:self.orangeFruit);
+			if(fruit.size<=30){//未成熟
+				fruit.size+=0.4;
+			}
+			else{//成熟果实
+				fruit.y-=fruit.spd;
+				fruit.ripe=true;
+			}
+			
+			if(fruit.y<-20){//果实死亡
+				self.born(i);
+			}
+			canvasUtil._drawImg(fruitImg,{
+				c_x:fruit.x-fruit.size*0.5,
+				c_y:fruit.y-fruit.size*0.5,
+				c_w:fruit.size,
+				c_h:fruit.size,
+				ctx:self.ctx,
+				canvas:self.canvas
+			});
+		}
+	},
+	born:function(id){
+		var self=this;
+		self.fruit[id]=self.createFruit(id);
 	}
 };
 
@@ -144,7 +185,6 @@ Fruit.prototype={
 
 		this.canvas1=document.getElementById("canvas1");
 		this.canvas2=document.getElementById("canvas2");
-		
 		
 		this.init();
 		this.gameLoop();
@@ -185,13 +225,13 @@ Fruit.prototype={
 			self.lastTime=new Date().getTime();
 			function loop(){
 				window.requestAnimationFrame(loop);
-
+				self.ctx1.clearRect(0,0,self.dprWidth,self.dprHeight);
 				self.background.draw();//绘制背景图片
 				self.ane.draw();//绘制摆动的海葵
-				// self.fruit.draw();//绘制果实
+				self.fruit.draw();//绘制果实
 
 				var now=new Date().getTime();
-				console.log(now-self.lastTime);
+				// console.log(now-self.lastTime);
 				self.lastTime=new Date().getTime();
 			}
 			loop();
