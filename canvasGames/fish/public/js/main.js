@@ -3,11 +3,17 @@
 // 3.不同canvas之间对象的交互  以及碰撞检测问题  对象和app之间的交互
 // 4.合理的布局应该是各种对象是分离的  app对象只负责将各种对象组织到一起，形成一个完整的业务逻辑
 
+//鼠标交互的坐标和实际对象的坐标位置会有清晰度的差别  要注意
 
 //app对象可以传递进所有的对象中 因为对象会实例化
 
 //图片加载完成才能确定图片的尺寸 图片的缩放问题怎么搞？ 对于只绘制一次的图片  使用onload  重复绘制的循环就好 
 
+
+//常见运动
+// 1.转向
+// 2.移动
+// 3.动效
 
 //canvas常用的绘图api  绘制图片  线条  圆弧 。。。。
 function canvasUtil(){
@@ -191,17 +197,24 @@ Mom.prototype={
 		this.body.src="./public/images/big.png";
 		this.eye.src="./public/images/bigEye0.png";
 		this.tail.src="./public/images/babyTail0.png";
-		this.x=self.canvas.width * 0.5;
-		this.y=self.canvas.height * 0.5;
-		this.angle=0;
+
+		var canW=self.canvas.width;
+		var canH=self.canvas.height;
+
+		this.x=canW * 0.5;//鱼的默认起始坐标
+		this.y=canH * 0.5;
+		this.mouseX=canW * 0.5;//鼠标的默认起始坐标
+		this.mouseY=canH * 0.5;
+		this.angle=0;//鱼的默认起始角度
 	},
 	draw:function(){
 		var self=this;
 		self.ctx.save();
-		self.ctx.translate(self.canvas.width * 0.5,self.canvas.height*0.5);
-		self.ctx.rotate(-Math.PI*0.25);
+		self.ctx.translate(self.x,self.y);//当一个对象有多个部位组成的时候  位移通过translate移动
+		self.ctx.rotate(self.angle);
+
 		canvasUtil._drawImg(self.body,{
-			c_x:0 - self.body.width * 0.5,
+			c_x:0- self.body.width * 0.5,
 			c_y:0 - self.body.height * 0.5,
 			c_w:self.body.width,
 			c_h:self.body.height,
@@ -226,6 +239,10 @@ Mom.prototype={
 			ctx:self.ctx
 		});
 		
+		var deta=0.06;
+		self.x=self.x+(self.mouseX-self.x)*deta;
+		self.y=self.y+(self.mouseY-self.y)*deta;
+		
 		self.ctx.restore();
 	},
 	updatePosition:function(x,y){
@@ -233,14 +250,14 @@ Mom.prototype={
 		var disX=x-self.x;
 		var disY=y-self.y;
 		var dis=Math.sqrt(disX*disX+disY*disY);
-			
+		
 		var now=new Date()*1;
 		var durTime=now-app.lastTime;
-
 		var angle=Math.atan(disY/disX);
-		console.log(angle);
-		// self.angle=angle*Math.PI-Math.PI*0.25;
-		console.log(self.angle);
+		self.angle=disX>=0?angle+Math.PI:angle;
+		self.mouseX=x;
+		self.mouseY=y;
+		
 	}
 };
 
@@ -321,8 +338,8 @@ Mom.prototype={
 		momAnimate:function(){
 			var self=this;
 			self.canvas2.addEventListener("mousemove",function(e){
-				var inner_x=e.offsetX||e.layerX;
-				var inner_y=e.offsetY||e.layerY;
+				var inner_x=(e.offsetX||e.layerX)*self.dpr;
+				var inner_y=(e.offsetY||e.layerY)*self.dpr;
 				self.mom.updatePosition(inner_x,inner_y);//更新鱼的位置坐标
 			});
 		}
