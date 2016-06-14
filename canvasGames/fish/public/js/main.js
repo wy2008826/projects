@@ -78,7 +78,7 @@ Background.prototype={
 
 
 //海葵
-var Ane=function(option){//海葵对象 canvas ctx
+var Ane=function(option){//海葵对象 canvas ctx   startPoint controlPoint endPoint
 	var o=this.o=option;
 	this.canvas=o.canvas;
 	this.ctx=o.ctx;
@@ -86,10 +86,11 @@ var Ane=function(option){//海葵对象 canvas ctx
 	this.c_h=o.canvas.height;
 	this.num=30;
 	this.aver=this.c_w / this.num;
+	this.lineWidth=this.aver * 0.7;
 	this.x=[];//海葵的x坐标集合
-	this.y=[];
 	this.len=[];
-
+	this.endPoint=[];//终止点
+	this.startTime=0;
 	this.init();//初始化 需要在生成对象的时候自动调用
 };
 Ane.prototype={
@@ -100,7 +101,7 @@ Ane.prototype={
 		for(var i=0;i<self.num;i++){
 			self.x[i]=i*self.aver+(Math.random()-0.5)*self.aver*0.7;
 			self.len[i]=baseLen+Math.random()*baseLen*0.3;
-			self.y[i]=self.c_h-self.len[i];
+			self.endPoint[i]={x:self.x[i],y:self.c_h-self.len[i]};
 		}
 	},
 	draw:function(){
@@ -108,29 +109,39 @@ Ane.prototype={
 		var ctx=self.ctx;
 		ctx.save();
 		ctx.globalAlpha=0.4;
-		ctx.lineWidth=self.aver * 0.7;
+		ctx.lineWidth=self.lineWidth;
 		ctx.strokeStyle="#2bae95";
 		ctx.lineCap="round";
 
 		for(var i=0;i<self.num;i++){
+			var endPointX=self.endPoint[i].x;
 			ctx.beginPath();
 			ctx.moveTo(self.x[i],self.c_h);
-			ctx.lineTo(self.x[i],self.y[i]);
+			ctx.quadraticCurveTo(self.x[i],self.c_h-self.len[i]*0.5, endPointX,self.c_h-self.len[i]);
 			ctx.stroke();
+			var endPointX=self.endPoint[i].x=self.x[i]+Math.sin(self.startTime*0.0015)*60;
 		}
 		ctx.restore();
+		self.startTime+=self.o.context.durTime;
 	}
 };
 
 
 //果实
 var Fruit=function(o){
+	this.o=o;
 	this.num=30;//果实数量
 	this.canvas=o.canvas;
 	this.ctx=o.ctx;
 	this.createFruit=function(id){
 		var x=(this.canvas.width / this.num )*(id+(Math.random()-0.5)*2);
 		var y=this.canvas.height*0.75+Math.random()*50;
+
+		// var ane=this.o.context.ane;
+		// var aneId=Math.round(ane.num*Math.random());
+		// var x=ane.endPoint[aneId].x;
+		// var y=ane.endPoint[aneId].y;
+		
 		return {//放置果实对象
 				type:Math.random()>0.7?"orange":"blue",//果实类型
 				x:x,
@@ -164,6 +175,11 @@ Fruit.prototype={
 			
 			var fruitImg=(fruit.type=="blue"?self.blueFruit:self.orangeFruit);
 			if(fruit.size<=30){//未成熟
+				var ane=self.o.context.ane;
+				var aneId=Math.round(ane.num*Math.random());
+				fruit.x=ane.endPoint[aneId].x;
+				fruit.y=ane.endPoint[aneId].y;
+				// console.log(aneId,);
 				fruit.size+=fruit.spd*0.2;
 			}
 			else{//成熟果实
@@ -466,6 +482,7 @@ Baby.prototype={
 		gameLoop:function(){
 			var self=this;
 			self.lastTime=new Date().getTime();
+			self.durTime=17;//默认最佳频速
 			function loop(){
 				window.requestAnimationFrame(loop);
 				self.ctx1.clearRect(0,0,self.dprWidth,self.dprHeight);
@@ -477,7 +494,8 @@ Baby.prototype={
 				self.mom.draw();//绘制鱼妈妈
 				self.baby.draw();//绘制小鱼
 
-
+				var now=new Date()*1;
+				self.durTime=now-self.lastTime;
 				self.lastTime=new Date().getTime();
 
 			}
