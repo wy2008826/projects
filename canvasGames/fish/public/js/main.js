@@ -10,12 +10,20 @@
 //图片加载完成才能确定图片的尺寸 图片的缩放问题怎么搞？ 对于只绘制一次的图片  使用onload  重复绘制的循环就好 
 
 
+//各种状态的判断触发不同的其他状态  如何判断？
+
 //常见运动
 // 1.转向
 // 2.移动
 // 3.动效
+// 4.对象本身的各部位的协调运动以及业务逻辑运动  对象整体的各种运动  对象之前的逻辑运动控制 
+// 5.一个部位的不同序列帧的逻辑绘制
+// 6.碰撞检测的问题   A碰触到B 和B碰触到A的执行逻辑是不一样的  怎么处理的?
 
-//canvas常用的绘图api  绘制图片  线条  圆弧 。。。。
+
+// 自身的运动位置变动 prototype.updatePosition  更改对象的位置
+
+
 function canvasUtil(){
 	this._drawImg=function(img,option){//img img_x img_y img_w img_h c_x c_y c_w c_h ctx canvas
 		var o=option;
@@ -90,18 +98,25 @@ var Ane=function(option){//海葵对象 canvas ctx   startPoint controlPoint end
 	this.x=[];//海葵的x坐标集合
 	this.len=[];
 	this.endPoint=[];//终止点
-	this.startTime=0;
+	this.continueTime=0;
 	this.init();//初始化 需要在生成对象的时候自动调用
 };
 Ane.prototype={
 	init:function(){//生成海葵的各种坐标信息
 		var self=this;
 		var baseLen=self.c_h * 0.25;
-
+		
 		for(var i=0;i<self.num;i++){
 			self.x[i]=i*self.aver+(Math.random()-0.5)*self.aver*0.7;
 			self.len[i]=baseLen+Math.random()*baseLen*0.3;
 			self.endPoint[i]={x:self.x[i],y:self.c_h-self.len[i]};
+		}
+	},
+	getEndPoint:function(id){//计算每个海葵的终点位置
+		var self=this;
+		return {
+			x:self.x[id]+Math.sin(self.continueTime*0.0015)*60,
+			y:self.canvas.height-self.len[id],
 		}
 	},
 	draw:function(){
@@ -114,15 +129,15 @@ Ane.prototype={
 		ctx.lineCap="round";
 
 		for(var i=0;i<self.num;i++){
-			var endPointX=self.endPoint[i].x;
+			var endPoint=self.endPoint[i];
 			ctx.beginPath();
 			ctx.moveTo(self.x[i],self.c_h);
-			ctx.quadraticCurveTo(self.x[i],self.c_h-self.len[i]*0.5, endPointX,self.c_h-self.len[i]);
+			ctx.quadraticCurveTo(self.x[i],self.c_h-self.len[i]*0.5, endPoint.x,endPoint.y);
 			ctx.stroke();
-			var endPointX=self.endPoint[i].x=self.x[i]+Math.sin(self.startTime*0.0015)*60;
+			self.endPoint[i]=self.getEndPoint(i);
 		}
 		ctx.restore();
-		self.startTime+=self.o.context.durTime;
+		self.continueTime+=self.o.context.durTime;
 	}
 };
 
@@ -134,13 +149,13 @@ var Fruit=function(o){
 	this.canvas=o.canvas;
 	this.ctx=o.ctx;
 	this.createFruit=function(id){
-		var x=(this.canvas.width / this.num )*(id+(Math.random()-0.5)*2);
-		var y=this.canvas.height*0.75+Math.random()*50;
+		// var x=(this.canvas.width / this.num )*(id+(Math.random()-0.5)*2);
+		// var y=this.canvas.height*0.75+Math.random()*50;
 
-		// var ane=this.o.context.ane;
-		// var aneId=Math.round(ane.num*Math.random());
-		// var x=ane.endPoint[aneId].x;
-		// var y=ane.endPoint[aneId].y;
+		var ane=this.o.context.ane;
+		var aneId=Math.round((ane.num-1)*Math.random());
+		var x=ane.endPoint[aneId].x;
+		var y=ane.endPoint[aneId].y;
 		
 		return {//放置果实对象
 				type:Math.random()>0.7?"orange":"blue",//果实类型
@@ -151,6 +166,7 @@ var Fruit=function(o){
 				id:id,
 				ripe:false,//是否成熟
 				spd:0.8+Math.random(),//果实的移动速度[0.8,1.8)
+				aneId:aneId//该果实出生的海葵的id
 		};
 	}
 	this.fruit=[];
@@ -172,15 +188,17 @@ Fruit.prototype={
 		var self=this;
 		for(var i=0;i<self.num;i++){
 			var fruit=self.fruit[i];
-			
+
 			var fruitImg=(fruit.type=="blue"?self.blueFruit:self.orangeFruit);
 			if(fruit.size<=30){//未成熟
-				var ane=self.o.context.ane;
-				var aneId=Math.round(ane.num*Math.random());
-				fruit.x=ane.endPoint[aneId].x;
-				fruit.y=ane.endPoint[aneId].y;
-				// console.log(aneId,);
+				
 				fruit.size+=fruit.spd*0.2;
+				var ane=self.o.context.ane;
+				var aneId=fruit.aneId;
+				var endPoint=ane.endPoint[aneId];
+				
+				fruit.x=endPoint.x;
+				fruit.y=endPoint.y;
 			}
 			else{//成熟果实
 				fruit.y-=fruit.spd;
@@ -283,6 +301,20 @@ Mom.prototype={
 		self.x=newPos.x;
 		self.y=newPos.y;
 		self.o.context.baby.updatePosition(self.x,self.y);//更改小鱼的位置
+
+		var momPos={
+			x:self.x,
+			y:self.y
+		};
+		var babyPos={
+			x:self.o.context.baby.x,
+			y:self.o.context.baby.y
+		};
+		if(canvasUtil._calDistance(babyPos,momPos)<10){
+			console.log("eat");
+			self.o.context.baby.eat();
+		}
+
 		self.ctx.restore();
 		self.collision();//碰撞检测 应该是只有鱼主动移动的时候  才会吃鱼  被动撞击不去吃
 	},
@@ -293,7 +325,7 @@ Mom.prototype={
 		var dis=Math.sqrt(disX*disX+disY*disY);
 		
 		var now=new Date()*1;
-		var durTime=now-app.lastTime;
+		var durTime=now-self.o.context.lastTime;
 		var angle=Math.atan(disY/disX);
 		self.angle=disX>=0?angle+Math.PI:angle;
 		self.mouseX=x;
@@ -334,9 +366,12 @@ var Baby=function(o){
 	this.body=new Image();//身子
 	this.eye=new Image();//眼睛
 	this.tail=new Image();//尾巴
-
+	this.fadeBodys=[];//开始饥饿的变色帧图片
+	this.fadeIndex=0;//初始的变色帧的序列号
+	this.isFadeing=true;//是否饥饿
+	this.isDead=false;//是否死亡
+	this.continueTime=0;//循环延续时间
 	this.init();
-	this.animate();
 };
 
 Baby.prototype={
@@ -345,7 +380,11 @@ Baby.prototype={
 		this.body.src="./public/images/baby.png";
 		this.eye.src="./public/images/babyEye0.png";
 		this.tail.src="./public/images/babyTail0.png";
-
+		for(var i=0;i<20;i++){
+			var img=new Image();
+			img.src="./public/images/babyFade"+i+".png";
+			self.fadeBodys.push(img);
+		}
 		var canW=self.canvas.width;
 		var canH=self.canvas.height;
 
@@ -354,21 +393,33 @@ Baby.prototype={
 		this.aimX=canW * 0.5- 50;//鼠标的默认起始坐标
 		this.aimY=canH * 0.5- 50;
 		this.angle=0;//鱼的默认起始角度
+		
 	},
 	draw:function(){
 		var self=this;
+		
 		self.ctx.save();
 		self.ctx.translate(self.x,self.y);//当一个对象有多个部位组成的时候  位移通过translate移动
 		self.ctx.rotate(self.angle);
 
-		canvasUtil._drawImg(self.body,{
-			c_x:0- self.body.width * 0.5,
-			c_y:0 - self.body.height * 0.5,
-			c_w:self.body.width,
-			c_h:self.body.height,
+		var fadeIndex=self.fadeIndex;
+
+		var body;
+		if(!self.isFadeing&&!self.isDead){//正常状态
+			var body=self.body;
+		}
+		else{//吃到食物后的开始饥饿的渐变状态
+			var body=self.isDead?self.fadeBodys[self.fadeBodys.length-1]:self.fadeBodys[fadeIndex];
+		}
+		canvasUtil._drawImg(body,{
+			c_x:0- body.width * 0.5,
+			c_y:0 - body.height * 0.5,
+			c_w:body.width,
+			c_h:body.height,
 			canvas:self.canvas,
 			ctx:self.ctx
 		});
+
 		canvasUtil._drawImg(self.eye,{
 			c_x:0 - self.eye.width * 0.5,
 			c_y:0 - self.eye.height * 0.5,
@@ -410,8 +461,31 @@ Baby.prototype={
 		self.aimX=x;
 		self.aimY=y;
 	},
-	animate:function(){
+	bodyFade:function(){//饥饿变色
+		var self=this;
+		var fadeCount=self.fadeBodys.length;//渐变的背景帧的数量
+		self.fadeIndex=0;
+		self.isFadeing=true;
+		self.isDead=false;
 
+		if(self.fadeTimer){
+			clearInterval(self.fadeTimer);
+		}
+		self.fadeTimer=setInterval(fadeLoop,400);
+
+		function fadeLoop(){
+			self.fadeIndex+=1;
+			if(self.fadeIndex==fadeCount){
+				self.fadeIndex=0;
+				self.isFadeing=false;
+				self.isDead=true;
+				clearInterval(self.fadeTimer);
+			}
+		}
+	},
+	eat:function(){
+		var self=this;
+		self.bodyFade();
 	}
 };
 
