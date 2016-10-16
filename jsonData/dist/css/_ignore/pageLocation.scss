@@ -1,0 +1,32 @@
+@import "./mixin";
+@import "./theme";
+
+.page-location{
+	position:absolute;
+	z-index: 999;
+	top:0;
+	left: 0;
+	right: 0;
+	$h:40px;
+	height:$h;
+	line-height:$h;
+	background-color:#fff;
+	border-bottom:1px solid #e6e6e6;
+	font-size:14px;
+	padding:0 20px;
+	color: #999;
+	em{
+		padding: 0 5px;
+		font-size: 12px;
+	}
+}
+
+.body-container{
+  position:absolute;
+  top:40px;
+  bottom:0;
+  left:0;
+  right:0;
+  overflow-y:auto;
+  padding: 20px;
+}

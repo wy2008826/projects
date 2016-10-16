@@ -1,0 +1,37 @@
+@import "./theme";
+
+.query-label-wraper{
+	ul{
+		li{
+			$labelW:90px;
+			$lH:36px;
+			padding-left:$labelW;
+			position: relative;
+			margin:8px 0;
+			line-height: $lH;
+			label{
+				display: block;
+				width: $labelW;
+				position: absolute;
+				left:0;
+				text-align:right;
+			}
+			a{
+				padding:0 10px;
+				margin:6px 15px 6px 0;
+				display: block;
+				float:left;
+				cursor:pointer;
+				line-height: 24px;
+				&:hover{
+					color:$theme-green;
+				}
+				@include borderRadius(3px);
+				&.active{
+					background-color:$theme-green;
+					color:#fff;
+				}
+			}
+		}
+	}
+}

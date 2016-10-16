@@ -1,0 +1,72 @@
+@import "./mixin";
+
+
+.left-menu{
+	.list{
+		width: 100%;
+		border-bottom:solid 1px #4d6681;
+		font-size: 14px;
+		ul{//第一层
+			li{
+				background-color:#56718f;
+				border:solid 1px #4d6681;
+				border-bottom:0;
+				cursor: pointer;
+				a{
+					padding-left: 20px;
+					color: #fff;
+					display: block;
+					height:39px;
+					line-height: 39px;
+					position: relative;
+				}
+				&.selected{
+					background-color:#7791a8;
+				}
+				.inactive{
+					&:after{
+						font-size:20px;
+						font-family: arial;
+						position: absolute;
+						content:"+";
+						right:20px;
+						top:0;
+					}
+				}
+				.inactives{
+					&:after{
+						font-size:22px;
+						font-family: arial;
+						position:absolute;
+						content:"-";
+						right:20px;
+						top:0;
+					}
+				}
+				ul{//第二层
+					display: none;
+					li{
+						border-left:0;
+						border-right:0;
+						background-color:#68859e;
+						border-color:#5e788e;
+						a{ padding-left:35px;}
+						a:hover{background-color: #7791a8;}
+						ul{//第三层
+							display: none;
+							li {
+								background-color:#d6e6f1;
+								border-color:#6196bb;
+								a{
+									color:#316a91;
+									padding-left:50px;
+								}
+							}
+						}
+					}
+
+				}
+			}
+		}
+	}
+}

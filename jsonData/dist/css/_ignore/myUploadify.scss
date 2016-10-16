@@ -1,0 +1,147 @@
+@import "./mixin";
+@import "./theme";
+
+.uploadify-button{
+	background-image:none !important;
+	border:none !important;
+	text-shadow:none !important;
+	&.btn{
+		padding-top:0;
+		padding-bottom:0;
+		@include borderRadius(4px);
+	}
+}
+
+.uploadify,.uploadify:hover{
+	.uploadify-button,.uploadify-button:hover{
+		background-image:none !important;
+		border:none !important;
+		text-shadow:none !important;
+	}
+}
+
+.uploadify-queue-item{
+	.cancel{
+		a{
+			color:$theme-red;
+			background:none !important;
+			display: block;
+			text-indent: 0 !important;
+			text-align:center;
+		}
+	}
+}
+
+.image-wraper{
+	$w:140px;
+	$h:140px;
+	.image-item{
+		$lh:16px;
+		position:relative;
+		width:$w;
+		height:$h;
+		padding:0px 10px 5px 10px;
+		margin:0px 10px 20px 0;
+		border:3px solid #f8f8f8;
+		@include borderRadius(5px);
+		@include boxSizing(border-box);
+		.file-del{
+			cursor:pointer;
+			color:$theme-red;
+			position:absolute;
+			right:5px;
+			top:5px;
+		}
+		.file-name{
+			line-height:$lh;
+			margin:5px 20px 5px 0;
+			@include ellipsisLine();
+
+		}
+		.file-img{
+			max-width: 100%;
+			vertical-align: middle;
+			max-height: $h - $lh -20px;
+		}
+	}
+}
+
+
+.pic-wrap{
+  padding: 10px 15px 15px 15px;
+  margin: 0;
+  margin-top: 10px;
+  border: 1px solid #d2d2d2;
+  legend{
+    padding: 0 8px!important;
+  }
+  .pic-box{
+    li{
+      float: left;
+      width: 100px;
+      height: 100px;
+      line-height: 100px;
+      text-align: center;
+      border: 1px solid #d2d2d2;
+      margin-right: 10px;
+      position: relative;
+      img{
+        max-width: 100px;
+        max-height: 100px;
+      }
+      em{
+        position: absolute;
+        top: -1px;
+        right: -1px;
+        width: 16px;
+        height: 16px;
+        line-height: 13px;
+        text-align: center;
+        background-color: #ff0000;
+        color: #fff;
+        font-size: 12px;
+        cursor: pointer;
+      }
+    }
+    .add-pic{
+      font-size: 50px;
+      color: #999;
+      line-height: 90px;
+      cursor: pointer;
+    }
+    .uploadify{
+      position: relative;
+      display: inline-block;
+      border: 1px solid #d2d2d2;
+      width: 100px;
+      height: 100px;
+      line-height: 100px;
+      text-align: center;
+      margin-bottom: 0;
+      .swfupload{
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100px;
+        height: 100px;
+      }
+      .uploadify-button{
+        line-height:90px;
+        text-align:center;
+        background-color: #fff;
+        background-image:none;
+        border:none;
+        color:#999;
+        border-radius:0;
+        font:normal 50px Arial, Helvetica, sans-serif;
+        :hover{
+          background-color: #fff;
+          background-image:none;
+        }
+      }
+    }
+    .uploadify-queue{
+      display:none;
+    }
+  }
+}

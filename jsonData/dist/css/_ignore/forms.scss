@@ -1,0 +1,186 @@
+@import "./mixin";
+@import "./theme";
+
+.form-horizontal,.form{
+  $border-radius:3px;
+  $font-size:14px;
+  $lh:36px;
+	.form-group {
+	  margin-bottom: 15px;
+    .error-label{
+      line-height: $lh;
+      font-size: $font-size;
+      color:$theme-red;
+    }
+		.form-control{
+			@include boxSizing(border-box);
+      @include borderRadius($border-radius);
+			line-height: $lh - 2px;
+	  	background-color: #fff;
+	  	background-image: none;
+	  	border: 1px solid $theme-border;
+	  	color: inherit;
+	  	display: block;
+	  	padding: 0px 10px;
+	  	transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+	  	width: 100%;
+	  	font-size: $font-size;
+      &.error-label:focus{
+        border-color:$theme-red !important;
+      }
+	  	&:focus{
+				border-color: $theme-form-active !important;
+				outline: 0;
+		  }
+	  	&.error{
+	  		border: 1px dotted $theme-red;
+	  	}
+		}
+    .control-append{
+      $tailW:50px;
+      position: relative;
+      @include boxSizing(border-box);
+      @include borderRadius($border-radius);
+      padding-right:$tailW;
+      border:1px solid $theme-border;
+      .form-control{
+        border:1px solid #fff;
+        @include borderRadius(0);
+        &:focus{
+          border-color: $theme-form-active !important;
+          outline: 0;
+        }
+        &.error{
+          border: 1px dotted $theme-red;
+        }
+      }
+      .append-tail{
+        font-size: $font-size;
+        position: absolute;
+        border-left:1px solid $theme-border;
+        right: 0;
+        line-height:$lh - 1px;
+        text-align: center;
+        top:0;
+        width: $tailW - 1px;
+      }
+    }
+    input,select{
+      &.form-control{
+        height: $lh;
+      }
+    }
+	}
+}
+
+.control-label{
+	line-height: 36px;
+  font-size:14px;
+}
+
+.form-control::-moz-placeholder {
+  color: #999;
+  opacity: 1;
+}
+.form-control:-ms-input-placeholder {
+  color: #999;
+}
+.form-control::-webkit-input-placeholder {
+  color: #999;
+}
+.form-control::-ms-expand {
+  background-color: transparent;
+  border: 0;
+}
+.form-control[disabled],
+.form-control[readonly],
+fieldset[disabled] .form-control {
+  background-color: #eee !important;
+  opacity: 1;
+}
+.form-control[disabled],
+fieldset[disabled] .form-control {
+  cursor: not-allowed;
+}
+textarea.form-control {
+  height: auto;
+}
+input[type="search"] {
+  -webkit-appearance: none;
+}
+
+.radio,
+.checkbox {
+  position: relative;
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.radio label,
+.checkbox label {
+  min-height: 20px;
+  padding-left: 20px;
+  margin-bottom: 0;
+  font-weight: normal;
+  cursor: pointer;
+}
+.radio input[type="radio"],
+.radio-inline input[type="radio"],
+.checkbox input[type="checkbox"],
+.checkbox-inline input[type="checkbox"] {
+  position: absolute;
+  margin-top: 4px \9;
+  margin-left: -20px;
+}
+.radio + .radio,
+.checkbox + .checkbox {
+  margin-top: -5px;
+}
+.radio-inline,
+.checkbox-inline {
+  position: relative;
+  display: inline-block;
+  padding-left: 20px;
+  margin-bottom: 0;
+  font-weight: normal;
+  vertical-align: middle;
+  cursor: pointer;
+}
+.radio-inline + .radio-inline,
+.checkbox-inline + .checkbox-inline {
+  margin-top: 0;
+  margin-left: 10px;
+}
+input[type="radio"][disabled],
+input[type="checkbox"][disabled],
+input[type="radio"].disabled,
+input[type="checkbox"].disabled,
+fieldset[disabled] input[type="radio"],
+fieldset[disabled] input[type="checkbox"] {
+  cursor: not-allowed;
+}
+.radio-inline.disabled,
+.checkbox-inline.disabled,
+fieldset[disabled] .radio-inline,
+fieldset[disabled] .checkbox-inline {
+  cursor: not-allowed;
+}
+.radio.disabled label,
+.checkbox.disabled label,
+fieldset[disabled] .radio label,
+fieldset[disabled] .checkbox label {
+  cursor: not-allowed;
+}
+
+.form-horizontal .radio,
+.form-horizontal .checkbox,
+.form-horizontal .radio-inline,
+.form-horizontal .checkbox-inline {
+  padding-top: 7px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.form-horizontal .radio,
+.form-horizontal .checkbox {
+  min-height: 27px;
+}

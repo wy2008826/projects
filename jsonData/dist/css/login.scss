@@ -1,0 +1,83 @@
+/*
+	name:loginPage
+	updata:2016-09-13
+*/
+
+@import "_ignore/base";
+@include fontFace("./");
+
+html,body{
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+body{
+	background: url("../images/loginBg.jpg") center no-repeat;
+	background-size:100% 100%;
+}
+
+.login-wrap{
+	width: 500px;
+	height: 510px;
+	position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -250px;
+  margin-top: -255px;
+	.login-title{
+		width: 500px;
+		height: 74px;
+	}
+	
+	.bd{
+		margin-top: 62px;
+		height: 328px;
+		background-color: rgba(255,255,255,0.6);
+		border-radius: 10px;
+		padding: 46px 60px 0 60px;
+		em.label{
+			position: absolute;
+			width: 46px;
+			background-color: #4b87ca;
+			height: 46px;
+			border-top-left-radius: 5px;
+			border-bottom-left-radius: 5px;
+			text-align: center;
+			line-height: 46px;
+			color: #fff;
+		}
+		.login-input{
+			height: 44px;
+			border:1px solid #4b87ca;
+			border-radius: 5px;
+			padding-left: 66px;
+			margin-bottom: 30px;
+			width: 312px;
+		}
+		.vcode{
+			width: 172px;
+		}
+		.vcode-img{
+			display: inline-block;
+			padding: 0;
+			width: 118px;
+			cursor: pointer;
+		}
+
+
+		.login-btn{
+			width: 100%;
+			height: 46px;
+			line-height: 46px;
+			border-radius: 5px;
+			background-color: #4b87ca;
+			color: #fff;
+			border: none;
+			&:hover{
+				background-color: #4082cb;
+			}
+		}
+
+	}
+
+}

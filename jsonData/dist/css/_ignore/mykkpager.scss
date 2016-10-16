@@ -1,0 +1,15 @@
+@import "./mixin";
+@import "./theme";
+
+.kkpager,#kkpager{
+	line-height:40px;
+	#kkpager_btn_go_input{
+		height: 20px;
+		margin-left:5px;
+		margin-right:5px;
+	}
+	#kkpager_btn_go{
+		height: 20px;
+		
+	}
+}

@@ -1,0 +1,58 @@
+@import "./mixin";
+@import "./theme";
+
+/* Tabs */
+
+.tabs-container{
+	$h:36px;
+	.nav-tabs{
+		border-bottom: 1px solid $theme-border;
+		height:$h;
+		background: none;
+		border: none;
+		position: relative;
+		z-index: 1;
+		li{
+			height:$h;
+			line-height: $h;
+			float: left;
+			margin-bottom: -1px;
+			&.active{
+				a,a:hover,a:focus{
+					border: 1px solid $theme-border;
+					border-top: 2px solid #495a70;
+				  border-bottom-color: transparent;
+				  background-color: #fff;
+					border-top-left-radius: 3px;
+					border-top-right-radius: 3px;
+				  color: #333;				
+				}
+			}
+			a{
+				color: #999;
+				font-weight: normal;
+				padding:0 20px;
+				line-height: $h;
+				display: block;
+				&:hover{
+					background: transparent;
+				  color: #333;
+				}
+			}
+
+		}
+	}
+	.tab-content{
+		background: #fff;
+		border: 1px solid $theme-border;
+		border-radius: 2px;
+		padding: 20px;
+		position: relative;
+		.tab-item{
+			display: none;
+			&.active{
+				display: block;
+			}
+		}
+	}
+}

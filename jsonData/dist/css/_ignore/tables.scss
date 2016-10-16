@@ -1,0 +1,89 @@
+@import "./mixin";
+
+//表格统一添加table的calss 默认不包含边框
+//table-striped 条纹间隔的table
+//table-bordered 包含内外边框的table
+//table-hover 鼠标移上去tr变色的table
+
+
+table{
+	border-collapse:collapse;
+	background-color: transparent;
+}
+
+.table {
+ 	border-collapse: collapse !important;
+ 	width: 100%;
+	max-width: 100%;
+	thead tr th {
+	  	text-align: left;
+	  	vertical-align: bottom;
+	  	border-bottom: 2px solid #ddd;
+			font-weight: bold;
+			font-size: 14px !important;
+			color:#111;
+	}
+	thead,tbody{
+		tr{
+			th,td{
+				  padding: 8px;
+			  	line-height: 22px;
+			  	vertical-align: top;
+			  	border-top: 1px solid #ddd;
+			}
+		}
+	}
+	tbody{
+		td{
+			white-space: nowrap;
+			font-size: 13px;
+		}
+	}
+}
+
+.table-bordered {
+  border: 1px solid #ddd;
+  thead,tbody,tfoot{
+  		tr{
+  			th,td{
+  				border: 1px solid #ddd;
+  			}
+  		}
+  }
+  thead{
+  		tr{
+  			th,td{
+  				border-bottom-width: 2px;
+  			}
+  		}
+  }
+}
+.table-striped {
+	thead{
+		tr{
+			td,th{
+				border-top: none !important;
+			}
+		}
+	}
+	tbody{
+		tr:nth-of-type(odd){
+			background-color: #f4f4f4;
+		}
+	}
+}
+
+.table-hover{
+	thead{
+		tr{
+			td,th{
+				border-top: none !important;
+			}
+		}
+	}
+	tbody{
+		tr:hover{
+			background-color: #f1f1f1;
+		}
+	}
+}
