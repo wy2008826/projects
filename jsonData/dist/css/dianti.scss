@@ -12,3 +12,9 @@
 @import "./_ignore/mykkpager";//自定义分页组件样式
 @import "./_ignore/myUploadify";//自定义分页组件样式
 @import "./_ignore/queryLabel";//label查询组件
+@import "_ignore/menu";
+
+.page-wraper{
+	margin-left:200px;
+	padding:20px;
+}
