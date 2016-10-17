@@ -8,40 +8,19 @@ var koaViews=require("koa-views");//koa页面指定
 var koaHbs=require("koa-hbs");//模板引擎
 
 
-
-
 app.use(koaStatic(__dirname+"/statics"));//设置静态资源路径
-
-
-
-app.use(koaHbs.middleware({
+app.use(koaHbs.middleware({//设置页面访问路径
 	viewPath:__dirname+"/views"
 }));
 
 
-router.get("/add.html",function*(next){
-	console.log(this.path);
-	var pageData={
-		title:"哈哈"
-	};
-	yield this.render("add",pageData);//必须使用yield
-	
-});
+var addroute=require("./routes/add")(router);//新增楼盘
+var searchroute=require("./routes/search")(router);//查询楼盘信息
 
 
-router.get("/aaa.html",function*(next){
-	console.log(this.path);
-	var pageData={
-		title:"哈哈"
-	};
-	
-	this.body=pageData;
-	
-});
 
 
 app.use(router.routes());
-
 
 app.listen(3000,function(){
 	console.log("server is start on port 9000");
