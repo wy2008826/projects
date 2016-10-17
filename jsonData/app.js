@@ -1,21 +1,51 @@
-//express的核心是http模块
+var koa=require("koa");
+var app=koa();
 
-var http=require("http");
-var express=require("express");
-var hbs=require("hbs");
-var app=express();
-
-
-
-app.use(express.static(__dirname+"/statics"));//设置静态资源路径
-app.set("view engine","hbs");//设置模板引擎
-app.set("views",__dirname+"/views");//设置视图路径
+var koaStatic=require("koa-static");//静态文件
+var koaRouter=require("koa-router");//koa路由
+var router=new koaRouter();
+var koaViews=require("koa-views");//koa页面指定
+var koaHbs=require("koa-hbs");//模板引擎
 
 
 
 
-var routesAdd=require("./routes/add");//首页路由
+app.use(koaStatic(__dirname+"/statics"));//设置静态资源路径
 
-app.use("/add",routesAdd);
 
-app.listen(3000);
+
+app.use(koaHbs.middleware({
+	viewPath:__dirname+"/views"
+}));
+
+
+router.get("/add.html",function*(next){
+	console.log(this.path);
+	var pageData={
+		title:"哈哈"
+	};
+	yield this.render("add",pageData);//必须使用yield
+	
+});
+
+
+router.get("/aaa.html",function*(next){
+	console.log(this.path);
+	var pageData={
+		title:"哈哈"
+	};
+	
+	this.body=pageData;
+	
+});
+
+
+app.use(router.routes());
+
+
+app.listen(3000,function(){
+	console.log("server is start on port 9000");
+});
+
+
+

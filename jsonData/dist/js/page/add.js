@@ -11,7 +11,7 @@ $(function(){
 		},
 		postData:function(){
 			$.ajax({
-				url:"posttest.html",
+				url:"aaa.html",
 				type:"get",
 				data:"124",
 				dataType:"json",
