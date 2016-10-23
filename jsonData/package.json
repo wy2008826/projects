@@ -26,6 +26,8 @@
     "koa-router": "^5.4.0",
     "koa-static": "^2.0.0",
     "koa-views": "^5.1.2",
-    "stream-combiner2": "^1.1.1"
+    "mongoose": "^4.6.4",
+    "stream-combiner2": "^1.1.1",
+    "underscore": "^1.8.3"
   }
 }

@@ -14,8 +14,14 @@ app.set("views",__dirname+"/views");//设置视图路径
 
 
 
-var routesAdd=require("./routes/add");//首页路由
 
-app.use("/add",routesAdd);
+var routesAdd=require("./routes/add");//添加电梯
+app.use("/",routesAdd);
+
+var routesSearch=require("./routes/search");//查询电梯
+app.use("/",routesSearch);
+
+
 
 app.listen(3000);
+console.log("server in running on port:3000");
