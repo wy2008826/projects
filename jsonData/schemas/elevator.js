@@ -1,4 +1,4 @@
-var mongooose=require("mongoose");
+var mongoose=require("mongoose");
 
 var ElevatorSchema=new mongoose.Schema({//注意各种数据的格式  数组怎么定义呢
 	city:String,
