@@ -1,0 +1,164 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'nrm',
+1 verbose cli   '-g' ]
+2 info using npm@2.15.9
+3 info using node@v4.6.0
+4 verbose install initial load of /usr/local/lib/package.json
+5 verbose readDependencies loading dependencies from /usr/local/lib/package.json
+6 silly cache add args [ 'nrm', null ]
+7 verbose cache add spec nrm
+8 silly cache add parsed spec Result {
+8 silly cache add   raw: 'nrm',
+8 silly cache add   scope: null,
+8 silly cache add   name: 'nrm',
+8 silly cache add   rawSpec: '',
+8 silly cache add   spec: 'latest',
+8 silly cache add   type: 'tag' }
+9 silly addNamed nrm@latest
+10 verbose addNamed "latest" is being treated as a dist-tag for nrm
+11 info addNameTag [ 'nrm', 'latest' ]
+12 silly mapToRegistry name nrm
+13 silly mapToRegistry using default registry
+14 silly mapToRegistry registry https://registry.npmjs.org/
+15 silly mapToRegistry data Result {
+15 silly mapToRegistry   raw: 'nrm',
+15 silly mapToRegistry   scope: null,
+15 silly mapToRegistry   name: 'nrm',
+15 silly mapToRegistry   rawSpec: '',
+15 silly mapToRegistry   spec: 'latest',
+15 silly mapToRegistry   type: 'tag' }
+16 silly mapToRegistry uri https://registry.npmjs.org/nrm
+17 verbose addNameTag registry:https://registry.npmjs.org/nrm not in flight; fetching
+18 verbose request uri https://registry.npmjs.org/nrm
+19 verbose request no auth needed
+20 info attempt registry request try #1 at 20:51:21
+21 verbose request id 686464c141013cd8
+22 verbose etag "E5PEQ90OEN2TUS54R3WFYU1WC"
+23 http request GET https://registry.npmjs.org/nrm
+24 http 304 https://registry.npmjs.org/nrm
+25 verbose headers { date: 'Sun, 16 Oct 2016 12:51:12 GMT',
+25 verbose headers   via: '1.1 varnish',
+25 verbose headers   'cache-control': 'max-age=300',
+25 verbose headers   etag: '"E5PEQ90OEN2TUS54R3WFYU1WC"',
+25 verbose headers   age: '275',
+25 verbose headers   connection: 'keep-alive',
+25 verbose headers   'x-served-by': 'cache-ams4120-AMS',
+25 verbose headers   'x-cache': 'HIT',
+25 verbose headers   'x-cache-hits': '1',
+25 verbose headers   'x-timer': 'S1476622272.266421,VS0,VE0',
+25 verbose headers   vary: 'Accept-Encoding' }
+26 silly get cb [ 304,
+26 silly get   { date: 'Sun, 16 Oct 2016 12:51:12 GMT',
+26 silly get     via: '1.1 varnish',
+26 silly get     'cache-control': 'max-age=300',
+26 silly get     etag: '"E5PEQ90OEN2TUS54R3WFYU1WC"',
+26 silly get     age: '275',
+26 silly get     connection: 'keep-alive',
+26 silly get     'x-served-by': 'cache-ams4120-AMS',
+26 silly get     'x-cache': 'HIT',
+26 silly get     'x-cache-hits': '1',
+26 silly get     'x-timer': 'S1476622272.266421,VS0,VE0',
+26 silly get     vary: 'Accept-Encoding' } ]
+27 verbose etag https://registry.npmjs.org/nrm from cache
+28 verbose get saving nrm to /Users/wangyu/.npm/registry.npmjs.org/nrm/.cache.json
+29 verbose correctMkdir /Users/wangyu/.npm correctMkdir not in flight; initializing
+30 silly addNameTag next cb for nrm with tag latest
+31 silly addNamed nrm@1.0.0
+32 verbose addNamed "1.0.0" is a plain semver version for nrm
+33 silly cache afterAdd nrm@1.0.0
+34 verbose afterAdd /Users/wangyu/.npm/nrm/1.0.0/package/package.json not in flight; writing
+35 verbose correctMkdir /Users/wangyu/.npm correctMkdir not in flight; initializing
+36 verbose afterAdd /Users/wangyu/.npm/nrm/1.0.0/package/package.json written
+37 silly install resolved [ { name: 'nrm',
+37 silly install resolved     version: '1.0.0',
+37 silly install resolved     description: 'NPM registry manager can help you easy and fast switch between different npm registries, now include: cnpm, taobao, nj(nodejitsu), rednpm, edunpm',
+37 silly install resolved     bin: { nrm: './cli.js' },
+37 silly install resolved     repository: { type: 'git', url: 'git://github.com/Pana/nrm.git' },
+37 silly install resolved     scripts: { star: 'npm star nrm' },
+37 silly install resolved     keywords: [ 'NPM', 'registry' ],
+37 silly install resolved     author: { name: 'Pana' },
+37 silly install resolved     license: 'MIT',
+37 silly install resolved     bugs: { url: 'https://github.com/Pana/nrm/issues' },
+37 silly install resolved     homepage: 'https://github.com/Pana/nrm',
+37 silly install resolved     dependencies:
+37 silly install resolved      { async: '^1.5.2',
+37 silly install resolved        commander: '^2.9.0',
+37 silly install resolved        extend: '^3.0.0',
+37 silly install resolved        ini: '^1.1.0',
+37 silly install resolved        'node-echo': '^0.1.1',
+37 silly install resolved        npm: '^3.10.3',
+37 silly install resolved        only: '0.0.2',
+37 silly install resolved        open: '0.0.5',
+37 silly install resolved        request: '^2.72.0' },
+37 silly install resolved     gitHead: 'd902f6e5d1dcac4186a8e29c68a539bb3f9a4587',
+37 silly install resolved     _id: 'nrm@1.0.0',
+37 silly install resolved     _shasum: 'b9353a4a8e1784c201502b9cfd83f274b1884f0d',
+37 silly install resolved     _from: 'nrm@latest',
+37 silly install resolved     _npmVersion: '2.14.7',
+37 silly install resolved     _nodeVersion: '4.2.1',
+37 silly install resolved     _npmUser: { name: 'pana', email: 'pana.wang@outlook.com' },
+37 silly install resolved     dist:
+37 silly install resolved      { shasum: 'b9353a4a8e1784c201502b9cfd83f274b1884f0d',
+37 silly install resolved        tarball: 'https://registry.npmjs.org/nrm/-/nrm-1.0.0.tgz' },
+37 silly install resolved     maintainers: [ [Object] ],
+37 silly install resolved     _npmOperationalInternal:
+37 silly install resolved      { host: 'packages-12-west.internal.npmjs.com',
+37 silly install resolved        tmp: 'tmp/nrm-1.0.0.tgz_1467544744124_0.2401212085969746' },
+37 silly install resolved     directories: {},
+37 silly install resolved     _resolved: 'https://registry.npmjs.org/nrm/-/nrm-1.0.0.tgz',
+37 silly install resolved     readme: 'ERROR: No README data found!' } ]
+38 info install nrm@1.0.0 into /usr/local/lib
+39 info installOne nrm@1.0.0
+40 verbose installOne of nrm to /usr/local/lib not in flight; installing
+41 verbose correctMkdir /Users/wangyu/.npm/_locks correctMkdir not in flight; initializing
+42 verbose lock using /Users/wangyu/.npm/_locks/nrm-84659466d7653f9f.lock for /usr/local/lib/node_modules/nrm
+43 silly install write writing nrm 1.0.0 to /usr/local/lib/node_modules/nrm
+44 verbose unbuild lib/node_modules/nrm
+45 silly gentlyRm /usr/local/lib/node_modules/nrm is being purged from base /usr/local
+46 verbose gentlyRm don't care about contents; nuking /usr/local/lib/node_modules/nrm
+47 verbose tar unpack /Users/wangyu/.npm/nrm/1.0.0/package.tgz
+48 verbose tar unpacking to /usr/local/lib/node_modules/nrm
+49 silly gentlyRm /usr/local/lib/node_modules/nrm is being purged
+50 verbose gentlyRm don't care about contents; nuking /usr/local/lib/node_modules/nrm
+51 silly gunzTarPerm modes [ '755', '644' ]
+52 error tar.unpack untar error /Users/wangyu/.npm/nrm/1.0.0/package.tgz
+53 verbose unlock done using /Users/wangyu/.npm/_locks/nrm-84659466d7653f9f.lock for /usr/local/lib/node_modules/nrm
+54 verbose fstream_path /usr/local/lib/node_modules/nrm
+55 verbose fstream_type Directory
+56 verbose fstream_class DirWriter
+57 verbose stack Error: EACCES: permission denied, mkdir '/usr/local/lib/node_modules/nrm'
+57 verbose stack     at Error (native)
+58 verbose fstream_stack /usr/local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:35:25
+58 verbose fstream_stack /usr/local/lib/node_modules/npm/node_modules/mkdirp/index.js:47:53
+58 verbose fstream_stack FSReqWrap.oncomplete (fs.js:82:15)
+59 verbose cwd /Users/wangyu/github/projects
+60 error Darwin 15.5.0
+61 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "install" "nrm" "-g"
+62 error node v4.6.0
+63 error npm  v2.15.9
+64 error path /usr/local/lib/node_modules/nrm
+65 error code EACCES
+66 error errno -13
+67 error syscall mkdir
+68 error Error: EACCES: permission denied, mkdir '/usr/local/lib/node_modules/nrm'
+68 error     at Error (native)
+68 error  { [Error: EACCES: permission denied, mkdir '/usr/local/lib/node_modules/nrm']
+68 error   errno: -13,
+68 error   code: 'EACCES',
+68 error   syscall: 'mkdir',
+68 error   path: '/usr/local/lib/node_modules/nrm',
+68 error   fstream_type: 'Directory',
+68 error   fstream_path: '/usr/local/lib/node_modules/nrm',
+68 error   fstream_class: 'DirWriter',
+68 error   fstream_stack:
+68 error    [ '/usr/local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:35:25',
+68 error      '/usr/local/lib/node_modules/npm/node_modules/mkdirp/index.js:47:53',
+68 error      'FSReqWrap.oncomplete (fs.js:82:15)' ] }
+69 error Please try running this command again as root/Administrator.
+70 verbose exit [ -13, true ]
+71 verbose unbuild lib/node_modules/nrm
+72 silly gentlyRm /usr/local/lib/node_modules/nrm is being purged from base /usr/local
+73 verbose gentlyRm don't care about contents; nuking /usr/local/lib/node_modules/nrm
