@@ -27,19 +27,19 @@
 			</div>
 		</div>
 		<div class="page-wraper">
-			<div class="panel">
+			<form class="panel form form-horizontal mg-t-30" id="searchForm" action="searchElevator.html">
 				<div class="panel-title row">
 					查询电梯
 				</div>
 				<div class="panel-content">
-					<form class="form form-horizontal mg-t-30">
+					<div >
 						<ul class="row">
 							<li class="col-all-4 form-group">
 								<div class="col-all-4 control-label text-right">
 									城市：
 								</div>
 								<div class="col-all-8">
-									<input type="text" class="form-control">
+									<input type="text" class="form-control" name="city">
 								</div>
 							</li>
 							<li class="col-all-4 form-group">
@@ -47,7 +47,7 @@
 									区域：
 								</div>
 								<div class="col-all-8">
-									<input type="text" class="form-control">
+									<input type="text" class="form-control" name="area">
 								</div>
 							</li>
 							<li class="col-all-4 form-group">
@@ -55,14 +55,61 @@
 									楼盘名称
 								</div>
 								<div class="col-all-8">
-									<input type="text" class="form-control">
+									<input type="text" class="form-control" name="house">
 								</div>
 							</li>
 						</ul>
-					</form>
+					</div>
+				</div>
+				<div class="panel-footer">
+					<ul class="row text-center">
+						<input type="submit" value="查询" class="btn btn-blue">
+					</ul>
+				</div>
+			</form>
+			<div class="panel">
+				<div class="panel-title">
+					查询列表
+				</div>
+				<div class="panel-content">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>城市</th>
+								<th>区域</th>
+								<th>楼盘名称</th>
+								<th>楼盘数量</th>
+							</tr>
+						</thead>
+						<tbody id="listBody" class="hide">
+							<script type="text/template" id="listTpl">
+								{{#each dataList}}
+								<tr>
+									<td>{{$value.city}}</td>
+									<td>{{$value.area}}</td>
+									<td>{{$value.house}}</td>
+									<td>{{$value.houseNum}}</td>
+								</tr>
+								{{/each}}
+							</script>
+						</tbody>
+					</table>
+				</div>
+				<div class="panel-footer">
+					<div class="kkpager" id="kkpager"></div>
 				</div>
 			</div>
 		</div>
 	</body>
+
+	<script type="text/javascript" src="js/sea.js"></script>
+	<script type="text/javascript" src="js/sea-config.js"></script>
+	<script type="text/javascript">
+		seajs.use("page/search.min.js");
+	</script>
 </html>
+
+
+
+
 	
