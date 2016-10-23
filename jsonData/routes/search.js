@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 var express=require("express");
 var router=express.Router();
 var path=require("path");
@@ -23,3 +24,19 @@ router.get("/searchElevators.html",function(req,res){
 });
 
 module.exports=router;
+=======
+
+function add(router){
+	router.get("/aaa.html",function*(next){
+		console.log(this.path);
+		var pageData={
+			title:"哈哈"
+		};
+		
+		this.body=pageData;
+		
+	});
+}
+
+module.exports=add;
+>>>>>>> f3e0e12a60445e320e07b98d2311368d18876e17

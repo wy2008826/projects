@@ -1,3 +1,4 @@
+
 define(function(require,module,exports){
 	require("jquery");
 	$(function(){
@@ -60,3 +61,4 @@ define(function(require,module,exports){
 		app=new App();
 	});
 });
+

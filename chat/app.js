@@ -25,7 +25,7 @@ app.use(koaHbs.middleware({
 }));
 
 
-router.get("/index.html",function*(next){
+router.get("/index.html",function*(next){//页面编译
 	console.log(this.path);
 	var pageData={
 		title:"哈哈"
@@ -35,12 +35,15 @@ router.get("/index.html",function*(next){
 });
 
 
-router.get("/passport/reg.html",function*(next){
+
+router.get("/passport/reg.html",function*(next){//ajax接口
 
 	yield this.render("passport/reg");
 });
 
 app.use(router.routes());
+
+
 
 
 //那么问题来了  如果一个网站有很多地方用到实时通信怎么玩？

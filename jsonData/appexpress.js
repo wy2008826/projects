@@ -1,16 +1,21 @@
-//express的核心是http模块
+var koa=require("koa");
+var app=koa();
 
-var http=require("http");
-var express=require("express");
-var hbs=require("hbs");
-var app=express();
+var koaStatic=require("koa-static");//静态文件
+var koaRouter=require("koa-router");//koa路由
+var router=new koaRouter();
+var koaViews=require("koa-views");//koa页面指定
+var koaHbs=require("koa-hbs");//模板引擎
 
 
+app.use(koaStatic(__dirname+"/statics"));//设置静态资源路径
+app.use(koaHbs.middleware({//设置页面访问路径
+	viewPath:__dirname+"/views"
+}));
 
-app.use(express.static(__dirname+"/statics"));//设置静态资源路径
-app.set("view engine","hbs");//设置模板引擎
-app.set("views",__dirname+"/views");//设置视图路径
 
+var addroute=require("./routes/add")(router);//新增楼盘
+var searchroute=require("./routes/search")(router);//查询楼盘信息
 
 
 
@@ -23,5 +28,11 @@ app.use("/",routesSearch);
 
 
 
-app.listen(3000);
-console.log("server in running on port:3000");
+
+app.use(router.routes());
+
+app.listen(3000,function(){
+	console.log("server is start on port 9000");
+});
+
+
