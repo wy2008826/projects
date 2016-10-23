@@ -36,6 +36,10 @@ ElevatorSchema.statics={//添加静态方法  schema可以调用mongoose的各�
 	findById:function(id,cb){//查询单条数据
 		return this.findOne({"_id":id});
 		exep(cb);
+	},
+	findByKey:function(key,cb){//查询单条数据
+		return this.findOne({key:key});
+		exep(cb);
 	}
 };
 
