@@ -24,7 +24,13 @@ router.get("/searchElevator.html",function(req,res){
 				house:"123",
 				houseNum:100
 			}
-		]
+		],
+		pages:{
+			currentPage:1,
+			pages:10,
+			total:100,
+			
+		}
 	});
 
 });
