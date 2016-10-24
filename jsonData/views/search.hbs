@@ -83,14 +83,14 @@
 						</thead>
 						<tbody id="listBody" class="hide">
 							<script type="text/template" id="listTpl">
-								{{#each dataList}}
-								<tr>
-									<td>{{$value.city}}</td>
-									<td>{{$value.area}}</td>
-									<td>{{$value.house}}</td>
-									<td>{{$value.houseNum}}</td>
-								</tr>
-								{{/each}}
+								<%_.each(dataList,function(item,i){%>
+									<tr>
+										<td><%=item.city%></td>
+										<td><%=item.area%></td>
+										<td><%=item.house%></td>
+										<td><%=item.houseNum%></td>
+									</tr>
+								<%});%>
 							</script>
 						</tbody>
 					</table>

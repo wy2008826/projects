@@ -17,6 +17,7 @@ seajs.config({
         "ztree":"plugin/ztree/jquery.ztree.all.min.js",
         "ztreeCss":"plugin/ztree/zTreeStyle.css",
         "cxSelect":"plugin/cxSelect/jquery.cxselect.min.js",
+        "underscore":"plugin/underscore/underscore.min.js",
     },
     //map: [[/^(.*\.(?:css|js))(.*)$/i, '$1?v=20160419']],
     charset: 'utf-8'

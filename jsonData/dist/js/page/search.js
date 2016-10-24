@@ -1,7 +1,9 @@
 
 define(function(require,module,exports){
 	require("jquery");
-	template=require("artTemplate");
+	require("underscore");
+	
+
 	$(function(){
 
 		var App=function(){
@@ -11,7 +13,7 @@ define(function(require,module,exports){
 			};
 
 			this.tpl={
-				elevatorTpl:template.compile($("#listTpl").html())
+				elevatorTpl:_.template($("#listTpl").html())
 			};
 			this.init();
 			this.searchEvelator();
