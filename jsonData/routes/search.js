@@ -24,7 +24,7 @@ router.get("/searchElevator.html",function(req,res){//
 			var total=data.length;
 			var from=(query.current-1)*query.pageSize;
 			var to=(from+query.pageSize*1)>total?total:from+query.pageSize*1;
-			
+
 			var resData={
 				result:true,
 				dataList:[],
@@ -38,8 +38,8 @@ router.get("/searchElevator.html",function(req,res){//
 				resData.dataList.push({
 					city:item.city,
 					area:item.area,
-					house:"",
-					houseNumber:""
+					house:"123",
+					houseNum:"666"
 				});
 			});
 			res.json(resData);
