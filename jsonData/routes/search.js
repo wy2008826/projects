@@ -12,8 +12,9 @@ router.get("/search",function(req,res){
 	res.render("search",{title:"查询"});
 });
 
-router.get("/searchElevator.html",function(req,res){//查询数据库是异步流程，如何在查询成功后进行返回
+router.get("/searchElevator.html",function(req,res){//
 	var query=req.query;
+	
 	console.log(query);
 	ElevatorModel.fetch(function(err,data){//查询结果是数组
 		if(err){
@@ -21,8 +22,9 @@ router.get("/searchElevator.html",function(req,res){//查询数据库是异步�
 		}
 		else{
 			var total=data.length;
-			console.log(data[0]);
-
+			var from=(query.current-1)*query.pageSize;
+			var to=(from+query.pageSize*1)>total?total:from+query.pageSize*1;
+			
 			var resData={
 				result:true,
 				dataList:[],
@@ -32,7 +34,7 @@ router.get("/searchElevator.html",function(req,res){//查询数据库是异步�
 					total:total,
 				}
 			};
-			data.forEach(function(item,index){
+			data.slice(from,to).forEach(function(item,index){
 				resData.dataList.push({
 					city:item.city,
 					area:item.area,
@@ -43,11 +45,6 @@ router.get("/searchElevator.html",function(req,res){//查询数据库是异步�
 			res.json(resData);
 		}
 	});
-	
-
-	var arr=[];
-	var page=50;
-	
 
 });
 

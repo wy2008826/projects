@@ -39,7 +39,7 @@ define(function(require,module,exports){
 	        	var self=this;
 	        	var $listTable=$("#listTable");
 	        	var $listTbody=$("#listBody");
-	        	var pageSize=10;
+	        	var pageSize=5;
 
 	        	var param={
 	          	current:1,
