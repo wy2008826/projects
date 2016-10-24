@@ -9,12 +9,11 @@ mongoose.connect("127.0.0.1:27017/evelator");
 
 
 router.get("/add",function(req,res){
-	res.render("add",{title:"抓取任意网站数据"});
+	res.render("add");
 });
 
 router.get("/addElevator.html",function(req,res){
 	var query=req.query;
-	console.log(query,query.id);
 	var _elevator;
 	if(query.id==undefined){//新增数据
 		_elevator = new ElevatorModel({//根据model生成数据实例
@@ -24,6 +23,10 @@ router.get("/addElevator.html",function(req,res){
 		});
 		_elevator.save(function(err,data){
 			if(err){
+				res.json({
+					result:false,
+					msg:"新增楼盘失败"
+				});
 				console.log(err);
 			}
 			else{

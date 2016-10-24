@@ -80,7 +80,7 @@ define(function(require,module,exports){
 		                    	param.current=n;
 		                    	$.ajax({
 		                        type:"get",
-		                        url:self.url.listUrl,
+		                        url:self.url.elevatorList,
 		                        data:param,
 		                        dataType:"json",
 		                        success:function(data){
