@@ -1,0 +1,42 @@
+@import "dianti";
+
+.elevator-container{
+	$main-w:150px;
+	$border:1px solid #f93;
+	$bg:#f8f8f8;
+	$lh:40px;
+	background-color:$bg;
+	border:$border;
+	.main-name{
+		width: $main-w;
+		height: 100%;
+		@include boxSizing(border-box);
+		line-height: $lh;
+		border-right:$border;
+		padding:4px 10px;
+	}
+	.sub-wraper{
+		margin-left:$main-w;
+		.house-wraper{
+			$w:80px;
+			.sub-name{
+				width:$w;
+				height: 100%;
+				line-height: $lh;
+				padding:4px 10px;
+				border-top:$border;
+				border-right:$border;
+				@include boxSizing(border-box);
+			}
+			.elevator-wraper{
+				margin-left:$w;
+				.elevator-item{
+					@include boxSizing(border-box);
+					padding:4px 10px;
+					line-height: 40px;
+					border-top:$border;
+				}
+			}
+		}
+	}
+}

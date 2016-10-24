@@ -15,7 +15,14 @@ define(function(require,module,exports){
 
 			},
 			citySelect:function(){
+				var self=this;
+				require.async("cxSelect",function(){
+					$('#groupSelect').cxSelect({
+						url: 'js/plugin/cxSelect/cityData.min.js',
+					  	selects: ['province', 'city', 'area']
+					});
 
+				});
 			},
 			addEvelator:function(){
 				var self=this;

@@ -12,7 +12,7 @@
 		<meta name="full-screen"content="yes">
 		<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
 		<title>新增电梯</title>
-		<link rel="stylesheet" href="css/dianti.min.css">
+		<link rel="stylesheet" href="css/add.min.css">
 	</head>
 	<body>
 		<div class="left-menu">
@@ -34,41 +34,107 @@
 				</div>
 				<div class="panel-content">
 					<div class="form form-horizontal mg-t-30">
-						<ul class="row" >
+						<ul class="row"  id="groupSelect">
 							<li class="col-all-4 form-group">
-								<div class="col-all-4 control-label text-right">
-									城市：
-								</div>
-								<div class="col-all-8">
-									<input type="text" class="form-control" name="city">
+								<div class="row">
+									<div class="col-all-4 control-label text-right">
+										地址：
+									</div>
+									<div class="col-all-8">
+										<select class="form-control province" name="province">
+											<option>浙江省</option>
+										</select>
+									</div>
+									
 								</div>
 							</li>
 							<li class="col-all-4 form-group">
-								<div class="col-all-4 control-label text-right">
-									区域：
-								</div>
-								<div class="col-all-8">
-									<input type="text" class="form-control" name="area">
+								<div class="row">
+									<div class="col-all-6">
+										<select class="form-control city" name="city">
+											<option>杭州市</option>
+										</select>
+									</div>
+									<div class="col-all-6">
+										<select class="form-control area" name="area">
+										</select>
+									</div>
 								</div>
 							</li>
 							<li class="col-all-4 form-group">
-								<div class="col-all-4 control-label text-right">
-									楼盘名称：
-								</div>
-								<div class="col-all-8">
-									<input type="text" class="form-control" name="loupan">
+								<div class="row">
+									<div class="col-all-12">
+										<input class="form-control" name="address">
+									</div>
 								</div>
 							</li>
 						</ul>
 						<ul class="row">
-							
+							<li class="col-all-4 form-group">
+								<div class="row">
+									<div class="col-all-4 control-label text-right">
+										楼盘名称：
+									</div>
+									<div class="col-all-8">
+										<input type="text" class="form-control" name="loupan">
+									</div>
+								</div>
+							</li>
 						</ul>
 					</div>
 				</div>
-				<div class="panel-footer">
-					<input type="submit" class="btn btn-md btn-blue" id="addBtn" value="添加">
+				<div class="panel-footer text-center">
+					<input type="submit" class="btn btn-md btn-blue" id="addBtn" value="添加楼盘">
 				</div>
 			</form>
+			<div class="panel">
+				<div class="panel-title">
+					电梯列表
+				</div>
+				<div class="panel-content">
+					<div class="elevator-container pos-rel">
+						<label class="main-name pos-abs">
+							楼盘A
+						</label>
+						<div class="sub-wraper pos-rel">
+							<div class="house-wraper pos-rel">
+								<label class="sub-name pos-abs">楼盘A-1</label>
+								<ul class="elevator-wraper pos-rel">
+									<li class="elevator-item">
+										<label class="elevator-name">电梯A</label>
+										<span>a</span>
+										<span>a</span>
+									</li>
+									<li class="elevator-item">
+										<label class="elevator-name">电梯A</label>
+										<span>a</span>
+										<span>a</span>
+									</li>
+								</ul>
+							</div>
+
+						</div>
+						<div class="sub-wraper pos-rel">
+							<div class="house-wraper pos-rel">
+								<label class="sub-name pos-abs">楼盘A-1</label>
+								<ul class="elevator-wraper pos-rel">
+									<li class="elevator-item">
+										<label class="elevator-name">电梯A</label>
+										<span>a</span>
+										<span>a</span>
+									</li>
+									<li class="elevator-item">
+										<label class="elevator-name">电梯A</label>
+										<span>a</span>
+										<span>a</span>
+									</li>
+								</ul>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 
 
