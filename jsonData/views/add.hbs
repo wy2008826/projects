@@ -93,7 +93,7 @@
 				</div>
 				<div class="panel-content">
 					<div class="elevator-container pos-rel">
-						<label class="main-name pos-abs">
+						<label class="main-name pos-abs" id="main-name">
 							楼盘A
 						</label>
 						<div class="sub-wraper pos-rel">
@@ -136,6 +136,24 @@
 				</div>
 			</div>
 		</div>
+		
+		<script type="text/template" id="subWraperTpl">
+			<div class="sub-wraper pos-rel">
+				<div class="house-wraper pos-rel">
+					<label class="sub-name pos-abs">电梯A</label>
+					<ul class="elevator-wraper pos-rel">
+					</ul>
+				</div>
+			</div>
+		</script>
+		
+		<script type="text/template" id="elevatorItemTpl">
+			<li class="elevator-item">
+				<label class="elevator-name">电梯A</label>
+				<span>a</span>
+				<span>a</span>
+			</li>
+		</script>
 
 
 		<script type="text/javascript" src="js/sea.js"></script>
