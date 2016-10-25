@@ -13,6 +13,8 @@ app.set("views",__dirname+"/views");//设置视图路径
 
 
 
+var routesNormalPage=require("./routes/pageroute");//查询电梯
+app.use("/",routesNormalPage);
 
 
 var routesAdd=require("./routes/add");//添加电梯

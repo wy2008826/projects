@@ -13,6 +13,9 @@
 		<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
 		<title>新增电梯</title>
 		<link rel="stylesheet" href="css/add.min.css">
+		<link rel="stylesheet" type="text/css" href="/js/plugin/laydate/need/laydate.css">
+		<link rel="stylesheet" type="text/css" href="/js/plugin/laydate/skins/molv/laydate.css">
+		<link rel="stylesheet" type="text/css" href="/js/plugin/layer/skin/layer.css">
 	</head>
 	<body>
 		<div class="left-menu">
@@ -31,6 +34,7 @@
 			<form class="panel" action="addElevator.html" id="addForm">
 				<div class="panel-title row">
 					新增楼盘
+					<span id="formError" class="fn-fr fc-error"></span>
 				</div>
 				<div class="panel-content">
 					<div class="form form-horizontal mg-t-30">
@@ -41,7 +45,7 @@
 										地址：
 									</div>
 									<div class="col-all-8">
-										<select class="form-control province" name="province">
+										<select class="form-control province" name="province" id="province">
 											<option>浙江省</option>
 										</select>
 									</div>
@@ -51,12 +55,13 @@
 							<li class="col-all-4 form-group">
 								<div class="row">
 									<div class="col-all-6">
-										<select class="form-control city" name="city">
+										<select class="form-control city" name="city" id="city">
 											<option>杭州市</option>
 										</select>
 									</div>
 									<div class="col-all-6">
-										<select class="form-control area" name="area">
+										<select class="form-control area" name="area" id="area">
+											<option>西湖区</option>
 										</select>
 									</div>
 								</div>
@@ -64,7 +69,25 @@
 							<li class="col-all-4 form-group">
 								<div class="row">
 									<div class="col-all-12">
-										<input class="form-control" name="address">
+										<input class="form-control" name="address" id="address">
+									</div>
+								</div>
+							</li>
+						</ul>
+						<ul class="row" >
+							<li class="col-all-8 form-group">
+								<div class="row">
+									<div class="col-all-2 control-label text-right">
+										合作期限：
+									</div>
+									<div class="col-all-4">
+										<input type="text" name="cooperStart" class="form-control" id="cooperStart">
+									</div>
+									<div class="col-all-1 control-label text-right">
+										至
+									</div>
+									<div class="col-all-4">
+										<input type="text" name="cooperEnd" class="form-control" id="cooperEnd">
 									</div>
 								</div>
 							</li>
@@ -76,7 +99,7 @@
 										楼盘名称：
 									</div>
 									<div class="col-all-8">
-										<input type="text" class="form-control" name="loupan">
+										<input type="text" class="form-control" name="loupan" id="loupan">
 									</div>
 								</div>
 							</li>
@@ -87,16 +110,21 @@
 					<input type="submit" class="btn btn-md btn-blue" id="addBtn" value="添加楼盘">
 				</div>
 			</form>
-			<div class="panel">
+			<div class="panel" id="addWraper" style="display:none">
 				<div class="panel-title">
 					电梯列表
 				</div>
 				<div class="panel-content">
-					<div class="elevator-container pos-rel">
-						<label class="main-name pos-abs" id="main-name">
-							楼盘A
+					<div class="elevator-container pos-rel" id="elevatorContainer">
+						<label class="main-name pos-abs" >
+							<h4 id="mainName"></h4>
+							<p class="fs-12 l-h-24" id="mainTime"></p>
+							<p class="fs-12 l-h-24" id="mainArress"></p>
+							<p class="text-center">
+								<span class="btn btn-green btn-sm addSubHouseBtn" id="addSubHouseBtn">添加子楼</span>
+							</p>
 						</label>
-						<div class="sub-wraper pos-rel">
+						<!-- <div class="sub-wraper pos-rel">
 							<div class="house-wraper pos-rel">
 								<label class="sub-name pos-abs">楼盘A-1</label>
 								<ul class="elevator-wraper pos-rel">
@@ -131,7 +159,7 @@
 								</ul>
 							</div>
 
-						</div>
+						</div> -->
 					</div>
 				</div>
 			</div>
@@ -140,8 +168,11 @@
 		<script type="text/template" id="subWraperTpl">
 			<div class="sub-wraper pos-rel">
 				<div class="house-wraper pos-rel">
-					<label class="sub-name pos-abs">电梯A</label>
-					<ul class="elevator-wraper pos-rel">
+					<label class="sub-name pos-abs">
+						<%=subName%>
+						<span class="btn btn-green btn-sm addElevatorBtn" data-id="<%=timestap%>">添加电梯</span>
+					</label>
+					<ul class="elevator-wraper pos-rel" id="<%=timestap%>">
 					</ul>
 				</div>
 			</div>
@@ -149,14 +180,17 @@
 		
 		<script type="text/template" id="elevatorItemTpl">
 			<li class="elevator-item">
-				<label class="elevator-name">电梯A</label>
-				<span>a</span>
-				<span>a</span>
+				<label class="elevator-name"><%=elevatorName%></label>
+				<%for(var i=0;i<elevatorNum;i++){%>
+					<span class="btn btn-yellow btn-sm"><%=elevatorName%>——<%=i+1%></span>
+				<%};%>
 			</li>
 		</script>
 
+		
 
 		<script type="text/javascript" src="js/sea.js"></script>
+		<script src="js/seajs-css.js"></script>
 		<script type="text/javascript" src="js/sea-config.js"></script>
 		<script type="text/javascript">
 			seajs.use("page/add.min.js");

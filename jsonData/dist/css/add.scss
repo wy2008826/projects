@@ -2,12 +2,14 @@
 @import "./_ignore/theme";
 
 .elevator-container{
-	$main-w:150px;
+	$main-w:200px;
 	$border:1px solid $theme-green;
 	$bg:#f8f8f8;
 	$lh:40px;
+	$min-h:150px;
 	background-color:$bg;
 	border:$border;
+	min-height: $min-h;
 	.main-name{
 		width: $main-w;
 		height: 100%;
@@ -31,11 +33,13 @@
 			}
 			.elevator-wraper{
 				margin-left:$w;
+				min-height: $min-h;
+				border-top:$border;
 				.elevator-item{
 					@include boxSizing(border-box);
 					padding:4px 10px;
 					line-height: 40px;
-					border-top:$border;
+					border-bottom:$border;
 					
 					label{
 						width: 100px;
@@ -43,7 +47,9 @@
 					}
 					span{
 						display: inline-block;
-						width: 80px;
+						line-height: 30px;
+						text-align: center;
+						padding:0 5px;
 					}
 				}
 			}
