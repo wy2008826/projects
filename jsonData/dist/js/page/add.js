@@ -10,7 +10,7 @@ define(function(require,module,exports){
 		var App=function(){
 
 			this.url={
-				a:"a.html",
+				addElevatorUrl:"addElevator.html",
 			};
 
 			this.tpl={
@@ -18,13 +18,17 @@ define(function(require,module,exports){
 				elevatorItemTpl:_.template($("#elevatorItemTpl").html()),
 			};
 
+			this.elevatorData={//新增 电梯信息
+				subHouses:[]//栋别 A栋
+			};
 
 			this.init();//页面初始化
-			this.citySelect();
-			this.dateSelect();
+			this.citySelect();//城市选择
+			this.dateSelect();//日历选择
 			this.addHouse();//添加楼盘
 			this.addSubhouse();//添加子楼盘
 			this.addElevator()//添加电梯
+			this.submitElevator();//提交数据
 		};
 
 		App.prototype={
@@ -43,12 +47,24 @@ define(function(require,module,exports){
 			},
 			dateSelect:function(){
 				var self=this;
-				laydate({
+				var start={
 				  	elem: '#cooperStart',
-				});
-				laydate({
+				  	format: 'YYYY-MM-DD',
+	          	choose: function(datas){
+	            	end.min = datas; //开始日选好后，重置结束日的最小日期
+	            	end.start = datas //将结束日的初始值设定为开始日
+	          	}
+				};
+				var end={
 				  	elem: '#cooperEnd',
-				});
+				  	format: 'YYYY-MM-DD',
+	          	choose: function(datas){
+	            	start.max = datas;
+	          	}
+				}
+
+				laydate(start);
+				laydate(end);
 
 			},
 			addHouse:function(){
@@ -108,6 +124,15 @@ define(function(require,module,exports){
 								$("#mainTime").text($cooperStart.val()+"——"+$cooperEnd.val());
 								$("#mainArress").text($province.val()+$city.val()+$area.val());
 
+								var data=self.elevatorData;
+								data.province=$province.val();//省份
+								data.city=$city.val();//城市
+								data.area=$area.val();//区域
+								data.address=$address.val();//详细地址
+								data.cooperStart=$cooperStart.val();//开始日期
+								data.cooperEnd=$cooperEnd.val();//结束日期
+								data.loupan=$loupan.val();//楼盘
+								console.log(data);
 
 								$("#addForm").slideUp();
 								$("#addWraper").slideDown();
@@ -138,6 +163,7 @@ define(function(require,module,exports){
 					subName:subName,
 					timestap:new Date()*1
 				};
+				self.elevatorData.subHouses.push(data);
 				var html=self.tpl.subWraperTpl(data);
 				$("#elevatorContainer").append(html);
 			},
@@ -158,6 +184,21 @@ define(function(require,module,exports){
 				var self=this;
 				var html=self.tpl.elevatorItemTpl(data);
 				$("#"+data.subHouseId).append(html);
+			},
+			submitElevator:function(){
+				var self=this;
+
+				$("#submitElevatorBtn").on("click",function(){
+					$.ajax({
+						url:self.url.addElevatorUrl,
+						type:"get",
+						data:self.elevatorData,
+						dataType:"json",
+						success:function(data){
+							console.log(data);
+						}
+					});
+				});
 			}
 		};
 
