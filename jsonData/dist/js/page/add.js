@@ -161,7 +161,8 @@ define(function(require,module,exports){
 				var self=this;
 				var data={
 					subName:subName,
-					timestap:new Date()*1
+					timestap:new Date()*1,
+					elevators:[]
 				};
 				self.elevatorData.subHouses.push(data);
 				var html=self.tpl.subWraperTpl(data);
@@ -184,6 +185,23 @@ define(function(require,module,exports){
 				var self=this;
 				var html=self.tpl.elevatorItemTpl(data);
 				$("#"+data.subHouseId).append(html);
+				var elevatorName=data.elevatorName;
+				var elevatorNum=data.elevatorNum;
+				var elevatorData={//生成电梯信息
+					elevatorName:data.elevatorName,
+					wallLists:[]
+				};
+				for(var i=0;i<elevatorNum;i++){//生成电梯墙面数据
+					var wallData={
+						wallName:elevatorName+"-->"+i,
+					};
+					elevatorData.wallLists.push(wallData);
+				}
+				self.elevatorData.subHouses.forEach(function(item,index){
+					if(item.timestap==data.subHouseId){
+						self.elevatorData.subHouses[index].elevators.push(elevatorData);
+					}
+				});
 			},
 			submitElevator:function(){
 				var self=this;

@@ -17,9 +17,15 @@ router.get("/addElevator.html",function(req,res){
 	var _elevator;
 	if(query.id==undefined){//新增数据
 		_elevator = new ElevatorModel({//根据model生成数据实例
+			province:query.province,
 			city:query.city,
 			area:query.area,
-			house:query.house
+			address:query.address,
+			area:query.area,
+			loupan:query.loupan,
+			cooperStart:query.cooperStart,
+			cooperEnd:query.cooperEnd,
+			subHouses:query.subHouses
 		});
 		_elevator.save(function(err,data){
 			if(err){

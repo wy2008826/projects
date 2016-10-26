@@ -5,6 +5,7 @@ var ElevatorSchema=new mongoose.Schema({//注意各种数据的格式  数组怎
 	province:String,
 	city:String,
 	area:String,
+	address:String,
 	loupan:String,//楼盘名称
 	cooperStart:String,//合作开始日期
 	cooperEnd:String,//合作结束日期
@@ -28,9 +29,9 @@ var ElevatorSchema=new mongoose.Schema({//注意各种数据的格式  数组怎
 // 		elevators:[//所有可用电梯
 // 			{
 // 				elevatorName:String,
-// 				usefulLists:[//电梯可用面列表
+// 				wallLists:[//电梯可用面列表
 // 					{
-// 						nickName:String,//
+// 						wallName:String,//
 // 						companyName:String,//合作公司名字
 // 						cooperStart:String,
 // 						cooperEnd:String,//合作期限
