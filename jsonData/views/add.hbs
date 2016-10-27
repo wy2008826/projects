@@ -173,7 +173,7 @@
 				<div class="house-wraper pos-rel">
 					<label class="sub-name pos-abs">
 						<%=subName%>
-						<span class="btn btn-green btn-sm addElevatorBtn" data-id="<%=timestap%>">添加电梯</span>
+						<span class="btn btn-green btn-sm addElevatorBtn" data-timestap="<%=timestap%>">添加电梯</span>
 					</label>
 					<ul class="elevator-wraper pos-rel" id="<%=timestap%>">
 					</ul>
@@ -185,7 +185,7 @@
 			<li class="elevator-item">
 				<label class="elevator-name"><%=elevatorName%></label>
 				<%for(var i=0;i<elevatorNum;i++){%>
-					<span class="btn btn-red btn-sm elevator-wall-item">
+					<span class="btn btn-red btn-sm elevator-wall-item" >
 						<%=elevatorName%>——<%=i+1%>
 					</span>
 				<%};%>

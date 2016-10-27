@@ -145,7 +145,7 @@ define(function(require,module,exports){
 				})
 
 			},
-			addSubhouse:function(){
+			addSubhouse:function(){//点击新增子楼盘
 				var self=this;
 				$("#addSubHouseBtn").on("click",function(){
 					layer.open({
@@ -158,7 +158,7 @@ define(function(require,module,exports){
 					
 				})
 			},
-			createSubhouse:function(subName){
+			createSubhouse:function(subName){//生成子楼盘模板
 				var self=this;
 				var data={
 					subName:subName,
@@ -172,13 +172,13 @@ define(function(require,module,exports){
 			addElevator:function(){
 				var self=this;
 				$("body").on("click",".addElevatorBtn",function(){
-					var id=$(this).attr("data-id");
+					var timestap=$(this).attr("data-timestap");
 					layer.open({
 					  type: 2,
 					  area: ['600px', '300px'],
 					  fix: false, //不固定
 					  maxmin: true,
-					  content: 'addElevator.hbs?id='+id
+					  content: 'addElevator.hbs?timestap='+timestap
 					});
 				})
 			},
@@ -189,7 +189,7 @@ define(function(require,module,exports){
 				var elevatorName=data.elevatorName;
 				var elevatorNum=data.elevatorNum;
 				var elevatorData={//生成电梯信息
-
+					timestap:new Date()*1,
 					elevatorName:data.elevatorName,
 					wallLists:[]
 				};
