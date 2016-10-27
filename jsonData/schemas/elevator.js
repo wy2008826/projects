@@ -6,10 +6,10 @@ var ElevatorSchema=new mongoose.Schema({//注意各种数据的格式  数组怎
 	city:String,
 	area:String,
 	address:String,
-	loupan:String,//楼盘名称
+	loupanName:String,//楼盘名称
 	cooperStart:String,//合作开始日期
 	cooperEnd:String,//合作结束日期
-	subHouses:Array,//栋别列表
+	subHouseLists:Array,//栋别列表
 	meta:{
 		createAt:{
 			type:Date,

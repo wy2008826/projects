@@ -22,10 +22,10 @@ router.get("/addElevator.html",function(req,res){
 			area:query.area,
 			address:query.address,
 			area:query.area,
-			loupan:query.loupan,
+			loupanName:query.loupanName,
 			cooperStart:query.cooperStart,
 			cooperEnd:query.cooperEnd,
-			subHouses:query.subHouses
+			subHouseLists:query.subHouseLists
 		});
 		_elevator.save(function(err,data){
 			if(err){

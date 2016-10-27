@@ -19,7 +19,7 @@ define(function(require,module,exports){
 			};
 
 			this.elevatorData={//新增 电梯信息
-				subHouses:[]//栋别 A栋
+				subHouseLists:[]//栋别 A栋
 			};
 
 			this.init();//页面初始化
@@ -28,7 +28,7 @@ define(function(require,module,exports){
 			this.addHouse();//添加楼盘
 			this.addSubhouse();//添加子楼盘
 			this.addElevator()//添加电梯
-			this.editElevatorWall();//编辑每一个电梯的合作信息
+			this.addElevatorWall();//编辑每一个电梯的合作信息
 			this.submitElevator();//提交数据
 		};
 
@@ -132,7 +132,7 @@ define(function(require,module,exports){
 								data.address=$address.val();//详细地址
 								data.cooperStart=$cooperStart.val();//开始日期
 								data.cooperEnd=$cooperEnd.val();//结束日期
-								data.loupan=$loupan.val();//楼盘
+								data.loupanName=$loupan.val();//楼盘
 								console.log(data);
 
 								$("#addForm").slideUp();
@@ -161,24 +161,24 @@ define(function(require,module,exports){
 			createSubhouse:function(subName){//生成子楼盘模板
 				var self=this;
 				var data={
-					subName:subName,
-					timestap:new Date()*1,
-					elevators:[]
+					houseName:subName,
+					houseTimeStap:new Date()*1,
+					elevatorLists:[]
 				};
-				self.elevatorData.subHouses.push(data);
+				self.elevatorData.subHouseLists.push(data);
 				var html=self.tpl.subWraperTpl(data);
 				$("#elevatorContainer").append(html);
 			},
 			addElevator:function(){
 				var self=this;
 				$("body").on("click",".addElevatorBtn",function(){
-					var timestap=$(this).attr("data-timestap");
+					var timestap=$(this).attr("data-house-timestap");
 					layer.open({
 					  type: 2,
 					  area: ['600px', '300px'],
 					  fix: false, //不固定
 					  maxmin: true,
-					  content: 'addElevator.hbs?timestap='+timestap
+					  content: 'addElevator.hbs?houseTimeStap='+timestap
 					});
 				})
 			},
@@ -186,12 +186,12 @@ define(function(require,module,exports){
 				var self=this;
 				var html=self.tpl.elevatorItemTpl(data);
 				console.log(data,html);
-				$("#"+data.upTimeStap).append(html);
+				$("#"+data.houseTimeStap).append(html);
 
 				var elevatorName=data.elevatorName;
 				var elevatorNum=data.elevatorNum;
 				var elevatorData={//生成电梯信息
-					timestap:data.timestap,
+					elevatorTimeStap:data.elevatorTimeStap,
 					elevatorName:data.elevatorName,
 					wallLists:[]
 				};
@@ -202,25 +202,50 @@ define(function(require,module,exports){
 					};
 					elevatorData.wallLists.push(wallData);
 				}
-				self.elevatorData.subHouses.forEach(function(item,index){
-					if(item.timestap==data.subHouseId){
-						self.elevatorData.subHouses[index].elevators.push(elevatorData);
+				self.elevatorData.subHouseLists.forEach(function(item,index){
+					if(item.houseTimeStap==data.houseTimeStap){
+						self.elevatorData.subHouseLists[index].elevatorLists.push(elevatorData);
 					}
 				});
 			},
-			editElevatorWall:function(){
+			addElevatorWall:function(){
 				var self=this;
 				$("body").on("click",".elevator-wall-item",function(){//点击每一个电梯墙面，编辑电梯信息 包含电梯的合作公司信息{公司名字  联系方式 合作期限 广告类型}
+					var houseTimeStap=$(this).attr("data-house-timestap");
+					var elevatorTimeStap=$(this).attr("data-elevator-timestap");
+					var index=$(this).attr("data-index");
 					layer.open({
 					  type: 2,
 					  area: ['600px', '300px'],
 					  fix: false, //不固定
 					  maxmin: true,
-					  content: 'addElevatorWall.hbs'
+					  content: 'addElevatorWall.hbs?houseTimeStap='+houseTimeStap+"&elevatorTimeStap="+elevatorTimeStap+"&index="+index,
 					});
 				});
 			},
 			addElevatorWallData:function(data){//如何让每一个墙面对应电梯以及楼盘和子楼盘
+				var self=this;
+				var houseTimeStap=data.houseTimeStap;
+				var elevatorTimeStap=data.elevatorTimeStap;
+				console.log(self.elevatorData,data);
+				self.elevatorData.subHouseLists.forEach(function(house,index){
+					if(house.houseTimeStap==houseTimeStap){
+
+						house.elevatorLists.forEach(function(elevator,j){
+							if(elevator.elevatorTimeStap==elevatorTimeStap){
+								elevator.wallLists.forEach(function(wall,m){
+									if(wall.index==data.index){
+										wall=_.extend(wall,data);
+									}
+								});
+							}
+							return;
+
+						});
+					}
+					return ;
+				});
+				console.log(data);
 
 			},
 			submitElevator:function(){
