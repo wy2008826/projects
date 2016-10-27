@@ -28,7 +28,7 @@ define(function(require,module,exports){
 			this.addHouse();//添加楼盘
 			this.addSubhouse();//添加子楼盘
 			this.addElevator()//添加电梯
-			this.editElevator();//编辑每一个电梯的合作信息
+			this.editElevatorWall();//编辑每一个电梯的合作信息
 			this.submitElevator();//提交数据
 		};
 
@@ -189,6 +189,7 @@ define(function(require,module,exports){
 				var elevatorName=data.elevatorName;
 				var elevatorNum=data.elevatorNum;
 				var elevatorData={//生成电梯信息
+
 					elevatorName:data.elevatorName,
 					wallLists:[]
 				};
@@ -204,9 +205,9 @@ define(function(require,module,exports){
 					}
 				});
 			},
-			editElevator:function(){
+			editElevatorWall:function(){
 				var self=this;
-				$("body").on("click",".elevator-wall-item",function(){//点击每一个电梯墙面，编辑电梯信息
+				$("body").on("click",".elevator-wall-item",function(){//点击每一个电梯墙面，编辑电梯信息 包含电梯的合作公司信息{公司名字  联系方式 合作期限 广告类型}
 					layer.open({
 					  type: 2,
 					  area: ['600px', '300px'],
@@ -215,6 +216,9 @@ define(function(require,module,exports){
 					  content: 'addElevatorWall.hbs'
 					});
 				});
+			},
+			addElevatorWallData:function(data){//如何让每一个墙面对应电梯以及楼盘和子楼盘
+
 			},
 			submitElevator:function(){
 				var self=this;
