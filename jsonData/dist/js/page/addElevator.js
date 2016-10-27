@@ -35,7 +35,8 @@ define(function(require,module,exports){
 						parent.app.createElevator({
 							elevatorName:elevatorName,
 							elevatorNum:elevatorNum,
-							subHouseId:$("#subHouseId").val()
+							upTimeStap:$("#subHouseId").val(),
+							timestap:new Date()*1,
 						});
 						parent.layer.closeAll();
 					}

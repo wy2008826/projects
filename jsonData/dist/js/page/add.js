@@ -185,17 +185,20 @@ define(function(require,module,exports){
 			createElevator:function(data){
 				var self=this;
 				var html=self.tpl.elevatorItemTpl(data);
-				$("#"+data.subHouseId).append(html);
+				console.log(data,html);
+				$("#"+data.upTimeStap).append(html);
+
 				var elevatorName=data.elevatorName;
 				var elevatorNum=data.elevatorNum;
 				var elevatorData={//生成电梯信息
-					timestap:new Date()*1,
+					timestap:data.timestap,
 					elevatorName:data.elevatorName,
 					wallLists:[]
 				};
 				for(var i=0;i<elevatorNum;i++){//生成电梯墙面数据
 					var wallData={
 						wallName:elevatorName+"——》"+i,
+						index:i,
 					};
 					elevatorData.wallLists.push(wallData);
 				}

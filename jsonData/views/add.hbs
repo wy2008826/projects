@@ -182,10 +182,10 @@
 		</script>
 		
 		<script type="text/template" id="elevatorItemTpl">
-			<li class="elevator-item">
+			<li class="elevator-item" data-timestap="<%=timestap%>">
 				<label class="elevator-name"><%=elevatorName%></label>
 				<%for(var i=0;i<elevatorNum;i++){%>
-					<span class="btn btn-red btn-sm elevator-wall-item" >
+					<span class="btn btn-red btn-sm elevator-wall-item" data-index="<%=i%>" data-timestap="<%=timestap%>">
 						<%=elevatorName%>——<%=i+1%>
 					</span>
 				<%};%>
