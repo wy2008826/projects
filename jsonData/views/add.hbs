@@ -185,7 +185,9 @@
 			<li class="elevator-item">
 				<label class="elevator-name"><%=elevatorName%></label>
 				<%for(var i=0;i<elevatorNum;i++){%>
-					<span class="btn btn-yellow btn-sm"><%=elevatorName%>——<%=i+1%></span>
+					<span class="btn btn-red btn-sm elevator-wall-item">
+						<%=elevatorName%>——<%=i+1%>
+					</span>
 				<%};%>
 			</li>
 		</script>

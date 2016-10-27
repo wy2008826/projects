@@ -28,6 +28,7 @@ define(function(require,module,exports){
 			this.addHouse();//添加楼盘
 			this.addSubhouse();//添加子楼盘
 			this.addElevator()//添加电梯
+			this.editElevator();//编辑每一个电梯的合作信息
 			this.submitElevator();//提交数据
 		};
 
@@ -193,7 +194,7 @@ define(function(require,module,exports){
 				};
 				for(var i=0;i<elevatorNum;i++){//生成电梯墙面数据
 					var wallData={
-						wallName:elevatorName+"-->"+i,
+						wallName:elevatorName+"——》"+i,
 					};
 					elevatorData.wallLists.push(wallData);
 				}
@@ -201,6 +202,18 @@ define(function(require,module,exports){
 					if(item.timestap==data.subHouseId){
 						self.elevatorData.subHouses[index].elevators.push(elevatorData);
 					}
+				});
+			},
+			editElevator:function(){
+				var self=this;
+				$("body").on("click",".elevator-wall-item",function(){//点击每一个电梯墙面，编辑电梯信息
+					layer.open({
+					  type: 2,
+					  area: ['600px', '300px'],
+					  fix: false, //不固定
+					  maxmin: true,
+					  content: 'addElevatorWall.hbs'
+					});
 				});
 			},
 			submitElevator:function(){

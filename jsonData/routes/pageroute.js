@@ -13,6 +13,9 @@ router.get("/addElevator.hbs",function(req,res){//新增子楼的电梯
 	res.render("addElevator",query);
 });
 
-
+router.get("/addElevatorWall.hbs",function(req,res){//新增电梯每一个墙面的合作信息
+	var query=req.query;
+	res.render("addElevatorWall",query);
+});
 
 module.exports=router;
