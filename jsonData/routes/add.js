@@ -5,7 +5,7 @@ var mongoose=require("mongoose");
 var _=require("underscore");
 
 var ElevatorModel=require("../models/elevator.js");
-mongoose.connect("127.0.0.1:27017/evelator");
+mongoose.connect("127.0.0.1:27017/elevator");// elevator 具体的库名称
 
 
 router.get("/add",function(req,res){

@@ -45,11 +45,21 @@
 						width: 100px;
 						display:inline-block;
 					}
-					span{
+					.elevator-wall-item{
 						display: inline-block;
 						line-height: 30px;
 						text-align: center;
 						padding:0 5px;
+						position: relative;
+						background-color:$theme-red;
+						&.has-edit{
+							background-color:$theme-default;
+							&:after{
+								content:" √";
+								font-size: 12px;
+								color:#fff;
+							}
+						}
 					}
 				}
 			}

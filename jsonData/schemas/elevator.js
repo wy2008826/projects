@@ -1,5 +1,6 @@
-var mongoose=require("mongoose");
+//schema的文件名会默认为数据库的表名
 
+var mongoose=require("mongoose");
 var ElevatorSchema=new mongoose.Schema({//注意各种数据的格式  数组怎么定义呢
 	id: mongoose.Schema.Types.ObjectId,
 	province:String,

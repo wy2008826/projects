@@ -149,11 +149,12 @@ define(function(require,module,exports){
 				var self=this;
 				$("#addSubHouseBtn").on("click",function(){
 					layer.open({
-					  type: 2,
-					  area: ['400px', '300px'],
-					  fix: false, //不固定
-					  maxmin: true,
-					  content: 'addSubHouse.hbs'
+						title:"新增子楼",
+						type: 2,
+					  	area: ['400px', '300px'],
+					  	fix: false, //不固定
+					  	maxmin: true,
+					  	content: 'addSubHouse.hbs'
 					});
 					
 				})
@@ -173,7 +174,9 @@ define(function(require,module,exports){
 				var self=this;
 				$("body").on("click",".addElevatorBtn",function(){
 					var timestap=$(this).attr("data-house-timestap");
+					var house=$(this).attr("data-house");
 					layer.open({
+						title:"为==>"+house+"  ==新增电梯",
 					  type: 2,
 					  area: ['600px', '300px'],
 					  fix: false, //不固定
@@ -211,10 +214,15 @@ define(function(require,module,exports){
 			addElevatorWall:function(){
 				var self=this;
 				$("body").on("click",".elevator-wall-item",function(){//点击每一个电梯墙面，编辑电梯信息 包含电梯的合作公司信息{公司名字  联系方式 合作期限 广告类型}
+					if($(this).hasClass("has-edit")){
+						return ;
+					}
 					var houseTimeStap=$(this).attr("data-house-timestap");
 					var elevatorTimeStap=$(this).attr("data-elevator-timestap");
 					var index=$(this).attr("data-index");
+					var text=$(this).text();
 					layer.open({
+						title:"编辑"+text,
 					  type: 2,
 					  area: ['600px', '300px'],
 					  fix: false, //不固定
@@ -227,6 +235,7 @@ define(function(require,module,exports){
 				var self=this;
 				var houseTimeStap=data.houseTimeStap;
 				var elevatorTimeStap=data.elevatorTimeStap;
+				var wallIndex=data.index;
 				console.log(self.elevatorData,data);
 				self.elevatorData.subHouseLists.forEach(function(house,index){
 					if(house.houseTimeStap==houseTimeStap){
@@ -236,6 +245,7 @@ define(function(require,module,exports){
 								elevator.wallLists.forEach(function(wall,m){
 									if(wall.index==data.index){
 										wall=_.extend(wall,data);
+										$("#"+houseTimeStap+"-"+elevatorTimeStap+"-"+wallIndex).addClass("has-edit");
 									}
 								});
 							}
