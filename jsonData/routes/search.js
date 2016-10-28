@@ -26,7 +26,13 @@ router.get("/searchElevator.html",function(req,res){//
 			},
 			{
 				"area":query.area||/[\s\S]*/,
-			}
+			},
+			// {
+			// 	"cooperStart":query.cooperStart||/[\s\S]*/,
+			// },
+			// {
+			// 	"cooperEnd":query.cooperEnd||/[\s\S]*/,
+			// }
 		]
 	};
 
