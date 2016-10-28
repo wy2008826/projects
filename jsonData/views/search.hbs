@@ -11,6 +11,8 @@
 		<meta name="full-screen"content="yes">
 		<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
 		<title>查询电梯</title>
+		<link rel="stylesheet" type="text/css" href="/js/plugin/laydate/need/laydate.css">
+		<link rel="stylesheet" type="text/css" href="/js/plugin/laydate/skins/molv/laydate.css">
 		<link rel="stylesheet" href="css/dianti.min.css">
 	</head>
 	<body>
@@ -33,29 +35,50 @@
 				</div>
 				<div class="panel-content">
 					<div >
-						<ul class="row">
+						<ul class="row"  id="groupSelect">
 							<li class="col-all-4 form-group">
-								<div class="col-all-4 control-label text-right">
-									城市：
-								</div>
-								<div class="col-all-8">
-									<input type="text" class="form-control" name="city">
+								<div class="row">
+									<div class="col-all-4 control-label text-right">
+										地址：
+									</div>
+									<div class="col-all-8">
+										<select class="form-control province" name="province" id="province">
+											<option>浙江省</option>
+										</select>
+									</div>
+									
 								</div>
 							</li>
 							<li class="col-all-4 form-group">
-								<div class="col-all-4 control-label text-right">
-									区域：
-								</div>
-								<div class="col-all-8">
-									<input type="text" class="form-control" name="area">
+								<div class="row">
+									<div class="col-all-6">
+										<select class="form-control city" name="city" id="city">
+											<option>杭州市</option>
+										</select>
+									</div>
+									<div class="col-all-6">
+										<select class="form-control area" name="area" id="area">
+											<option>西湖区</option>
+										</select>
+									</div>
 								</div>
 							</li>
-							<li class="col-all-4 form-group">
-								<div class="col-all-4 control-label text-right">
-									楼盘名称
-								</div>
-								<div class="col-all-8">
-									<input type="text" class="form-control" name="house">
+						</ul>
+						<ul class="row" >
+							<li class="col-all-8 form-group">
+								<div class="row">
+									<div class="col-all-2 control-label text-right">
+										合作期限：
+									</div>
+									<div class="col-all-4">
+										<input type="text" name="cooperStart" class="form-control" id="cooperStart">
+									</div>
+									<div class="col-all-2 control-label text-center">
+										至
+									</div>
+									<div class="col-all-4">
+										<input type="text" name="cooperEnd" class="form-control" id="cooperEnd">
+									</div>
 								</div>
 							</li>
 						</ul>
@@ -75,27 +98,25 @@
 					<table class="table table-striped hide" id="listTable">
 						<thead>
 							<tr>
-								<th>城市</th>
-								<th>区域</th>
+								<th>地址</th>
 								<th>楼盘名称</th>
-								<th>楼盘数量</th>
+								<th>合作日期</th>
 							</tr>
 						</thead>
 						<tbody id="listBody" >
 							<script type="text/template" id="listTpl">
 								<%_.each(dataList,function(item,i){%>
 									<tr>
-										<td><%=item.city%></td>
-										<td><%=item.area%></td>
-										<td><%=item.house%></td>
-										<td><%=item.houseNum%></td>
+										<td><%=item.province%>——<%=item.city%>——<%=item.area%></td>
+										<td><%=item.loupanName%></td>
+										<td><%=item.cooperStart%>至<%=item.cooperEnd%></td>
 									</tr>
 								<%});%>
 							</script>
 						</tbody>
 					</table>
 				</div>
-				<div class="panel-footer">
+				<div class="panel-footer text-center">
 					<div class="kkpager" id="kkpager"></div>
 				</div>
 			</div>
