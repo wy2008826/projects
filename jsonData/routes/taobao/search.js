@@ -79,7 +79,7 @@ function getData(param,n){
 			});
 		}
 		catch(error){
-			console.log("error:",jsonData.mods.shoplist.data);
+			console.log("error:",jsonData.mods.shoplist);
 		}
 		// console.log(arr);
 		if(currentPage>=searchPageCount){
