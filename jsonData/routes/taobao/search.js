@@ -18,7 +18,7 @@ router.get("/",function(req,res){
 
 });
 
-var startPage=100;//开始的页码
+var startPage=0;//开始的页码
 
 var currentPage=startPage;
 var searchPageCount=20;//查询的总页码数
@@ -67,7 +67,7 @@ function getData(param,n){
 								getData(param,currentCount);
 							}
 							else{
-								console.log("成功存储: "+param+"  第"+startCount+"页至第"+searchPageCount+"页的数据！棒棒哒。。。");
+								console.log("成功存储: "+param+"  第"+startPage+"页至第"+searchPageCount+"页的数据！棒棒哒。。。");
 							}
 							currentPage+=1;
 							currentCount=currentPage*pageSize;
