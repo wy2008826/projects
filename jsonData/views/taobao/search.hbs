@@ -1,0 +1,191 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+	<head>
+		<meta charset="utf-8">
+		<meta content="yes" name="apple-mobile-web-app-capable"> 
+		<meta content="yes" name="apple-touch-fullscreen"> 
+		<meta content="telephone=no,email=no" name="format-detection"> 	
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<meta content="black" name="apple-mobile-web-app-status-bar-style">
+		<meta name="x5-fullscreen"content="true"/>
+		<meta name="full-screen"content="yes">
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+		<title>查询淘宝店铺列表</title>
+		<link rel="stylesheet" href="css/taobao/search.min.css">
+	</head>
+	<body>
+
+		<div>
+			<form class="panel" action="addElevator.html" id="addForm">
+				<div class="panel-title row">
+					新增楼盘
+					<span id="formError" class="fn-fr fc-error"></span>
+				</div>
+				<div class="panel-content">
+					<div class="form form-horizontal mg-t-30">
+						<ul class="row"  id="groupSelect">
+							<li class="col-all-4 form-group">
+								<div class="row">
+									<div class="col-all-4 control-label text-right">
+										地址：
+									</div>
+									<div class="col-all-8">
+										<select class="form-control province" name="province" id="province">
+											<option>浙江省</option>
+										</select>
+									</div>
+									
+								</div>
+							</li>
+							<li class="col-all-4 form-group">
+								<div class="row">
+									<div class="col-all-6">
+										<select class="form-control city" name="city" id="city">
+											<option>杭州市</option>
+										</select>
+									</div>
+									<div class="col-all-6">
+										<select class="form-control area" name="area" id="area">
+											<option>西湖区</option>
+										</select>
+									</div>
+								</div>
+							</li>
+							<li class="col-all-4 form-group">
+								<div class="row">
+									<div class="col-all-12">
+										<input class="form-control" name="address" id="address">
+									</div>
+								</div>
+							</li>
+						</ul>
+						<ul class="row" >
+							<li class="col-all-8 form-group">
+								<div class="row">
+									<div class="col-all-2 control-label text-right">
+										合作期限：
+									</div>
+									<div class="col-all-4">
+										<input type="text" name="cooperStart" class="form-control" id="cooperStart">
+									</div>
+									<div class="col-all-1 control-label text-right">
+										至
+									</div>
+									<div class="col-all-4">
+										<input type="text" name="cooperEnd" class="form-control" id="cooperEnd">
+									</div>
+								</div>
+							</li>
+						</ul>
+						<ul class="row">
+							<li class="col-all-4 form-group">
+								<div class="row">
+									<div class="col-all-4 control-label text-right">
+										楼盘名称：
+									</div>
+									<div class="col-all-8">
+										<input type="text" class="form-control" name="loupan" id="loupan">
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="panel-footer text-center">
+					<input type="submit" class="btn btn-md btn-blue" id="addBtn" value="添加楼盘">
+				</div>
+			</form>
+			<div class="panel" id="addWraper" style="display:none">
+				<div class="panel-title">
+					电梯列表
+				</div>
+				<div class="panel-content">
+					<div class="elevator-container pos-rel" id="elevatorContainer">
+						<label class="main-name pos-abs" >
+							<h4 id="mainName"></h4>
+							<p class="fs-12 l-h-24" id="mainTime"></p>
+							<p class="fs-12 l-h-24" id="mainArress"></p>
+							<p class="text-center">
+								<span class="btn btn-green btn-sm addSubHouseBtn" id="addSubHouseBtn">添加子楼</span>
+							</p>
+						</label>
+						<!-- <div class="sub-wraper pos-rel">
+							<div class="house-wraper pos-rel">
+								<label class="sub-name pos-abs">楼盘A-1</label>
+								<ul class="elevator-wraper pos-rel">
+									<li class="elevator-item">
+										<label class="elevator-name">电梯A</label>
+										<span>a</span>
+										<span>a</span>
+									</li>
+									<li class="elevator-item">
+										<label class="elevator-name">电梯A</label>
+										<span>a</span>
+										<span>a</span>
+									</li>
+								</ul>
+							</div>
+
+						</div>
+						<div class="sub-wraper pos-rel">
+							<div class="house-wraper pos-rel">
+								<label class="sub-name pos-abs">楼盘A-1</label>
+								<ul class="elevator-wraper pos-rel">
+									<li class="elevator-item">
+										<label class="elevator-name">电梯A</label>
+										<span>a</span>
+										<span>a</span>
+									</li>
+									<li class="elevator-item">
+										<label class="elevator-name">电梯A</label>
+										<span>a</span>
+										<span>a</span>
+									</li>
+								</ul>
+							</div>
+
+						</div> -->
+					</div>
+				</div>
+				<div class="panel-footer text-center">
+					<span class="btn btn-blue" id="submitElevatorBtn">提交</span>
+				</div>
+			</div>
+		</div>
+		
+		<script type="text/template" id="subWraperTpl">
+			<div class="sub-wraper pos-rel">
+				<div class="house-wraper pos-rel">
+					<label class="sub-name pos-abs">
+						<%=houseName%>
+						<span class="btn btn-green btn-sm addElevatorBtn" data-house-timestap="<%=houseTimeStap%>" data-house="<%=houseName%>">添加电梯</span>
+					</label>
+					<ul class="elevator-wraper pos-rel" data-house-timestap="<%=houseTimeStap%>" id="<%=houseTimeStap%>">
+					</ul>
+				</div>
+			</div>
+		</script>
+		
+		<script type="text/template" id="elevatorItemTpl">
+			<li class="elevator-item" data-house-timestap="<%=houseTimeStap%>">
+				<label class="elevator-name"><%=elevatorName%></label>
+				<%for(var i=0;i<elevatorNum;i++){%>
+					<span class="btn btn-sm elevator-wall-item" data-index="<%=i%>" data-house-timestap="<%=houseTimeStap%>" data-elevator-timestap="<%=elevatorTimeStap%>" id="<%=houseTimeStap%>-<%=elevatorTimeStap%>-<%=i%>">
+						<%=elevatorName%>——<%=i+1%>
+					</span>
+				<%};%>
+			</li>
+		</script>
+
+		
+
+		<script type="text/javascript" src="js/sea.js"></script>
+		<script src="js/seajs-css.js"></script>
+		<script type="text/javascript" src="js/sea-config.js"></script>
+		<script type="text/javascript">
+			seajs.use("page/add.min.js");
+		</script>
+	</body>
+</html>
+	
