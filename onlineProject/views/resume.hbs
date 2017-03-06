@@ -32,6 +32,22 @@
 		}
 		ul li .text.work{padding:20px 10px;}
 		ul li .text.work p{line-height: 28px;margin-bottom: 10px;}
+		ul li .text.skills p{
+			padding-left:20px;
+			position: relative;
+		}
+		ul li .text.skills p:before{
+			content:"";
+			display: block;
+			width: 6px;
+			height:6px;
+			-webkit-border-radius:50%;
+			border-radius:50%;
+			background: #999;
+			position: absolute;
+			top:13px;
+			left:0;
+		}
 	</style>
 </head>
 <body>
@@ -70,14 +86,14 @@
 		</li>
 		<li>
 			<div class="title">技能总结</div>
-			<div class="text">
+			<div class="text skills">
 				<h4>版本管理</h4>
 				<p>熟练使用 git svn </p>
 				<h4>基本技能</h4>
 				<p>HTML(5)、CSS(3)、jQuery、zepto、bootstrap</p>
 				<p>es6：会使用一些简单的语法、promise、箭头函数等</p>
 				<p>nodejs：可以使用express启动服务并编写路由和页面逻辑</p>
-				<p>数据库：</p>
+				<p>数据库：mongodb（建立数据库，并进行简单的增删改查）</p>
 				<p>移动端：保证页面在各种分辨率手机中的尺寸自适应和高清还原、webview和app交互</p>
 				<p>mvc：熟悉vue框架（自己写过一些demo，使用过路由以及vuex数据管理） react（做过一些了解）react-native（初始化本地项目并启动以及使用es6编写简单的组件）</p>
 				<p>编写原生js插件以及jQuery插件</p>
@@ -85,8 +101,8 @@
 				<p>gulp webpack sass seajs </p>
 				
 				<h4>个人github</h4>
-				<p>github地址：https://github.com/wy2008826</p>
-				<p>8.完整版wap项目github 地址：https://github.com/wy2008826/workFile/tree/gh-pages/qbm/wap</p>
+				<p>github地址：<a href="https://github.com/wy2008826">https://github.com/wy2008826</a></p>
+				<p>完整版wap项目github 地址：<a href="https://github.com/wy2008826/workFile/tree/gh-pages/qbm/wap">https://github.com/wy2008826/workFile/tree/gh-pages/qbm/wap</a></p>
 			</div>
 		</li>
 	</ul>
