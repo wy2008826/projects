@@ -47,6 +47,9 @@ module.exports=function(req,res,error){
 	});
 }
 
+let exist=0;
+let save=0;
+
 function* getAreaSlots(arr,res){
 	for(var i=0;i<arr.length;i++){
 		var area=arr[i];
@@ -54,6 +57,10 @@ function* getAreaSlots(arr,res){
 		data[area.code]={lists:[]};
 		yield getSlot(url,area.code);
 	};
+	yield console.log({
+		exist:exist,
+		save:save
+	});
 
 	yield res.json({
 		"code":"1",
@@ -101,9 +108,13 @@ function getSlot(url,areaCode){
 										console.log(err);
 									}
 									else{
+										save+=1;
 										console.log("save success")
 									}
 								});
+							}else{
+								exist+=1;
+								console.log(code+" exists")
 							}
 						}
 					});

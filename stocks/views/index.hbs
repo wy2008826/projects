@@ -105,7 +105,7 @@
 						url:"/api/selectIncrease",
 						type:"get",
 						data:{
-							last:7
+							last:3
 						},
 						dataType:"json",
 						success:function(data){
@@ -114,6 +114,9 @@
 						}
 					});
 				}
+			},
+			created:function(){
+				this.selectIncrease();
 			}
 		});
 		
