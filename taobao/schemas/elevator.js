@@ -23,30 +23,6 @@ var ElevatorSchema=new mongoose.Schema({//注意各种数据的格式  数组怎
 	}
 });
 
-// var subHouses=[//楼盘的栋别列表
-// 	{
-// 		subName:String,
-// 		timestap:String,
-// 		elevators:[//所有可用电梯
-// 			{
-// 				elevatorName:String,
-// 				wallLists:[//电梯可用面列表
-// 					{
-// 						wallName:String,//
-// 						companyName:String,//合作公司名字
-// 						cooperStart:String,
-// 						cooperEnd:String,//合作期限
-// 						type:Number,//广告类别
-// 					},
-// 					{
-						
-// 					},
-// 				]
-// 			}
-// 		]
-// 	},
-
-// ]
 
 
 ElevatorSchema.pre('save',function(next){//添加事件
