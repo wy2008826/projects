@@ -17,6 +17,9 @@ let slotArr=[];//股票列表
 let data={};
 let gen;
 
+//通过generator函数可以实现任何级别的回调
+
+
 module.exports=function(req,res,error){
 	var query=req.query;
 
