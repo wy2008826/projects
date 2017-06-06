@@ -54,9 +54,9 @@ function crawPage(page){
 		__s:[["hq","hs_a","",0,1,80]],
 		callback:"fn"
 	};
-
+	console.log("loading "+page);
 	superagent.get(stockUrl).end(function(error,resHtml){
-		console.log("loading "+page);
+		console.log("loaded "+page);
 		var text=resHtml.text;
 		var replaceTxt="/*<script>location.href='//sina.com';</script>*/fn(";
 
@@ -146,7 +146,7 @@ function isSuit(nowData){
 	var nowToLow=(now-todayLow)/height;
 
 	var min=Math.min(openToLow,nowToLow);
-	console.log(zhenfu,openToLow,nowToLow);
+	// console.log(zhenfu,openToLow,nowToLow);
 	if(zhenfu>=0.06&&min>0.65){
 		suit+=1;
 		return true;
