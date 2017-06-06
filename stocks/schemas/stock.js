@@ -3,9 +3,11 @@
 var mongoose=require("mongoose");
 var StockSchema=new mongoose.Schema({//注意各种数据的格式  数组怎么定义呢
 	id: mongoose.Schema.Types.ObjectId,
+	area:String,
 	code:String,
-	companyName:String,
+	name:String,
 	finance:mongoose.Schema.Types.Mixed,
+	nowData:Array,
 	meta:{
 		createAt:{
 			type:Date,

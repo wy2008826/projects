@@ -99,6 +99,18 @@
 						}
 					});
 				},
+				crawNowData:function(){
+					var self=this;
+					$.ajax({
+						url:"/craw/crawNowData",
+						type:"get",
+						dataType:"json",
+						success:function(data){
+							console.log(data);
+							self.$data.stockLists=data.lists;
+						}
+					});
+				},
 				selectIncrease:function(){
 					var self=this;
 					$.ajax({
@@ -113,10 +125,10 @@
 							self.$data.stockLists=data.lists;
 						}
 					});
-				}
+				},
 			},
 			created:function(){
-				this.selectIncrease();
+				this.crawAllSlots();
 			}
 		});
 		
