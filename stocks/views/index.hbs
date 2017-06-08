@@ -37,7 +37,7 @@
 <body>
 	<div id="pageWraper" >
 		<ul>
-			<li @click="crawAllSlots">抓取股票列表</li>
+			<li @click="crawAllSlotsAndSearchOneDayT">抓取股票列表</li>
 			<li @click="crawAllSlotsFinance">抓取所有股票财务数据</li>
 			<li @click="selectIncrease">筛选财务数据连续三年增长的股票</li>
 		</ul>
@@ -76,9 +76,9 @@
 				stockLists:[]
 			},
 			methods:{
-				crawAllSlots:function(){
+				crawAllSlotsAndSearchOneDayT:function(){
 					$.ajax({
-						url:"/craw/crawAllSlots",
+						url:"/craw/crawAllSlotsAndSearchOneDayT",
 						type:"get",
 						data:{
 							name:"哈哈"
@@ -111,6 +111,22 @@
 						}
 					});
 				},
+				crawHistoryData:function(code){
+					var self=this;
+					$.ajax({
+						url:"/craw/crawHistoryData",
+						type:"get",
+						dataType:"json",
+						data:{
+							code:code||"000725",
+							timeLimit:2
+						},
+						success:function(data){
+							console.log(data);
+							self.$data.stockLists=data.lists;
+						}
+					});
+				},
 				selectIncrease:function(){
 					var self=this;
 					$.ajax({
@@ -126,9 +142,23 @@
 						}
 					});
 				},
+				apiSelectOneStockHistoryAllDayT:function(code){
+					var self=this;
+					$.ajax({
+						url:"/api/apiSelectOneStockHistoryAllDayT",
+						type:"get",
+						data:{
+							code:code||"000725"
+						},
+						dataType:"json",
+						success:function(data){
+							console.log(data);
+						}
+					});
+				},
 			},
 			created:function(){
-				this.crawAllSlots();
+				this.apiSelectOneStockHistoryAllDayT("601088");
 			}
 		});
 		
