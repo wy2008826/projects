@@ -10,6 +10,8 @@ var StockModel=require("../../models/stock.js");
 mongoose.connect("127.0.0.1:27017/stock");// elevator 具体的库名称
 
 let isOneDayT=require("../../strategy/isOneDayT.js");
+let sendEmail=require("../utils/sendEmail.js");
+
 
 let exist=0;
 let save=0;
@@ -51,10 +53,20 @@ function* crawPages(res){
 		});
 		console.log("loaded all!","exists:"+exist,"save:"+save,"suit:"+suit);
 		console.log(lists);
-		res.json({
-			r:1,
-			lists
-		});
+		if(res){//如果是响应前端请求
+			res.json({
+				r:1,
+				lists
+			});
+		}else{
+			var html="<ul>";
+			lists.forEach(function(item,index){
+				html+=item.name+":"+item.code+"<br/>";
+			});
+			html+="</ul>";
+			sendEmail(html);
+		}
+		
 	})();
 }
 
