@@ -11,7 +11,7 @@ module.exports=function(){
 
 
 		if(day!=6||day!=0){//非周末
-			if(hours==21&&minutes==33){
+			if(hours==21&&minutes==38){
 				crawAllSlotsAndSearchOneDayT(undefined,undefined,"email");
 			}
 		}
