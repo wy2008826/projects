@@ -9,11 +9,10 @@ module.exports=function(){
 		var hours=now.getHours();
 		var minutes=now.getMinutes();
 
-		console.log(hours,minutes)
 		if(day!=6||day!=0){//非周末
-			if(hours==22&&minutes==3){
+			if(hours==14&&minutes==48){
 				crawAllSlotsAndSearchOneDayT(undefined,undefined,"email");
 			}
 		}
-	},1000*30);
+	},1000*58);
 }
