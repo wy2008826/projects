@@ -11,7 +11,7 @@ module.exports=function(){
 
 		console.log(hours,minutes)
 		if(day!=6||day!=0){//非周末
-			if(hours==21&&minutes==46){
+			if(hours==21&&minutes==56){
 				crawAllSlotsAndSearchOneDayT(undefined,undefined,"email");
 			}
 		}
