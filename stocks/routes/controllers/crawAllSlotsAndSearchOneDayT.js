@@ -39,6 +39,7 @@ module.exports=function(req,res,error){
 
 
 function* crawPages(res){
+	lists=[];//清空数据
 	for(let i=curPage;i<pages;i++){
 		yield crawPage(i);
 	}
