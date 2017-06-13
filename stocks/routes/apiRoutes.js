@@ -7,7 +7,7 @@ let apiSelectOneStockHistoryAllDayT =require("./controllers/apiSelectOneStockHis
 
 
 
-route.get("/api/index",function(req,res,error){
+route.get("/api/test",function(req,res,error){
 	var query=req.query;
 	var data={
 		id:123,
