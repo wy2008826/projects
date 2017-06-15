@@ -6,8 +6,10 @@ var StockSchema=new mongoose.Schema({//注意各种数据的格式  数组怎么
 	area:String,
 	code:String,
 	name:String,
-	finance:mongoose.Schema.Types.Mixed,
-	nowData:Array,
+	finance:mongoose.Schema.Types.Mixed,//经济数据
+	nowData:Array,//当前数据
+	historyData:mongoose.Schema.Types.Mixed,//历史数据
+	peoples:mongoose.Schema.Types.Mixed,//股东人数
 	meta:{
 		createAt:{
 			type:Date,

@@ -11,20 +11,24 @@ function sendEmail(html){
 	    }
 	});
 
-	transport.sendMail({
-	    from : "wy760104178@163.com",
-	    to : "760104178@qq.com",
-	    subject: "now kLine is T",
-	    generateTextFromHTML : true,
-	    // text:"hello word",
-	    html : html
-	}, function(error, response){
-	    if(error){
-	        console.log(error);
-	    }else{
-	        console.log("Message sent: " , response);
-	    }
-	    transport.close();
+	return new Promise(function(resolve,reject){
+		transport.sendMail({
+		    from : "wy760104178@163.com",
+		    to : "760104178@qq.com",
+		    subject: "now kLine is T",
+		    generateTextFromHTML : true,
+		    // text:"hello word",
+		    html : html
+		}, function(error, response){
+		    if(error){
+		        console.log(error);
+		        reject(error);
+		    }else{
+		        console.log("Message sent: " , response);
+		    	resolve(response);
+		    }
+		    transport.close();
+		});
 	});
 
 }
