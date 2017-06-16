@@ -9,6 +9,8 @@ let schedule = require("node-schedule");//定时任务
 let timeRules=require ("./const/consts.js");
 
 let crawAllSlotsAndSearchOneDayT =require("./routes/controllers/crawAllSlotsAndSearchOneDayT.js");
+let crawHistoryData=require("./routes/controllers/crawHistoryData");
+
 
 
 app.use(express.static(__dirname+"/dist"));//设置静态资源路径
@@ -28,10 +30,11 @@ schedule.scheduleJob(timeRules.beforePmClose, crawAllSlotsAndSearchOneDayT);
 
 async function all(){
 
-	await crawAllSlotsAndSearchOneDayT();//抓取数据
+	// await crawAllSlotsAndSearchOneDayT();//抓取数据
+	await crawHistoryData();
 }
 
-// all();
+all();
 
 
 app.use("/",pageRoutes);
