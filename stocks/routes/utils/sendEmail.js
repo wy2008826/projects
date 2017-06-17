@@ -1,6 +1,6 @@
 let nodemailer = require("nodemailer");//发送邮件所需要的module
 
-function sendEmail(html){
+function sendEmail(html,title){
 	let transport = nodemailer.createTransport( {
 	    host: 'smtp.163.com',
 	    port: 465,
@@ -15,7 +15,7 @@ function sendEmail(html){
 		transport.sendMail({
 		    from : "wy760104178@163.com",
 		    to : "760104178@qq.com",
-		    subject: "now kLine is T",
+		    subject: title||"now kLine is T",
 		    generateTextFromHTML : true,
 		    // text:"hello word",
 		    html : html

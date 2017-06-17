@@ -9,7 +9,11 @@ let schedule = require("node-schedule");//定时任务
 let timeRules=require ("./const/consts.js");
 
 let crawAllSlotsAndSearchOneDayT =require("./routes/controllers/crawAllSlotsAndSearchOneDayT.js");
-let crawHistoryData=require("./routes/controllers/crawHistoryData");
+let crawHistoryDataAll=require("./routes/controllers/crawHistoryDataAll");
+let crawHistoryDataOne=require("./routes/controllers/crawHistoryDataOne");
+let selectAllAverageUp=require("./routes/controllers/selectAllAverageUp");
+let selectHuiTiaoToAverageLineAllType=require("./routes/controllers/selectHuiTiaoToAverageLineAllType");
+let selectHuiTiaoToAverageLineOneType=require("./routes/controllers/selectHuiTiaoToAverageLineOneType");
 
 
 
@@ -28,10 +32,22 @@ schedule.scheduleJob(timeRules.beforeAmClose, crawAllSlotsAndSearchOneDayT);
 schedule.scheduleJob(timeRules.beforePmClose, crawAllSlotsAndSearchOneDayT);
 
 
+//每天晚上6:10爬取数据  完善数据库股票的历史数据
+schedule.scheduleJob(timeRules.excludeWeekends18, crawHistoryDataAll);
+schedule.scheduleJob(timeRules.everyNight20, selectHuiTiaoToAverageLineAllType);
+
+
+
 async function all(){
 
-	// await crawAllSlotsAndSearchOneDayT();//抓取数据
-	await crawHistoryData();
+	await crawAllSlotsAndSearchOneDayT();//抓取数据
+	// await crawHistoryDataAll();//抓取所有股票的历史数据
+	// await selectAllAverageUp();
+	// await selectHuiTiaoToAverageLineAllType();
+
+	await selectHuiTiaoToAverageLineAllType();
+	
+	// await crawHistoryDataOne("600027","2017-05-26");
 }
 
 all();

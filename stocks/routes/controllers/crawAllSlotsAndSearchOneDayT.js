@@ -42,7 +42,7 @@ module.exports= async function crawAllSlotsAndSearchOneDayT(){
 	await writeCodeFile();
 
 	const html=createEmailText();
-	await sendEmail(html);
+	await sendEmail(html,"now kLine is T");
 }
 
 
@@ -93,7 +93,7 @@ function saveStock(_stock){
 	var todayHigh=_stock[10];//
 	var todayLow=_stock[11];//
 	var now=_stock[3];//
-	var nowData=[todayOpen,todayHigh,todayLow,now];
+	var nowData=[new Date(),todayOpen,todayHigh,todayLow,now];
 	if(isOneDayT(nowData)){
 		suit+=1;
 		suits.push({
@@ -134,7 +134,18 @@ function saveStock(_stock){
 					});
 				}else{
 					exist+=1;
-					resolve({exists:1});
+					// console.log("data:",data);
+					StockModel.update({code:code},{
+						$set:{
+							nowData:nowData
+						}
+					},function(err){
+						if(err){
+							reject(err);
+						}else{
+							resolve({exists:1});
+						}
+					});
 				}
 			}
 		});
