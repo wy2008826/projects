@@ -40,12 +40,12 @@ schedule.scheduleJob(timeRules.everyNight20, selectHuiTiaoToAverageLineAllType);
 
 async function all(){
 
-	await crawAllSlotsAndSearchOneDayT();//抓取数据
+	// await crawAllSlotsAndSearchOneDayT();//抓取数据
 	// await crawHistoryDataAll();//抓取所有股票的历史数据
 	// await selectAllAverageUp();
 	// await selectHuiTiaoToAverageLineAllType();
 
-	await selectHuiTiaoToAverageLineAllType();
+	// await selectHuiTiaoToAverageLineAllType();
 	
 	// await crawHistoryDataOne("600027","2017-05-26");
 }
