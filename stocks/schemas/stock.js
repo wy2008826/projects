@@ -36,6 +36,18 @@ StockSchema.pre('save',function(next){//添加事件
 });
 
 
+StockSchema.pre('update',function(next){//添加事件
+	// if(this.isNew){
+	// 	this.meta.createAt=this.meta.updateAt=Date.now();
+	// }
+	// else{
+	// 	this.meta.updateAt=Date.now();
+	// }
+
+	next();
+});
+
+
 StockSchema.statics={//添加静态方法  schema可以调用mongoose的各种查询方法
 	fetch:function(cb){//查询所有数据 并排序
 		this.find({},cb);

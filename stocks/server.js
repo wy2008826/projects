@@ -14,7 +14,9 @@ let crawHistoryDataOne=require("./routes/controllers/crawHistoryDataOne");
 let selectAllAverageUp=require("./routes/controllers/selectAllAverageUp");
 let selectHuiTiaoToAverageLineAllType=require("./routes/controllers/selectHuiTiaoToAverageLineAllType");
 let selectHuiTiaoToAverageLineOneType=require("./routes/controllers/selectHuiTiaoToAverageLineOneType");
+let selectSingleSunKeepedDays=require("./routes/controllers/selectSingleSunKeepedDays");
 
+let testSearchOneCodeSingleSunKeepedDays=require("./testStrategy/searchOneCodeSingleSunKeepedDays");
 
 
 app.use(express.static(__dirname+"/dist"));//设置静态资源路径
@@ -47,7 +49,9 @@ async function all(){
 
 	// await selectHuiTiaoToAverageLineAllType();
 	
-	// await crawHistoryDataOne("600027","2017-05-26");
+	// await crawHistoryDataOne("600027","2016-05-26");
+	// await selectSingleSunKeepedDays();
+	await testSearchOneCodeSingleSunKeepedDays("603833");
 }
 
 all();

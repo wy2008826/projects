@@ -9,7 +9,7 @@
 
 
 function isOneDayT(nowData){
-	var [todayOpen,todayHigh,todayLow,now]=nowData;
+	var [time,todayOpen,todayHigh,todayLow,now]=nowData;
 	var height=todayHigh-todayLow;
 	var zhenfu=height/todayLow;
 	var openToLow=(todayOpen-todayLow)/height;

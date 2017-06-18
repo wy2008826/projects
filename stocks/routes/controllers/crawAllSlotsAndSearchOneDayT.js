@@ -93,7 +93,10 @@ function saveStock(_stock){
 	var todayHigh=_stock[10];//
 	var todayLow=_stock[11];//
 	var now=_stock[3];//
-	var nowData=[new Date(),todayOpen,todayHigh,todayLow,now];
+	var num=_stock[12];//
+	var money=_stock[13];//
+
+	var nowData=[new Date(),todayOpen,todayHigh,todayLow,now,num,money];
 	if(isOneDayT(nowData)){
 		suit+=1;
 		suits.push({

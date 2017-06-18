@@ -99,18 +99,6 @@
 						}
 					});
 				},
-				crawNowData:function(){
-					var self=this;
-					$.ajax({
-						url:"/craw/crawNowData",
-						type:"get",
-						dataType:"json",
-						success:function(data){
-							console.log(data);
-							self.$data.stockLists=data.lists;
-						}
-					});
-				},
 				crawHistoryData:function(code){
 					var self=this;
 					$.ajax({
