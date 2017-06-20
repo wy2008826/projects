@@ -37,13 +37,18 @@ module.exports=async function(code,time=undefined){
 	
 	let yearJiduArr=createYearJiDu(time);
 	for(let i=0;i<yearJiduArr.length;i++){
-		await crawJiDuData(code,yearJiduArr[i][0],yearJiduArr[i][1]);
+		try{
+			let data=await crawJiDuData(code,yearJiduArr[i][0],yearJiduArr[i][1]);
+		}catch(e){
+			console.log(`---------craw ${yearJiduArr[i][0]} 年 ${yearJiduArr[i][1]} 季度数据出错 重试中。。。 ---------`)
+			await crawJiDuData(code,yearJiduArr[i][0],yearJiduArr[i][1]);//再次尝试
+		}
 	}
 	historyData.lists.sort(function(prev,next){
 		return new Date(prev[0])-new Date(next[0]);
 	});
 	await saveHistoryData(code);
-	console.log(historyData)
+	// console.log(historyData)
 }
 
 
@@ -53,10 +58,14 @@ async function crawJiDuData(code,year,jidu){
 
 	return new Promise(function(resolve,reject){
 
-		superagent.get(url).end(function(error,resHtml){
+		let sup=superagent.get(url).timeout({
+			deadline:1000*10,//10s超时时间  超时之后不继续执行代码怎么破
+			response:1000*10
+		}).end(function(error,resHtml){
 			if(error){
-				console.log(error);
-				reject(error);
+				console.log('error:');
+				// sup.abort();
+				reject(false);
 			}else{
 				console.log(`craw  ${code} ${year}年${jidu}季度数据  success ! ! !`);
 				var text=resHtml.text;
@@ -66,15 +75,15 @@ async function crawJiDuData(code,year,jidu){
 
 					var tr=trs.eq(i);
 					var tds=tr.find("td");
-					var time=tds.eq(0).find("a").html().trim();
-					var open=tds.eq(1).find("div").html().trim();
-					var high=tds.eq(2).find("div").html().trim();
-					var now=tds.eq(3).find("div").html().trim();
-					var low=tds.eq(4).find("div").html().trim();
-					var num=tds.eq(5).find("div").html().trim();
-					var money=tds.eq(6).find("div").html().trim();
+					var time=tds.eq(0).find("a").html()||' '.trim();
+					var open=tds.eq(1).find("div").html()||' '.trim();
+					var high=tds.eq(2).find("div").html()||' '.trim();
+					var now=tds.eq(3).find("div").html()||' '.trim();
+					var low=tds.eq(4).find("div").html()||' '.trim();
+					var num=tds.eq(5).find("div").html()||' '.trim();
+					var money=tds.eq(6).find("div").html()||' '.trim();
 
-					if(!historyData.timeColect[time]){
+					if(!historyData.timeColect[time]&&time){
 						historyData.timeColect[time]=true;
 						historyData.count+=1;
 						historyData.lists.push([time,open,high,low,now,num,money]);
@@ -120,7 +129,7 @@ async function saveHistoryData(code){
 					for(let i=0;i<historyData.lists.length;i++){
 						var dayData=historyData.lists[i];
 						var time=dayData[0];
-						if(!data.historyData.timeColect[time]){
+						if(!data.historyData.timeColect[time]&&time){
 							data.historyData.timeColect[time]=true;
 							data.historyData.count+=1;
 							data.historyData.lists.push(dayData);

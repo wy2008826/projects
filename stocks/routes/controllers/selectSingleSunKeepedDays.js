@@ -3,12 +3,13 @@ var mongoose=require("mongoose");
 
 var StockModel=require("../../models/stock.js");
 mongoose.connect("127.0.0.1:27017/stock");// elevator 具体的库名称
+let sendEmail=require("../utils/sendEmail.js");
 
 let maxDaysKeep=15;
 let isSingleSunKeepd=require("../../strategy/isSingleSunKeepd.js");
 
 
-module.exports= function(){// 
+module.exports= function(needEmail){// 
 	
 	const strategyName=`本地数据库查找单阳不破的股票`;
 
@@ -45,9 +46,29 @@ module.exports= function(){//
 				let minutes=( (end-start) / (1000 * 60 ) );
 				console.log(`${strategyName} 😊 !!! 共耗时 ${minutes} 分钟`);
 				console.log(suits)
-				
+				try{
+					if(needEmail){//是否需要发邮件
+						const html=createEmailText(suits);
+						console.log(html)
+						await sendEmail(html,"now kLine is T");
+					}
+					
+				}catch(e){
+					console.log("catch e:",e)
+				}
 			}
 			
 		});
 	});
 }
+
+
+function createEmailText(suits){
+	let html="<ul>";
+	suits.forEach(function(item,index){
+		html+=item.name+":"+item.code+"<br/>";
+	});
+	html+="</ul>";
+	return html;
+}
+

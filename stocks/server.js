@@ -16,7 +16,7 @@ let selectHuiTiaoToAverageLineAllType=require("./routes/controllers/selectHuiTia
 let selectHuiTiaoToAverageLineOneType=require("./routes/controllers/selectHuiTiaoToAverageLineOneType");
 let selectSingleSunKeepedDays=require("./routes/controllers/selectSingleSunKeepedDays");
 
-let testSearchOneCodeSingleSunKeepedDays=require("./testStrategy/searchOneCodeSingleSunKeepedDays");
+let testSearchAllCodeSingleSunKeepedDays=require("./testStrategy/testSearchAllCodeSingleSunKeepedDays");
 
 
 app.use(express.static(__dirname+"/dist"));//设置静态资源路径
@@ -30,19 +30,32 @@ var crawRoutes=require("./routes/crawRoutes");//api路由
 
 
 //上、下午收盘前找出 T 字形股票
-schedule.scheduleJob(timeRules.beforeAmClose, crawAllSlotsAndSearchOneDayT);
-schedule.scheduleJob(timeRules.beforePmClose, crawAllSlotsAndSearchOneDayT);
+schedule.scheduleJob(timeRules.beforeAmClose, function(){
+	crawAllSlotsAndSearchOneDayT("email");
+});
+schedule.scheduleJob(timeRules.beforePmClose, function(){
+	crawAllSlotsAndSearchOneDayT("email");
+});
 
 
 //每天晚上6:10爬取数据  完善数据库股票的历史数据
-schedule.scheduleJob(timeRules.excludeWeekends18, crawHistoryDataAll);
-schedule.scheduleJob(timeRules.everyNight20, selectHuiTiaoToAverageLineAllType);
+schedule.scheduleJob(timeRules.excludeWeekends18, async function(){
+	await crawAllSlotsAndSearchOneDayT();
+	await crawHistoryDataAll();
+});
+
+
+//每天晚上搜索单阳不破的股票
+schedule.scheduleJob(timeRules.everyNight20, async function(){
+	await selectSingleSunKeepedDays("email");
+});
 
 
 
 async function all(){
 
 	// await crawAllSlotsAndSearchOneDayT();//抓取数据
+	
 	// await crawHistoryDataAll();//抓取所有股票的历史数据
 	// await selectAllAverageUp();
 	// await selectHuiTiaoToAverageLineAllType();
@@ -51,7 +64,8 @@ async function all(){
 	
 	// await crawHistoryDataOne("600027","2016-05-26");
 	// await selectSingleSunKeepedDays();
-	await testSearchOneCodeSingleSunKeepedDays("603833");
+	// await testSearchAllCodeSingleSunKeepedDays("601588");
+
 }
 
 all();
@@ -62,3 +76,4 @@ app.use("/",apiRoutes);
 app.use("/",crawRoutes);
 
 app.listen(3000);
+

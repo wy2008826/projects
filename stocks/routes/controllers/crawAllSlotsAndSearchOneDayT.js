@@ -24,7 +24,7 @@ let suits=[];//满足要求的今天的股票
 let codesObj=[]
 
 
-module.exports= async function crawAllSlotsAndSearchOneDayT(){
+module.exports= async function crawAllSlotsAndSearchOneDayT(needEmail){
 	suits=[];
 	codesObj=[];
 
@@ -41,8 +41,18 @@ module.exports= async function crawAllSlotsAndSearchOneDayT(){
 	}
 	await writeCodeFile();
 
-	const html=createEmailText();
-	await sendEmail(html,"now kLine is T");
+	
+	console.log(suits);
+	try{
+		if(needEmail){//是否需要发邮件
+			const html=createEmailText();
+			await sendEmail(html,"now kLine is T");
+		}
+		
+	}catch(e){
+		console.log("catch e:",e)
+	}
+	
 }
 
 
