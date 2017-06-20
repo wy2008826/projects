@@ -36,10 +36,15 @@ module.exports= async function crawAllSlotsAndSearchOneDayT(needEmail){
 	let pages=Math.round(count/pageSize);
 
 	for(let i=curPage;i<pages;i++){
-		let pageStocks = await crawPage(i,pageSize);
-		if(pageStocks){
-			let pageTongJi=await savePageStocks(pageStocks,i);
+		try{
+			let pageStocks = await crawPage(i,pageSize);
+			if(pageStocks&&pageStocks.length>0){
+				let pageTongJi=await savePageStocks(pageStocks,i);
+			}
+		}catch(e){
+			console.log("爬取数据失败！！！！")
 		}
+		
 		
 	}
 	await writeCodeFile();
