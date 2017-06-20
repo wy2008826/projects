@@ -44,8 +44,7 @@ schedule.scheduleJob(timeRules.excludeWeekends18, async function(){
 	await crawHistoryDataAll();
 });
 
-
-//每天晚上搜索单阳不破的股票
+//每天晚上搜索单阳不破de
 schedule.scheduleJob(timeRules.everyNight20, async function(){
 	await selectSingleSunKeepedDays("email");
 });
@@ -57,13 +56,15 @@ async function all(){
 	// await crawAllSlotsAndSearchOneDayT();//抓取数据
 	
 	// await crawHistoryDataAll();//抓取所有股票的历史数据
+	// await selectSingleSunKeepedDays();
+
+	
 	// await selectAllAverageUp();
 	// await selectHuiTiaoToAverageLineAllType();
 
-	// await selectHuiTiaoToAverageLineAllType();
 	
 	// await crawHistoryDataOne("600027","2016-05-26");
-	// await selectSingleSunKeepedDays();
+	
 	// await testSearchAllCodeSingleSunKeepedDays("601588");
 
 }
