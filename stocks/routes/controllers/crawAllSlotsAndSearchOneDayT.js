@@ -37,7 +37,10 @@ module.exports= async function crawAllSlotsAndSearchOneDayT(needEmail){
 
 	for(let i=curPage;i<pages;i++){
 		let pageStocks = await crawPage(i,pageSize);
-		let pageTongJi=await savePageStocks(pageStocks,i);
+		if(pageStocks){
+			let pageTongJi=await savePageStocks(pageStocks,i);
+		}
+		
 	}
 	await writeCodeFile();
 
