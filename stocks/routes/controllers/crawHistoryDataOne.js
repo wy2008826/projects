@@ -37,17 +37,20 @@ module.exports=async function(code,time=undefined){
 	
 	let yearJiduArr=createYearJiDu(time);
 	for(let i=0;i<yearJiduArr.length;i++){
-		try{
-			let data=await crawJiDuData(code,yearJiduArr[i][0],yearJiduArr[i][1]);
-		}catch(e){
+		let data=await crawJiDuData(code,yearJiduArr[i][0],yearJiduArr[i][1]).catch(async function(err){
 			console.log(`---------craw ${yearJiduArr[i][0]} 年 ${yearJiduArr[i][1]} 季度数据出错 重试中。。。 ---------`)
-			await crawJiDuData(code,yearJiduArr[i][0],yearJiduArr[i][1]);//再次尝试
-		}
+			await crawJiDuData(code,yearJiduArr[i][0],yearJiduArr[i][1]).catch(function(err){
+				console.log("-------  craw ${yearJiduArr[i][0]} 年 ${yearJiduArr[i][1]} 季度数据出错    不再尝试。。。 ---------")
+			});//再次尝试
+		});
+		
 	}
 	historyData.lists.sort(function(prev,next){
 		return new Date(prev[0])-new Date(next[0]);
 	});
-	await saveHistoryData(code);
+	await saveHistoryData(code).catch(function(err){
+		console.log(`--------  保存 ${code}  历史数据失败 ---------!`)
+	});
 	// console.log(historyData)
 }
 

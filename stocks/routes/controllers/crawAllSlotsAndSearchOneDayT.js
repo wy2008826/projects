@@ -36,31 +36,25 @@ module.exports= async function crawAllSlotsAndSearchOneDayT(needEmail){
 	let pages=Math.round(count/pageSize);
 
 	for(let i=curPage;i<pages;i++){
-		try{
-			let pageStocks = await crawPage(i,pageSize);
-			if(pageStocks&&pageStocks.length>0){
-				let pageTongJi=await savePageStocks(pageStocks,i);
-			}
-		}catch(e){
-			console.log("爬取数据失败！！！！")
+		let pageStocks = await crawPage(i,pageSize).catch(function(err){
+			console.log(`----- craw page ${i} 代码列表失败 -------!`);
+		});
+		if(pageStocks&&pageStocks.length>0){
+			let pageTongJi=await savePageStocks(pageStocks,i).catch(function(err){
+				console.log(`----- save page ${i} 代码列表失败 -------!`);
+			});
 		}
-		
-		
 	}
 	await writeCodeFile();
 
-	
 	console.log(suits);
-	try{
-		if(needEmail){//是否需要发邮件
-			const html=createEmailText();
-			await sendEmail(html,"now kLine is T");
-		}
-		
-	}catch(e){
-		console.log("catch e:",e)
+	if(needEmail){//是否需要发邮件
+		const html=createEmailText();
+		await sendEmail(html,"now kLine is T").catch(function(err){
+			console.log("－－－－－－邮件发送失败－－－－－！")
+		});
 	}
-	
+		
 }
 
 
@@ -71,13 +65,18 @@ async function crawPage(page,pageSize){
 	
 	return new Promise(function(resolve,reject){
 		superagent.get(stockUrl).end(function(error,resHtml){
-			console.log("loaded "+page);
-			var text=resHtml.text;
-			var replaceTxt="/*<script>location.href='//sina.com';</script>*/fn(";
+			if(error){
+				console.log(`-------  load ${page} failed ------- !`);
+				reject(error);
+			}else{
+				console.log("loaded "+page);
+				var text=resHtml.text;
+				var replaceTxt="/*<script>location.href='//sina.com';</script>*/fn(";
 
-			var dataString=text.substring(replaceTxt.length+1,text.lastIndexOf(")"));
-			var stockArr=JSON.parse(dataString)[0].items;
-			resolve(stockArr);
+				var dataString=text.substring(replaceTxt.length+1,text.lastIndexOf(")"));
+				var stockArr=JSON.parse(dataString)[0].items;
+				resolve(stockArr);
+			}
 			
 		});
 	});
@@ -90,7 +89,9 @@ async function savePageStocks(stockArr,i){
 	let saves=[];
 	for(let i=0;i<stockArr.length;i++){
 		let _stock=stockArr[i];
-		let codeStatus = await saveStock(_stock);
+		let codeStatus = await saveStock(_stock).catch(function(err){
+			console.log(`------- save stocks failed -------`);
+		});
 		if(codeStatus.save){
 			save+=1;
 			saves.push({code,name}=codeStatus);
