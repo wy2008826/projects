@@ -45,7 +45,7 @@ module.exports= async function crawAllSlotsAndSearchOneDayT(needEmail){
 			});
 		}
 	}
-	// await writeCodeFile();
+	await writeCodeFile();
 
 	console.log(suits);
 	if(needEmail){//是否需要发邮件
