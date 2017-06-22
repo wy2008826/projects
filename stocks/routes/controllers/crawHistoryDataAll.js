@@ -38,6 +38,8 @@ module.exports=async function(){
 				console.log(`loaded all historyData 😊 !!! 共耗时 ${minutes} 分钟`)
 			}
 		});
+	}).catch(function(){
+		console.log("begain craw historyData error!")
 	});
 	
 }
