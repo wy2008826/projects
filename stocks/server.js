@@ -53,17 +53,16 @@ schedule.scheduleJob(timeRules.everyNight20, async function(){
 
 async function all(){
 
-	// await crawAllSlotsAndSearchOneDayT();//抓取数据
+	await crawAllSlotsAndSearchOneDayT();//抓取数据
 	
 	await crawHistoryDataAll();//抓取所有股票的历史数据
-	 await selectSingleSunKeepedDays();
+	await selectSingleSunKeepedDays();
 
 	
 	// await selectAllAverageUp();
 	// await selectHuiTiaoToAverageLineAllType();
 
 	
-	// await crawHistoryDataOne("600027","2016-05-26");
 	
 	// await testSearchAllCodeSingleSunKeepedDays("601588");
 

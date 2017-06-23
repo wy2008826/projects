@@ -8,7 +8,7 @@ var mongoose=require("mongoose");
 
 
 var StockModel=require("../../models/stock.js");
-mongoose.connect("127.0.0.1:27017/stock");// elevator 具体的库名称
+// mongoose.connect("127.0.0.1:27017/stock");// elevator 具体的库名称
 
 
 function getInitialHistoryData(){

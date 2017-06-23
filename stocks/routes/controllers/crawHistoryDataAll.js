@@ -14,6 +14,7 @@ module.exports=async function(){
 	return new Promise(function(resolve,reject){
 		StockModel.find({},async function(err,stocks){
 			if(err){
+				console.log("find err:",err)
 				reject(err);
 			}else{
 				for(let i=0;i<stocks.length;i++){
