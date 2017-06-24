@@ -13,7 +13,10 @@ let timeFormat=require("../utils/getYMDHMS.js");
 module.exports=async function(){
 	let begain=new Date();
 	return new Promise(function(resolve,reject){
-		StockModel.find({},async function(err,stocks){
+		var query=StockModel.find({});
+		query.limit(10);
+		
+		query.exec(async function(err,stocks){
 			if(err){
 				console.log("find err:",err)
 				reject(err);
