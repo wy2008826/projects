@@ -6,6 +6,7 @@ var mongoose=require("mongoose");
 var StockModel=require("../../models/stock.js");
 mongoose.connect("127.0.0.1:27017/stock");// elevator 具体的库名称
 
+//使用process.nextTick()可以避免console过多导致的内存崩溃
 
 let timeFormat=require("../utils/getYMDHMS.js");
 //从数据库中查找股票的历史数据，按照历史数据最近一次的日期进行历史数据查询  完善数据库历史数据记录
@@ -17,26 +18,39 @@ module.exports=async function(){
 				console.log("find err:",err)
 				reject(err);
 			}else{
-				for(let i=0;i<stocks.length;i++){
-					
-					let stock=stocks[i];
-					let code=stock.code;
-					let historyData=stock.historyData;
-					let start;
-					if(historyData){
-						start=historyData.end;
-						if(getDay(start)==getDay(new Date())){
-							console.log("code historyData is fresh to now! skiped....")
-							continue;
+				let length=stocks.length;
+				let i=0;
+
+				async function startCraw(){
+					if(i<length){
+						let stock=stocks[i];
+						let code=stock.code;
+						let historyData=stock.historyData;
+						let start;
+						if(historyData){
+							start=historyData.end;
+							if(getDay(start)==getDay(new Date())){
+								console.log("code historyData is fresh to now! skiped....");
+								i+=1;
+							}else{
+								await crawHistoryDataOne(code,start);
+								i+=1;
+								process.nextTick(startCraw);
+							}
+						}else{
+							await crawHistoryDataOne(code,start);
+							i+=1;
+							process.nextTick(startCraw);
 						}
+					}else{
+						let end=new Date();
+						let minutes=( (end-begain) / (1000 * 60 ) );
+						console.log(`loaded all historyData 😊 !!! 共耗时 ${minutes} 分钟`);
+						resolve();
 					}
-					
-					await crawHistoryDataOne(code,start);
-				
 				}
-				let end=new Date();
-				let minutes=( (end-begain) / (1000 * 60 ) );
-				console.log(`loaded all historyData 😊 !!! 共耗时 ${minutes} 分钟`)
+				startCraw();
+				
 			}
 		});
 	}).catch(function(){

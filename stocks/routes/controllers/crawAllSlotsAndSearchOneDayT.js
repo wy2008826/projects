@@ -48,6 +48,7 @@ module.exports= async function crawAllSlotsAndSearchOneDayT(needEmail){
 	// await writeCodeFile();
 
 	console.log(suits);
+	return suits;
 	if(needEmail){//是否需要发邮件
 		const html=createEmailText();
 		await sendEmail(html,"now kLine is T").catch(function(err){

@@ -45,7 +45,8 @@ module.exports= function(needEmail){//
 				let end=new Date();
 				let minutes=( (end-start) / (1000 * 60 ) );
 				console.log(`${strategyName} 😊 !!! 共耗时 ${minutes} 分钟`);
-				console.log(suits)
+				console.log(suits);
+				resolve(suits);
 				try{
 					if(needEmail){//是否需要发邮件
 						const html=createEmailText(suits);
