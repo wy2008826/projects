@@ -13,9 +13,34 @@ let timeFormat=require("../utils/getYMDHMS.js");
 module.exports=async function(){
 	let begain=new Date();
 	return new Promise(function(resolve,reject){
-		var query=StockModel.find({});
-		query.limit(10);
 		
+
+		
+		StockModel.count({},async function(err,count){
+			if(err){
+				reject("find local database error");
+			}else{
+				let step=100;
+				for(let i=0;i<count;i+=step){//需要对数据进行拆分，不然会导致内存泄漏
+					let query=StockModel.find({});
+					query.skip(i);
+					query.limit(step);
+					await crawGroups(query);
+
+				}
+			}
+
+		});
+
+	}).catch(function(){
+		console.log("begain craw historyData error!")
+	});
+	
+}
+
+
+function crawGroups(query){
+	return new Promise(function(resolve,reject){
 		query.exec(async function(err,stocks){
 			if(err){
 				console.log("find err:",err)
@@ -56,11 +81,9 @@ module.exports=async function(){
 				
 			}
 		});
-	}).catch(function(){
-		console.log("begain craw historyData error!")
 	});
-	
 }
+
 
 
 function getDay(_time){
