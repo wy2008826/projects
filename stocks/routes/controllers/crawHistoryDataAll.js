@@ -31,6 +31,7 @@ module.exports=async function(){
 				let end=new Date();
 				let minutes=( (end-begain) / (1000 * 60 ) );
 				console.log(`loaded all historyData 😊 !!! 共耗时 ${minutes} 分钟`);
+				resolve();
 			}
 
 		});
