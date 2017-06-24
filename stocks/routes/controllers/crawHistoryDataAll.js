@@ -38,7 +38,6 @@ module.exports=async function(){
 	
 }
 
-
 function crawGroups(query){
 	return new Promise(function(resolve,reject){
 		query.exec(async function(err,stocks){

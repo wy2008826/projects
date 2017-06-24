@@ -19,11 +19,46 @@ module.exports= function(needEmail){//
 		let suits=[];
 		
 		console.log(`finding.......${strategyName}`);
-
-		StockModel.find({},async function(err,stocks){
+		StockModel.count({},async function(err,count){
 			if(err){
+				reject("本地数据库查找失败！");
+			}else{
+				let step=100;
+				for(let i=0;i<count;i+=step){//需要对数据进行拆分，不然会导致内存泄漏
+					let query=StockModel.find({});
+					query.skip(i);
+					query.limit(step);
+					await searchGroups(query);
+
+				}
+				let end=new Date();
+				let minutes=( (end-start) / (1000 * 60 ) );
+				console.log(`${strategyName} 😊 !!! 共耗时 ${minutes} 分钟`);
+				console.log(suits);
+				resolve(suits);
+				try{
+					if(needEmail){//是否需要发邮件
+						const html=createEmailText(suits);
+						console.log(html)
+						await sendEmail(html,"single sun keeped days!!");
+					}
+					
+				}catch(e){
+					console.log("catch e:",e)
+				}
+			}
+		});
+	});
+}
+
+function searchGroups(query){
+	return new Promise(function(resolve,reject){
+		query.exec(async function(err,stocks){
+			if(err){
+				console.log("find err:",err)
 				reject(err);
 			}else{
+
 				for(let i=0;i<stocks.length;i++){//计算所有的股票当前是否满足条件
 					
 					let stock=stocks[i];
@@ -40,29 +75,12 @@ module.exports= function(needEmail){//
 						}
 					}
 				}
+				resolve();
 				
-				
-				let end=new Date();
-				let minutes=( (end-start) / (1000 * 60 ) );
-				console.log(`${strategyName} 😊 !!! 共耗时 ${minutes} 分钟`);
-				console.log(suits);
-				resolve(suits);
-				try{
-					if(needEmail){//是否需要发邮件
-						const html=createEmailText(suits);
-						console.log(html)
-						await sendEmail(html,"now kLine is T");
-					}
-					
-				}catch(e){
-					console.log("catch e:",e)
-				}
 			}
-			
 		});
 	});
 }
-
 
 function createEmailText(suits){
 	let html="<ul>";

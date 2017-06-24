@@ -55,7 +55,7 @@ async function all(){
 
 	// let suits_OneDayT=await crawAllSlotsAndSearchOneDayT();//抓取数据
 	
-	await crawHistoryDataAll();//抓取所有股票的历史数据
+	// await crawHistoryDataAll();//抓取所有股票的历史数据
 	let suits_keepDays=await selectSingleSunKeepedDays();
 	
 	
@@ -64,7 +64,7 @@ async function all(){
 
 	// await testSearchAllCodeSingleSunKeepedDays("601588");
 
-	console.log("one day T:",suits_OneDayT);
+	// console.log("one day T:",suits_OneDayT);
 	console.log("Single sun keeped days:",suits_keepDays);
 
 }
