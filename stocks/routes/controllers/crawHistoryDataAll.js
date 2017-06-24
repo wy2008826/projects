@@ -28,6 +28,9 @@ module.exports=async function(){
 					await crawGroups(query);
 
 				}
+				let end=new Date();
+				let minutes=( (end-begain) / (1000 * 60 ) );
+				console.log(`loaded all historyData 😊 !!! 共耗时 ${minutes} 分钟`);
 			}
 
 		});
@@ -70,9 +73,6 @@ function crawGroups(query){
 							process.nextTick(startCraw);
 						}
 					}else{
-						let end=new Date();
-						let minutes=( (end-begain) / (1000 * 60 ) );
-						console.log(`loaded all historyData 😊 !!! 共耗时 ${minutes} 分钟`);
 						resolve();
 					}
 				}
