@@ -88,7 +88,7 @@
   }
   .stock{
         background-color:#fff;
-        border:0.012rem solid red;
+        border:0.012rem solid #f9f9f9;
   }
   
 </style>

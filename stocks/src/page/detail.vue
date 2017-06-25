@@ -23,9 +23,9 @@
       <p>
         <span v-text="historyData.name"></span>
         <span v-text="historyData.historyData.start"></span>
-        <span v-text="historyData.historyData.start"></span>
+        <span v-text="historyData.historyData.end"></span>
       </p>
-      <svg ref="svg" version="1.1" class="svg"  xmlns="http://www.w3.org/2000/svg"></svg>
+      <svg ref="svg" preserveAspectRatio="xMaxYMax slice" class="svg"  xmlns="http://www.w3.org/2000/svg"></svg>
     </div>
   </div>
 </template>
@@ -100,6 +100,8 @@
         this.calMaxMinVal(this.data);
         console.log(this.max,this.min);
         this.perH=(this.height - this.topSpace -this.bottomSpace)/(this.max-this.min);
+//        this.perH=1;
+//        this.perH=10;
         this.draw();
 //        this.drawOneK();
         console.log(this);
@@ -153,11 +155,11 @@
             let height=close_y-open_y;
 
             let x=(self.barSize+self.barGap) * i;
-            let start_y=height>=0?close_y:open_y;
+            let start_y=height>=0?open_y:close_y;
             let stroke=height>=0?"#00b252":"#ff0000";
             let option={
                 x,
-                y:self.topSpace+start_y,
+                y:self.topSpace+start_y*1,
                 height:Math.abs(height),
                 stroke,
                 fill:height>=0?"#00b252":"transparent"
