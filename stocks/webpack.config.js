@@ -60,6 +60,9 @@ module.exports = function () {
                         },
                         {
                             loader: 'postcss-loader',
+                        },
+                        {
+                            loader: 'file-loader',
                         }
                     ]
                 },
@@ -71,12 +74,20 @@ module.exports = function () {
                 },
                 {test: /\.json$/, loader: 'json-loader'},
                 {
-                    test: /\.(png|jpe?g|eot|svg|ttf|woff2?)$/,
+                    test: /\.(png|jpe?g)$/,
                     loader: 'url-loader?name=image/[name].[ext]',
                     options: {
                         limit: 8000
                     }
-                }
+                },
+                {
+                    test: /\.(woff|eot|svg|ttf)\??.*$/,
+                    loader : 'url-loader?name=fonts/[name].[md5:hash:hex:7].[ext]',
+                    // options: {
+                    //     limit: 8000,
+                    //     name:"fonts/[name].[md5:hash:hex:t].[ext]"
+                    // }
+                },
             ]
         },
         resolve: {

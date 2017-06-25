@@ -5,8 +5,10 @@ var route=express.Router();
 let selectIncrease =require("./controllers/apiSelectIncrease.js");
 let apiSelectOneStockHistoryAllDayT =require("./controllers/apiSelectOneStockHistoryAllDayT.js");
 let getAllCodes =require("./controllers/api/getAllCodes.js");
-let testSearchOneCodeAllT=require('../testStrategy/testSearchOneCodeAllT');
+let getOneCodeHistoryData =require("./controllers/api/getOneCodeHistoryData.js");
 
+let testSearchOneCodeAllT=require('../testStrategy/testSearchOneCodeAllT');
+let searchAllSlotsAndSearchOneDayT=require('./controllers/searchAllSlotsAndSearchOneDayT');
 
 route.get("/api/test",function(req,res,error){
 	var query=req.query;
@@ -26,6 +28,34 @@ route.get("/api/getAllCodes",async function(req,res,error){
 		stocks
 	};
 	res.json(data);
+});
+
+route.get("/api/getAllCodeNowT",async function(req,res,error){
+    var query=req.query;
+
+    let lists=await searchAllSlotsAndSearchOneDayT(query);
+    var data={
+        query:query,
+        lists
+    };
+    res.json(data);
+});
+route.get("/api/getOneCodeHistoryData",async function(req,res,error){
+    var query=req.query;
+	const code=query.code;
+	if(code){
+        let result=await getOneCodeHistoryData(code);
+        var data={
+            query:query,
+            result
+        };
+        res.json(data);
+	}else{
+        res.json({
+			r:false
+		});
+	}
+
 });
 
 route.get("/api/getOneCodeAllT",async function(req,res,error){

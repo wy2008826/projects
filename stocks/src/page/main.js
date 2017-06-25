@@ -7,6 +7,8 @@ import routes from "../router/router.js";
 
 import vuex from "vuex";
 import store from "../store/store.js";
+// import "../assets/css/base.scss";
+
 
 Vue.use(vueRouter);
 Vue.use(vueResource);
