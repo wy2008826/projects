@@ -64,6 +64,11 @@ module.exports = function () {
                     ]
                 },
                 {test: /\.vue$/,loader: "vue-loader"},
+                {
+                    test: /\.js$/,
+                    loader: "babel-loader",
+                    exclude: /node_modules/,
+                },
                 {test: /\.json$/, loader: 'json-loader'},
                 {
                     test: /\.(png|jpe?g|eot|svg|ttf|woff2?)$/,

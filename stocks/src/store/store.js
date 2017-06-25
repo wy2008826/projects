@@ -39,7 +39,7 @@ var actions={
 
 
 //store
-const store=new Vuex.Store({
+var store=new Vuex.Store({
 	state:state,
 	mutations:mutations,
   actions:actions
