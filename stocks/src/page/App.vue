@@ -45,6 +45,9 @@
 <style rel="stylesheet/scss" scoped lang="sass">
   
   @import "../assets/css/ignore/mixin.scss";
-
+  .top_bar{
+    line-height: 0.9rem;
+    font-size:0.4rem;
+  }
   
 </style>
