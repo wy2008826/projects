@@ -6,7 +6,7 @@ Vue.use(Vuex);
 //state
 var state={
   stocksIsPlain:false,
-  curStockIndex:0,
+  curStock:undefined,
   stocks:[]
 };
 
@@ -16,8 +16,8 @@ var mutations={
     SET_STOCKS:function(state,payload) {
       state.stocks=payload;
     },
-    SET_CURSTOCK_INDEX:function(state,payload){
-      state.curStockIndex=payload;
+    SET_CURSTOCK:function(state,payload){
+      state.curStock=payload;
     },
     TOGGLE_STOCKS:function(state,payload){
       state.stocksIsPlain=!state.stocksIsPlain;
@@ -27,10 +27,10 @@ var mutations={
 var actions={
     setStocks:function(context,payload){
       context.commit('SET_STOCKS',payload);
-      context.commit('SET_CURSTOCK_INDEX',0);
+      context.commit('SET_CURSTOCK',payload[0]);
     },
-    setCurStockIndex:function(context,payload){
-      context.commit('SET_CURSTOCK_INDEX',payload||0);
+    setCurStock:function(context,payload){
+      context.commit('SET_CURSTOCK',payload);
     },
     toggleStocks:function(context,payload){
       context.commit('TOGGLE_STOCKS',!state.stocksIsPlain);

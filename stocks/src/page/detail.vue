@@ -1,7 +1,7 @@
 <template>
   <div >
     <p>{{code}}:{{name}}</p>
-    <table class="table">
+    <table class="table text-center">
       <thead>
         <td>时间</td>
         <td>开盘</td>
@@ -32,17 +32,16 @@
       }
     },
     computed:{
-      curStockIndex(){
-        return this.$store.state.curStockIndex;
+      curStock(){
+        return this.$store.state.curStock;
       },
       code(){
-        let curStockIndex=this.curStockIndex;
-        
-        return this.$store.state.stocks[curStockIndex]["code"];
+        let self=this;
+        return self.curStock&&self.curStock.code ||self.$route.params.code;
       },
       name(){
-        let curStockIndex=this.curStockIndex;
-        return this.$store.state.stocks[curStockIndex]["name"];
+        let self=this;
+        return self.curStock&&self.curStock.name ||""
       }
     },
     methods:{

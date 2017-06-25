@@ -1,0 +1,17 @@
+
+table{
+	thead{
+		line-height: 0.8rem;
+		background: #e9eaec;
+	}
+	tbody{
+		line-height: 0.6rem;
+		background: #fefefe;
+		tr:nth-child(odd){
+			background: #f6f6f6;
+		}
+	}
+	td,th{
+		border:1px solid #f1f1f1;
+	}
+}

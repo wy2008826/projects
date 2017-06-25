@@ -6,7 +6,7 @@
         :to="'/detail/'+stock.code" 
         v-for="(stock,index) in stocks" 
         :class="{active:index==curStockIndex}">
-        <p v-on:click="selectStock(index)" class="clearfix box">
+        <p v-on:click="selectStock(stock)" class="clearfix box">
           <span v-text="stock.code" class="fn-fl"></span><span class="fn-fr" v-text="stock.name"></span>
         </p>
       </router-link>
@@ -27,18 +27,18 @@
         return this.$store.state.stocksIsPlain;
       },
       curStockIndex(){
-        return this.$store.state.curStockIndex;
+        return this.$store.state.stocks.indexOf(this.$store.state.curStock);
       },
       stocks(){
-        return this.$store.state.stocks;
+        return this.$store.state.stocks.slice(0,100);
       }
     },
     methods:{
       toggleStocks:function(){
         this.$store.dispatch("toggleStocks",!this.showStocks);
       },
-      selectStock(index){
-        this.$store.dispatch("setCurStockIndex",index);
+      selectStock(stock){
+        this.$store.dispatch("setCurStock",stock);
       }
     },
     created(){
@@ -48,6 +48,7 @@
       if(!stocks.length){
         this.$http.get("/api/getAllCodes?page=0&pageSize=100",{page:0,pageSize:100}).then((res)=>{
           self.$store.dispatch("setStocks",res.body.stocks);
+          
         },(res)=>{
           console.log("error")
         });
