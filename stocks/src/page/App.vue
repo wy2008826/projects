@@ -9,7 +9,7 @@
   </div>
 </template>
 
-<script>
+<script type="text/babel">
   import Stocks from "@/components/Stocks/Stocks.vue";
 
   export default {

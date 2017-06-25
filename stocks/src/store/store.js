@@ -4,45 +4,45 @@ Vue.use(Vuex);
 
 
 //state
-const state={
+var state={
   stocksIsPlain:false,
   curStockIndex:0,
   stocks:[]
 };
 
 
-//mutations
-const mutations={
-    SET_STOCKS(state,payload) {
+//mutations:mutations
+var mutations={
+    SET_STOCKS:function(state,payload) {
       state.stocks=payload;
     },
-    SET_CURSTOCK_INDEX(state,payload){
+    SET_CURSTOCK_INDEX:function(state,payload){
       state.curStockIndex=payload;
     },
-    TOGGLE_STOCKS(state,payload){
+    TOGGLE_STOCKS:function(state,payload){
       state.stocksIsPlain=!state.stocksIsPlain;
     }
 };
 
-const actions={
-    setStocks(context,payload){
+var actions={
+    setStocks:function(context,payload){
       context.commit('SET_STOCKS',payload);
       context.commit('SET_CURSTOCK_INDEX',0);
     },
-    setCurStockIndex(context,payload){
+    setCurStockIndex:function(context,payload){
       context.commit('SET_CURSTOCK_INDEX',payload||0);
     },
-    toggleStocks(context,payload){
-      context.commit('TOGGLE_STOCKS',payload||0);
+    toggleStocks:function(context,payload){
+      context.commit('TOGGLE_STOCKS',!state.stocksIsPlain);
     }
 }
 
 
 //store
 const store=new Vuex.Store({
-	state,
-	mutations,
-  actions
+	state:state,
+	mutations:mutations,
+  actions:actions
 });
 
 export default store;

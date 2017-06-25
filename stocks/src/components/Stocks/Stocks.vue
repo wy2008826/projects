@@ -5,9 +5,8 @@
       <router-link tag="li" 
         :to="'/detail/'+stock.code" 
         v-for="(stock,index) in stocks" 
-        class="clearfix box" 
         :class="{active:index==curStockIndex}">
-        <p v-on:click="selectStock(index)">
+        <p v-on:click="selectStock(index)" class="clearfix box">
           <span v-text="stock.code" class="fn-fl"></span><span class="fn-fr" v-text="stock.name"></span>
         </p>
       </router-link>
@@ -101,7 +100,10 @@
         border-bottom:0.01rem solid #fafafa;
         border-top:0.01rem solid #f0f0f0;
         background: #f7f7f7;
-        padding:0.05rem 0.1rem;
+        p{
+          height: 100%;
+          padding:0.05rem 0.1rem;
+        }
         &.active{
           color:#f93;
         }
