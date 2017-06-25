@@ -10,146 +10,22 @@
 	<meta name="x5-fullscreen"content="true"/>
 	<meta name="full-screen"content="yes">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no,minimum-scale=1.0, maximum-scale=1.0">
-	<title>index-module</title>
-	<style>
-		*{
-			margin:0;padding: 0;
-		}
-		ul{
-			list-style: none;
-		}
-		li{
-			line-height: 40px;
-		}
-		table{
-			width: 100%;
-			border-collapse: collapse;
-			text-align: center;
-		}
-		table th,td{
-			border:1px solid #e9e9e9;
-		}
-		tr td:last-child{
-			text-align: left;
-		}
-	</style>
-</head>
-<body>
-	<div id="pageWraper" >
-		<ul>
-			<li @click="crawAllSlotsAndSearchOneDayT">抓取股票列表</li>
-			<li @click="crawAllSlotsFinance">抓取所有股票财务数据</li>
-			<li @click="selectIncrease">筛选财务数据连续三年增长的股票</li>
-		</ul>
-		<table>
-			<thead>
-				<tr>
-					<th>公司名称</th>
-					<th>公司代码</th>
-					<th>净利润</th>
-					<th>利润表</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr v-for="stock in stockLists">
-					<td v-text="stock.name"></td>
-					<td v-text="stock.code"></td>
-					<td >
-						<p v-for="n in stock.time.length">
-							<span v-text="stock.time[n-1] + ' : ' +stock.profit[n-1]"></span>
-						</p>
-					</td>
-					<td>
-						<a :href="stock.href">查看财务状况</a>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-	
-	<script src="/js/plugins/zepto.min.js"></script>
-	<script src="/js/plugins/vue.min.js"></script>
+	<title>stocks</title>
 	<script>
-		window.vm=new Vue({
-			el:"#pageWraper",
-			data:{
-				stockLists:[]
-			},
-			methods:{
-				crawAllSlotsAndSearchOneDayT:function(){
-					$.ajax({
-						url:"/craw/crawAllSlotsAndSearchOneDayT",
-						type:"get",
-						data:{
-							name:"哈哈"
-						},
-						dataType:"json",
-						success:function(data){
-							console.log(data);
-						}
-					});
-				},
-				crawAllSlotsFinance:function(){
-					$.ajax({
-						url:"/craw/crawAllSlotsFinance",
-						type:"get",
-						dataType:"json",
-						success:function(data){
-							console.log(data);
-						}
-					});
-				},
-				crawHistoryData:function(code){
-					var self=this;
-					$.ajax({
-						url:"/craw/crawHistoryData",
-						type:"get",
-						dataType:"json",
-						data:{
-							code:code||"000725",
-							timeLimit:2
-						},
-						success:function(data){
-							console.log(data);
-							self.$data.stockLists=data.lists;
-						}
-					});
-				},
-				selectIncrease:function(){
-					var self=this;
-					$.ajax({
-						url:"/api/selectIncrease",
-						type:"get",
-						data:{
-							last:3
-						},
-						dataType:"json",
-						success:function(data){
-							console.log(data);
-							self.$data.stockLists=data.lists;
-						}
-					});
-				},
-				apiSelectOneStockHistoryAllDayT:function(code){
-					var self=this;
-					$.ajax({
-						url:"/api/apiSelectOneStockHistoryAllDayT",
-						type:"get",
-						data:{
-							code:code||"000725"
-						},
-						dataType:"json",
-						success:function(data){
-							console.log(data);
-						}
-					});
-				},
-			},
-			created:function(){
-				// this.crawAllSlotsAndSearchOneDayT();
-			}
-		});
+		
+		(function() {
+		    var deviceWidth = document.documentElement.clientWidth;
+		    if(deviceWidth > 750) deviceWidth = 750;
+		    document.documentElement.style.fontSize = deviceWidth / 7.5 + 'px';
+		})();
 		
 	</script>
+</head>
+<body>
+	<div id="app" >
+		<router-view></router-view>
+	</div>
+	
+	<script src="/dist/js/main.min.js"></script>
 </body>
 </html>

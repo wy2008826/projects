@@ -7,47 +7,74 @@ let sendEmail=require("../utils/sendEmail.js");
 
 let maxDaysKeep=15;
 let isSingleSunKeepd=require("../../strategy/isSingleSunKeepd.js");
+let getStocksCount=require("../utils/getStocksCount.js");
 
 
 module.exports= function(needEmail){// 
 	
 	const strategyName=`本地数据库查找单阳不破的股票`;
 
-	return new Promise(function(resolve,reject){
+	return new Promise(async function(resolve,reject){
 		let start=new Date();
 		
 		let suits=[];
-		
-		console.log(`finding.......${strategyName}`);
-		StockModel.count({},async function(err,count){
-			if(err){
-				reject("本地数据库查找失败！");
-			}else{
-				let step=100;
-				for(let i=0;i<count;i+=step){//需要对数据进行拆分，不然会导致内存泄漏
-					let query=StockModel.find({});
-					query.skip(i);
-					query.limit(step);
-					await searchGroups(query);
+		let count=await getStocksCount();
+		if(!count){
+			reject("find local database error");
+		}else{
+			console.log(`finding.......${strategyName}`);
+			let step=100;
+			for(let i=0;i<count;i+=step){//需要对数据进行拆分，不然会导致内存泄漏
+				let query=StockModel.find({});
+				query.skip(i);
+				query.limit(step);
+				await searchGroups(query);
 
-				}
-				let end=new Date();
-				let minutes=( (end-start) / (1000 * 60 ) );
-				console.log(`${strategyName} 😊 !!! 共耗时 ${minutes} 分钟`);
-				console.log(suits);
-				resolve(suits);
-				try{
-					if(needEmail){//是否需要发邮件
-						const html=createEmailText(suits);
-						console.log(html)
-						await sendEmail(html,"single sun keeped days!!");
-					}
-					
-				}catch(e){
-					console.log("catch e:",e)
-				}
 			}
-		});
+			let end=new Date();
+			let minutes=( (end-start) / (1000 * 60 ) );
+			console.log(`${strategyName} 😊 !!! 共耗时 ${minutes} 分钟`);
+			console.log(suits);
+			resolve(suits);
+
+			if(needEmail){//是否需要发邮件
+				const html=createEmailText(suits);
+				console.log(html)
+				await sendEmail(html,"single sun keeped days!!");
+			}
+			
+		};
+
+		
+		// StockModel.count({},async function(err,count){
+		// 	if(err){
+		// 		reject("本地数据库查找失败！");
+		// 	}else{
+		// 		let step=100;
+		// 		for(let i=0;i<count;i+=step){//需要对数据进行拆分，不然会导致内存泄漏
+		// 			let query=StockModel.find({});
+		// 			query.skip(i);
+		// 			query.limit(step);
+		// 			await searchGroups(query);
+
+		// 		}
+		// 		let end=new Date();
+		// 		let minutes=( (end-start) / (1000 * 60 ) );
+		// 		console.log(`${strategyName} 😊 !!! 共耗时 ${minutes} 分钟`);
+		// 		console.log(suits);
+		// 		resolve(suits);
+		// 		try{
+		// 			if(needEmail){//是否需要发邮件
+		// 				const html=createEmailText(suits);
+		// 				console.log(html)
+		// 				await sendEmail(html,"single sun keeped days!!");
+		// 			}
+					
+		// 		}catch(e){
+		// 			console.log("catch e:",e)
+		// 		}
+		// 	}
+		// });
 	});
 }
 

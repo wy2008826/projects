@@ -1,0 +1,55 @@
+@import "ignore/mixin";
+@import "ignore/reset";
+@import "ignore/grid-system";
+@import "ignore/transition";
+
+
+html{
+	background-color:#fff;
+}
+body{
+	max-width:7.5rem;
+	margin:0 auto;
+	background-color:#e8e8e8;
+}
+
+
+/**/
+.fn-fl{float:left;}
+.fn-fr{float:right;}
+.fn-fl,.fn-fr{display: inline;}
+.mt10{margin-top: 10px;}
+.hide{display: none !important;}
+.show{display: block;}
+
+.text-center{text-align: center;}
+.text-right{text-align:right;}
+.text-deco{text-decoration: underline;}
+
+.clearfix:after{content: ".";display: block;height: 0;	clear: both;visibility: hidden;}
+.clearfix{zoom:1;display: inline-block;_height: 1px;}
+.clearfix{display: block;}
+
+/*margin*/
+.mg-20{margin:20px}
+.mg-30{margin:30px}
+.mg-t-0{margin-top:0px;}
+.mg-t-10{margin-top:10px;}
+.mg-t-20{margin-top:20px !important;}
+.mg-t-30{margin-top:30px;}
+.mg-l-50{margin-left:50px;}
+.mg-l-10{margin-left: 10px;}
+.mg-b-0{margin-bottom: 0 !important;}
+
+/*padding*/
+.pd-0{padding:0 !important;}
+.pd-l-0{padding-left:0 !important;}
+.pd-20{padding: 20px !important;}
+
+/*cursor*/
+.cursor-p{cursor:pointer;}
+
+
+.box{box-sizing: border-box;}
+.dis-block{display: block;}
+

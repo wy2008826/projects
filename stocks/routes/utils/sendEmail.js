@@ -29,6 +29,8 @@ function sendEmail(html,title){
 		    }
 		    transport.close();
 		});
+	}).catch(function(err){
+		console.log("发送邮件失败  title：",title)
 	});
 
 }

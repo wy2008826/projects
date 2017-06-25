@@ -7,22 +7,49 @@ mongoose.connect("127.0.0.1:27017/stock");// elevator 具体的库名称
 
 let maxDaysKeep=15;
 let isSingleSunKeepd=require("../strategy/isSingleSunKeepd.js");
+let getStocksCount=require("../routes/utils/getStocksCount.js");
+let suits=[];
+
+module.exports=function(){
+	const strategyName=`本地数据库查找 单阳不破的买点`;
 
 
-module.exports=function(code="600000"){
-	const strategyName=`本地数据库查找 ${code} 单阳不破的买点`;
-
-
-	return new Promise(function(resolve,reject){
+	return new Promise(async function(resolve,reject){
 		let start=new Date();
 		
-		let suits=[];
 		
-		console.log(`finding.......${strategyName}`);
+		let count=await getStocksCount();
 
-		StockModel.find({},async function(err,stocks){
+		if(!count){
+			reject("find local database error");
+		}else{
+			console.log(`finding.......${strategyName}`);
+			let step=100;
+			for(let i=0;i<count;i+=step){//需要对数据进行拆分，不然会导致内存泄漏
+				let query=StockModel.find({});
+				query.skip(i);
+				query.limit(step);
+				await searchGroups(query);
+
+			}
+			
+			let end=new Date();
+			let minutes=( (end-start) / (1000 * 60 ) );
+			console.log(`${strategyName} 😊 !!! 共耗时 ${minutes} 分钟`);
+			console.log(suits)
+			resolve(suits);
+		};
+		
+	});
+}
+
+
+function searchGroups(query){
+	// return new Promise(function(resolve,reject){
+		return query.exec(async function(err,stocks){
 			if(err){
-				reject(err);
+				console.log("find err:",err)
+				// reject(err);
 			}else{
 				for(let i=0;i<stocks.length;i++){
 					let stock=stocks[i];
@@ -30,7 +57,6 @@ module.exports=function(code="600000"){
 					let name=stock.name;
 					let historyData=stock.historyData;
 					let length=historyData.lists.length;
-
 
 					if(historyData && length>maxDaysKeep+3){
 						for(let j=length-maxDaysKeep-3;j>18;j-- ){
@@ -43,15 +69,10 @@ module.exports=function(code="600000"){
 					}
 					
 				}
-				
-				
-				let end=new Date();
-				let minutes=( (end-start) / (1000 * 60 ) );
-				console.log(`${strategyName} 😊 !!! 共耗时 ${minutes} 分钟`);
-				console.log(suits)
-				resolve(suits);
+				// resolve();
 			}
-			
 		});
-	});
+	// });
 }
+
+

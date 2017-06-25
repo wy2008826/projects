@@ -1,0 +1,14 @@
+
+.slide-enter-active,.slide-leave-active{
+	transition:all ease 40000ms;
+}
+
+.slide-leave-active{
+	transform:translateX(0%);
+}
+.slide-enter-active{
+	transform:translateX(-100%);
+}
+.slide-enter{
+	transform:translateX(0%);
+}

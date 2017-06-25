@@ -16,7 +16,7 @@ var route=express.Router();
 route.get("/page/*",function(req,res){
 	var urlObj=url.parse(req.url,true);
 	var viewPath=urlObj.pathname.substr(6);
-	var viewFullPath=path.resolve(__dirname,"../views/",viewPath) +".hbs";
+	var viewFullPath=path.resolve(__dirname,"../views/",viewPath) +".html";
 
 	if(viewPath=="index"){//首页
 		indexController(req,res);

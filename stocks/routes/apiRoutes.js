@@ -4,7 +4,8 @@ var route=express.Router();
 
 let selectIncrease =require("./controllers/apiSelectIncrease.js");
 let apiSelectOneStockHistoryAllDayT =require("./controllers/apiSelectOneStockHistoryAllDayT.js");
-
+let getAllCodes =require("./controllers/api/getAllCodes.js");
+let testSearchOneCodeAllT=require('../testStrategy/testSearchOneCodeAllT');
 
 
 route.get("/api/test",function(req,res,error){
@@ -12,6 +13,28 @@ route.get("/api/test",function(req,res,error){
 	var data={
 		id:123,
 		query:query
+	};
+	res.json(data);
+});
+
+route.get("/api/getAllCodes",async function(req,res,error){
+	var query=req.query;
+
+	let stocks=await getAllCodes();
+	var data={
+		query:query,
+		stocks
+	};
+	res.json(data);
+});
+
+route.get("/api/getOneCodeAllT",async function(req,res,error){
+	var query=req.query;
+
+	let lists=await testSearchOneCodeAllT(query.code||"600000");
+	var data={
+		query:query,
+		lists
 	};
 	res.json(data);
 });

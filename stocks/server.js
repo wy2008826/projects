@@ -17,9 +17,9 @@ let selectHuiTiaoToAverageLineOneType=require("./routes/controllers/selectHuiTia
 let selectSingleSunKeepedDays=require("./routes/controllers/selectSingleSunKeepedDays");
 
 let testSearchAllCodeSingleSunKeepedDays=require("./testStrategy/testSearchAllCodeSingleSunKeepedDays");
+let testSearchOneCodeAllT=require('./testStrategy/testSearchOneCodeAllT');
 
-
-app.use(express.static(__dirname+"/dist"));//设置静态资源路径
+app.use(express.static(__dirname+"/"));//设置静态资源路径
 app.set("view engine","hbs");//设置模板引擎
 app.set("views",__dirname+"/views");//设置视图路径
 
@@ -55,17 +55,19 @@ async function all(){
 
 	// let suits_OneDayT=await crawAllSlotsAndSearchOneDayT();//抓取数据
 	
-	await crawHistoryDataAll();//抓取所有股票的历史数据
-	let suits_keepDays=await selectSingleSunKeepedDays();
+	// await crawHistoryDataAll();//抓取所有股票的历史数据
+	// let suits_keepDays=await selectSingleSunKeepedDays();
 	
 	
 	// await selectAllAverageUp();
 	// await selectHuiTiaoToAverageLineAllType();
 
-	// await testSearchAllCodeSingleSunKeepedDays("601588");
+	// await testSearchAllCodeSingleSunKeepedDays();
+	// await testSearchOneCodeAllT("600006");
+
 
 	// console.log("one day T:",suits_OneDayT);
-	console.log("Single sun keeped days:",suits_keepDays);
+	// console.log("Single sun keeped days:",suits_keepDays);
 
 }
 
