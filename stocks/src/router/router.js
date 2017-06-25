@@ -9,7 +9,7 @@ import Detail from "@/page/detail.vue";
 
 //会导致一个问题，有些路由已经用不到了，但是依然会被保留，导致该文件越来越臃肿
 
-const routes=[
+var routes=[
 	{
 		path:"/",
 		component:App,
