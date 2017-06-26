@@ -16,7 +16,7 @@ module.exports=async function(){
 	let begain=new Date();
 	return new Promise(async function(resolve,reject){
 
-		let Query=StockModel.find({});
+		let Query=StockModel.find({},["code"]);
 		let count=await Query.then(function(docs){
 			return docs.length||0;
 		});
@@ -67,6 +67,7 @@ function crawGroups(query){
 							if(getDay(start)==getDay(new Date())){
 								console.log("code historyData is fresh to now! skiped....");
 								i+=1;
+								process.nextTick(startCraw);
 							}else{
 								await crawHistoryDataOne(code,start);
 								i+=1;
