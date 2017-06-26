@@ -93,7 +93,6 @@
       width:3.5rem;
       height: 100%;
       overflow-y: scroll;
-      font-size:0.12rem;
       z-index: 2;
       box-shadow:0.03rem 0 0.02rem #d8d8d8;
       li{
@@ -101,6 +100,7 @@
         border-bottom:0.01rem solid #fafafa;
         border-top:0.01rem solid #f0f0f0;
         background: #f7f7f7;
+        font-size:0.14rem;
         p{
           height: 100%;
           padding:0.05rem 0.1rem;

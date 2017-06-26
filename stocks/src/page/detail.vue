@@ -25,7 +25,7 @@
         <span v-text="historyData.historyData.start"></span>
         <span v-text="historyData.historyData.end"></span>
       </p>
-      <svg ref="svg" preserveAspectRatio="xMaxYMax slice" class="svg"  xmlns="http://www.w3.org/2000/svg"></svg>
+      <svg ref="svg" preserveAspectRatio="none" class="svg"  xmlns="http://www.w3.org/2000/svg"></svg>
     </div>
   </div>
 </template>
@@ -71,7 +71,7 @@
         this.$http.get(`/api/getOneCodeHistoryData?code=${self.code}`).then((res)=>{
             console.log(res.body.result);
             self.$data.historyData=res.body.result;
-            new drawKLine(self.$refs["svg"],res.body.result);
+            window.draw=new drawKLine(self.$refs["svg"],res.body.result);
         },(res)=>{
             console.log("error")
         });
@@ -86,6 +86,7 @@
     constructor(svg,data){
         this.svg=window.svg=svg;
         this.data=data.historyData.lists;
+        this.length=this.data.length;
         this.barCount=this.data.length;
         this.barSize=6;
         this.strokeWidth=1;
@@ -97,14 +98,12 @@
         this.min=100000000;
         this.init();
 
-        this.calMaxMinVal(this.data);
-        console.log(this.max,this.min);
-        this.perH=(this.height - this.topSpace -this.bottomSpace)/(this.max-this.min);
-//        this.perH=1;
-//        this.perH=10;
+        let maxMin=this.calMaxMinVal(0,length-1);
+        self.max=maxMin.max;
+        self.min=maxMin.min;
+
         this.draw();
-//        this.drawOneK();
-        console.log(this);
+        this.setViewBox(this.length-40,this.length-1);
     }
     init(){
         let self=this;
@@ -115,18 +114,16 @@
         self.svg.setAttribute("height",height);
         self.svg.setAttribute("width",width );
 
-
-
     }
-    calMaxMinVal(data){
+    calMaxMinVal(start,end){
         let self=this;
         let max=-1000000;
         let min=10000000;
 
-        for(let i=0;i<data.length;i++){
-            let day=data[i];
+        for(let i=start;i<end;i++){
+            let day=self.data[i];
             let high=day[2];
-            let low=day[2];
+            let low=day[3];
             if(high>max){
                 max=high;
             }
@@ -134,44 +131,52 @@
                 min=low;
             }
         }
-        self.max=max;
-        self.min=min;
+        return {
+          max,
+          min
+        }
     }
-    calPosition(price){
+    setViewBox(start,end){
+      let self=this;
 
+      let {max,min}=this.calMaxMinVal(start,end);
+      let hight=max-min;
+      let barRelative=self.barSize+self.barGap;
+      let width=(end-start+3)*barRelative;
+      let x=start*barRelative;
+      this.svg.setAttribute("viewBox",`${x} ${-max-hight*0.05} ${width} ${hight*1.1}`)
     }
     draw(){
         let self=this;
         for(let i=0;i<self.barCount;i++){
             let bar=self.data[i];
-            let open=bar[1];
-            let high=bar[2];
-            let low=bar[3];
-            let close=bar[4];
+            self.drawOneK(bar,i);
 
-            let open_y=(self.max-open)*self.perH;
-            let close_y=(self.max-close)*self.perH;
-
-            let height=close_y-open_y;
-
-            let x=(self.barSize+self.barGap) * i;
-            let start_y=height>=0?open_y:close_y;
-            let stroke=height>=0?"#00b252":"#ff0000";
-            let option={
-                x,
-                y:self.topSpace+start_y*1,
-                height:Math.abs(height),
-                stroke,
-                fill:height>=0?"#00b252":"transparent"
-            };
-
-//            console.log(option);
-            self.drawOneK(option);
         }
     }
-    drawOneK(option){
-        let {x,y,height,stroke,fill}=option;
+    drawOneK(bar,index){
         let self=this;
+
+        let _open=bar[1];
+        let _high=bar[2];
+        let _low=bar[3];
+        let _close=bar[4];
+
+
+        let _height=_close-_open;
+
+        let x=(self.barSize+self.barGap) * index;
+        let y=_height>=0?-_close:-_open;
+        // let y=start_y * 1;
+        let height=Math.abs(_height);
+
+        
+        let stroke=_height>=0?"#ff0000":"#00b252";
+        let fill=_height>=0?"transparent":"#00b252";
+        let high=-_high;
+        let low=-_low;
+
+        
         let rect=document.createElementNS("http://www.w3.org/2000/svg", "rect");
         rect.setAttribute("x",x);
         rect.setAttribute("y",y);
@@ -183,6 +188,30 @@
         rect.setAttribute("fill",fill);
         rect.setAttribute("vector-effect","non-scaling-stroke");
         self.svg.appendChild(rect);
+
+        let line_top=document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line_top.setAttribute("x1",x+self.barSize*0.5);
+        line_top.setAttribute("y1",high);
+        line_top.setAttribute("x2",x+self.barSize*0.5);
+        line_top.setAttribute("y2",y);
+
+        line_top.setAttribute("stroke",stroke);
+        line_top.setAttribute("stroke-width",self.strokeWidth);
+        line_top.setAttribute("vector-effect","non-scaling-stroke");
+        self.svg.appendChild(line_top);
+
+
+
+        let line_bottom=document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line_bottom.setAttribute("x1",x+self.barSize*0.5);
+        line_bottom.setAttribute("y1",y+height);
+        line_bottom.setAttribute("x2",x+self.barSize*0.5);
+        line_bottom.setAttribute("y2",low);
+
+        line_bottom.setAttribute("stroke",stroke);
+        line_bottom.setAttribute("stroke-width",self.strokeWidth);
+        line_bottom.setAttribute("vector-effect","non-scaling-stroke");
+        self.svg.appendChild(line_bottom);
     }
   }
 </script>
