@@ -6,11 +6,14 @@
     <div>
 
       <ul class="clearfix row">
-        <li v-for="stock in nowT" class="fn-fl stock col-all-4 text-center">
+        <router-link tag="li" 
+          class="fn-fl stock col-all-4 text-center"
+          :to="'/detail/'+stock.code" 
+          v-for="(stock,index) in nowT" >
           <p v-text="stock.name"></p>
           <p v-text="stock.code"></p>
           <p v-text="formatTime(stock.nowData[0])"></p>
-        </li>
+        </router-link>
       </ul>
     </div>
     

@@ -1,6 +1,6 @@
 <template>
   <div >
-    <p>{{code}}:{{name}}</p>
+    <p>{{code}}:{{historyData.name}}</p>
     <table class="table text-center">
       <thead>
         <td>时间</td>
@@ -48,11 +48,11 @@
       },
       code(){
         let self=this;
-        return self.curStock&&self.curStock.code ||self.$route.params.code;
+        return self.$route.params.code;
       },
       name(){
         let self=this;
-        return self.curStock&&self.curStock.name ||""
+        return ""
       }
     },
     methods:{
@@ -62,15 +62,15 @@
         var self=this;
         console.log(this)
         this.$http.get(`/api/getOneCodeAllT?code=${self.code}`).then((res)=>{
-          console.log(res);
           self.$data.suits=res.body.lists;
         },(res)=>{
           console.log("error")
         });
 
         this.$http.get(`/api/getOneCodeHistoryData?code=${self.code}`).then((res)=>{
-            console.log(res.body.result);
+            console.log(res);
             self.$data.historyData=res.body.result;
+            self.name=res.body.result.name;
             window.draw=new drawKLine(self.$refs["svg"],res.body.result);
         },(res)=>{
             console.log("error")

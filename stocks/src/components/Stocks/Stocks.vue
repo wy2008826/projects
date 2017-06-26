@@ -100,7 +100,7 @@
         border-bottom:0.01rem solid #fafafa;
         border-top:0.01rem solid #f0f0f0;
         background: #f7f7f7;
-        font-size:0.14rem;
+        font-size:0.2rem;
         p{
           height: 100%;
           padding:0.05rem 0.1rem;
