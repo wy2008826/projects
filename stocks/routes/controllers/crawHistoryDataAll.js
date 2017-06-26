@@ -17,18 +17,17 @@ module.exports=async function(){
 	return new Promise(async function(resolve,reject){
 
 		let Query=StockModel.find({},["code"]);
+		let codes;
 		let count=await Query.then(function(docs){
+			codes=docs;
 			return docs.length||0;
 		});
-		
 		if(!count){
 			reject("find local database error");
 		}else{
 			let step=100;
-			for(let i=0;i<count;i+=step){//需要对数据进行拆分，不然会导致内存泄漏
-				let query=StockModel.find({});
-				query.skip(i);
-				query.limit(step);
+			for(let i=0;i<count;i++){//需要对数据进行拆分，不然会导致内存泄漏
+				let query=StockModel.findOne({code:codes[i].code});
 				await crawGroups(query);
 			}
 			let end=new Date();
@@ -48,42 +47,28 @@ module.exports=async function(){
 
 function crawGroups(query){
 	return new Promise(function(resolve,reject){
-		return query.exec(async function(err,stocks){
+		return query.exec(async function(err,stock){
 			if(err){
 				console.log("find err:",err)
 				reject(err);
 			}else{
-				let length=stocks.length;
-				let i=0;
-
-				async function startCraw(){
-					if(i<length){
-						let stock=stocks[i];
-						let code=stock.code;
-						let historyData=stock.historyData;
-						let start;
-						if(historyData){
-							start=historyData.end;
-							if(getDay(start)==getDay(new Date())){
-								console.log(`${code} historyData is fresh to now! skiped....`);
-								i+=1;
-								process.nextTick(startCraw);
-							}else{
-								await crawHistoryDataOne(code,start);
-								i+=1;
-								process.nextTick(startCraw);
-							}
-						}else{
-							await crawHistoryDataOne(code,start);
-							i+=1;
-							process.nextTick(startCraw);
-						}
+				let code=stock.code;
+				let historyData=stock.historyData;
+				let start;
+				if(historyData){
+					start=historyData.end;
+					if(getDay(start)==getDay(new Date())){
+						console.log(`${code} historyData is fresh to now! skiped....`);
+						resolve();
 					}else{
+						await crawHistoryDataOne(code,start);
 						resolve();
 					}
+				}else{
+					await crawHistoryDataOne(code,start);
+					resolve();
 				}
-				startCraw();
-				
+
 			}
 		});
 	});
