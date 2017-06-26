@@ -65,7 +65,7 @@ function crawGroups(query){
 						if(historyData){
 							start=historyData.end;
 							if(getDay(start)==getDay(new Date())){
-								console.log("code historyData is fresh to now! skiped....");
+								console.log(`${code} historyData is fresh to now! skiped....`);
 								i+=1;
 								process.nextTick(startCraw);
 							}else{
