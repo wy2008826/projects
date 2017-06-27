@@ -1,6 +1,7 @@
 
 let StockModel=require("../../../models/stock.js");
 
+
 module.exports=async function(code){
     return new Promise(async function(resolve,reject){
         let Query=StockModel.findOne({code},["code","name","historyData"]);

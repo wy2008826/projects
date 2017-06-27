@@ -15,8 +15,7 @@ function getInitialHistoryData(){
 		count:0,
 		start:"2050-01-01",
 		end:"2000-01-01",
-		timeColect:{},
-		lists:[]
+		dataColects:{},
 	};
 }
 let historyData=getInitialHistoryData();
@@ -44,9 +43,7 @@ module.exports=async function(code,time=undefined){
 		});
 		
 	}
-	historyData.lists.sort(function(prev,next){
-		return new Date(prev[0])-new Date(next[0]);
-	});
+	
 	await saveHistoryData(code).catch(function(err){
 		console.log(`--------  保存 ${code}  历史数据失败 ---------!`)
 	});
@@ -77,7 +74,7 @@ async function crawJiDuData(code,year,jidu){
 
 					var tr=trs.eq(i);
 					var tds=tr.find("td");
-					var time=tds.eq(0).find("a").html()||' '.trim();
+					var time=tds.eq(0).find("a").html()||' '.trim().replace(/\s+/g,"");
 					var open=tds.eq(1).find("div").html()||' '.trim();
 					var high=tds.eq(2).find("div").html()||' '.trim();
 					var now=tds.eq(3).find("div").html()||' '.trim();
@@ -85,10 +82,9 @@ async function crawJiDuData(code,year,jidu){
 					var num=tds.eq(5).find("div").html()||' '.trim();
 					var money=tds.eq(6).find("div").html()||' '.trim();
 
-					if(!historyData.timeColect[time]&&time){
-						historyData.timeColect[time]=true;
+					if(!historyData.dataColects[time]&&time){
+						historyData.dataColects[time]=[time,open,high,low,now,num,money];
 						historyData.count+=1;
-						historyData.lists.push([time,open,high,low,now,num,money]);
 						if(new Date(time)>new Date(historyData.end)){
 							historyData.end=time;
 						}
@@ -110,7 +106,7 @@ async function saveHistoryData(code){
 			if(err){
 				reject(err);
 			}else{
-				if(!data.historyData){
+				if(!data.historyData){//数据库中没有历史数据
 					StockModel.update({code:code},{
 						$set:{
 							historyData:historyData
@@ -123,18 +119,15 @@ async function saveHistoryData(code){
 							resolve(historyData);
 						}
 					});
-				}else{
+				}else{//数据库中存在历史数据
 					var push=0;
 					var pushStart="2090-01-01";
-					
-
-					for(let i=0;i<historyData.lists.length;i++){
-						var dayData=historyData.lists[i];
+					Object.keys(historyData.dataColects).forEach(function(timeKey,index){
+						var dayData=historyData.dataColects[timeKey];
 						var time=dayData[0];
-						if(!data.historyData.timeColect[time]&&time){
-							data.historyData.timeColect[time]=true;
+						if(!data.historyData.dataColects[time]&&time){
+							data.historyData.dataColects[time]=dayData;
 							data.historyData.count+=1;
-							data.historyData.lists.push(dayData);
 							if(new Date(time)>new Date(data.historyData.end)){
 								data.historyData.end=time;
 								if(new Date(time)< new Date(pushStart)){
@@ -143,7 +136,8 @@ async function saveHistoryData(code){
 							}
 							push+=1;
 						}
-					}
+					});
+					
 					StockModel.update({code:code},data,function(err){
 						if(err){
 							reject(err);

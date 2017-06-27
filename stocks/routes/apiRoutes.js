@@ -3,7 +3,6 @@ var express=require("express");
 var route=express.Router();
 
 let selectIncrease =require("./controllers/apiSelectIncrease.js");
-let apiSelectOneStockHistoryAllDayT =require("./controllers/apiSelectOneStockHistoryAllDayT.js");
 let getAllCodes =require("./controllers/api/getAllCodes.js");
 let getOneCodeHistoryData =require("./controllers/api/getOneCodeHistoryData.js");
 
@@ -70,7 +69,6 @@ route.get("/api/getOneCodeAllT",async function(req,res,error){
 });
 
 route.get("/api/selectIncrease",selectIncrease);
-route.get("/api/apiSelectOneStockHistoryAllDayT",apiSelectOneStockHistoryAllDayT);
 
 
 module.exports=route;

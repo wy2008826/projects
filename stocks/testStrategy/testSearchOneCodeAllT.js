@@ -1,6 +1,7 @@
 
 var StockModel=require("../models/stock.js");
 var isOneDayT=require('../strategy/isOneDayT.js');
+var getSortHistoryData=require('../routes/utils/getSortHistoryData.js');
 
 module.exports=async function(code='000725'){
 	let suits=[];
@@ -10,9 +11,9 @@ module.exports=async function(code='000725'){
 				console.log(err);
 				reject(false);
 			}else{
-				let historyData=stock.historyData.lists;
+				let historyData=getSortHistoryData(stock.historyData.dataColects);
 				let length=historyData.length;
-
+				// console.log(historyData);
 				for(let i=0;i<length;i++){
 					let day=historyData[i];
 
@@ -21,10 +22,9 @@ module.exports=async function(code='000725'){
 					}
 				}
 				
-				console.log(suits);
+				console.log(code+":所有的单日 T:",suits);
 				resolve(suits);
 			}
 		});
 	});
-	
 }

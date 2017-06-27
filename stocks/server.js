@@ -63,7 +63,7 @@ async function all(){
 	// await selectHuiTiaoToAverageLineAllType();
 
 	// await testSearchAllCodeSingleSunKeepedDays();
-	// await testSearchOneCodeAllT("600006");
+	// await testSearchOneCodeAllT("603133");
 
 
 	// console.log("one day T:",suits_OneDayT);
