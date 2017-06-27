@@ -74,7 +74,7 @@ async function crawJiDuData(code,year,jidu){
 
 					var tr=trs.eq(i);
 					var tds=tr.find("td");
-					var time=tds.eq(0).find("a").html()||' '.trim().replace(/\s+/g,"");
+					var time=(tds.eq(0).find("a").text()||' '.trim()).replace(/\s+|\n+|\t+|\r+/,"");
 					var open=tds.eq(1).find("div").html()||' '.trim();
 					var high=tds.eq(2).find("div").html()||' '.trim();
 					var now=tds.eq(3).find("div").html()||' '.trim();
