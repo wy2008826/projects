@@ -2,19 +2,14 @@
 var mongoose=require("mongoose");
 
 var StockModel=require("../../models/stock.js");
-mongoose.connect("127.0.0.1:27017/stock");// elevator 具体的库名称
-let sendEmail=require("../utils/sendEmail.js");
 
-let maxDaysKeep=15;
-let isSingleSunKeepd=require("../../strategy/isSingleSunKeepd.js");
-let getStocksCount=require("../utils/getStocksCount.js");
 var getSortHistoryData=require('../utils/getSortHistoryData.js');
-
+let isLowOpenAndHighClose=require("../../strategy/isLowOpenAndHighClose.js");
 
 
 module.exports= function(needEmail){// 
 	
-	const strategyName=`本地数据库查找单阳不破的股票`;
+	const strategyName=`本地数据库查找低开高走的股票`;
 	return new Promise(async function(resolve,reject){
 		let start=new Date();
 		let suits=[];
@@ -32,7 +27,7 @@ module.exports= function(needEmail){//
 			console.log(`finding.......${strategyName}`);
 			for(let i=0;i<count;i++){//需要对数据进行拆分，不然会导致内存泄漏
 				let query=StockModel.findOne({code:codes[i].code});
-				let suit=await searchGroups(query);
+				let suit=await testStock(query);
 				if(suit){
 					suits.push(suit);
 				}
@@ -57,7 +52,7 @@ module.exports= function(needEmail){//
 	});
 }
 
-function searchGroups(query){
+function testStock(query){
 	return new Promise(function(resolve,reject){
 		return query.exec(async function(err,stock){
 			if(err){
@@ -68,10 +63,10 @@ function searchGroups(query){
 				let code=stock.code;
 				let name=stock.name;
 				let historyData=getSortHistoryData(stock.historyData.dataColects);
-				if(historyData && historyData.length>maxDaysKeep+3){
-					var recentData=historyData.slice(historyData.length-maxDaysKeep-3);
+				if(historyData && historyData.length>1){
+					var recentData=historyData.slice(historyData.length-2);
 
-					var result=isSingleSunKeepd(recentData);
+					var result=isLowOpenAndHighClose(recentData);
 					if(result.isSuit){
 						resolve({code,name,buyTime:result.buyTime});
 					}

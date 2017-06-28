@@ -95,7 +95,8 @@ module.exports = function () {
             extensions: ['.css', '.scss', 'sass','.js', '.jsx', '.vue'],
             alias: {
                 '@': path.resolve(__dirname, './src'),
-                'vue': 'vue/dist/vue.js'
+                'vue': 'vue/dist/vue.js',
+                'strategy': path.resolve(__dirname, './strategy'),
             }
         },
     };

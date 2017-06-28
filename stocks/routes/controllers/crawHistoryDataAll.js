@@ -25,7 +25,6 @@ module.exports=async function(){
 		if(!count){
 			reject("find local database error");
 		}else{
-			let step=100;
 			for(let i=0;i<count;i++){//需要对数据进行拆分，不然会导致内存泄漏
 				let query=StockModel.findOne({code:codes[i].code});
 				await crawGroups(query);

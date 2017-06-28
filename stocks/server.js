@@ -3,6 +3,9 @@
 var http=require("http");
 var express=require("express");
 var hbs=require("hbs");
+var mongoose=require("mongoose");
+mongoose.connect("127.0.0.1:27017/stock");
+
 var app=express();
 let schedule = require("node-schedule");//定时任务
 
@@ -15,6 +18,9 @@ let selectAllAverageUp=require("./routes/controllers/selectAllAverageUp");
 let selectHuiTiaoToAverageLineAllType=require("./routes/controllers/selectHuiTiaoToAverageLineAllType");
 let selectHuiTiaoToAverageLineOneType=require("./routes/controllers/selectHuiTiaoToAverageLineOneType");
 let selectSingleSunKeepedDays=require("./routes/controllers/selectSingleSunKeepedDays");
+let selectLowOpenAndHighClose=require("./routes/controllers/selectLowOpenAndHighClose.js");
+
+
 
 let testSearchAllCodeSingleSunKeepedDays=require("./testStrategy/testSearchAllCodeSingleSunKeepedDays");
 let testSearchOneCodeAllT=require('./testStrategy/testSearchOneCodeAllT');
@@ -57,7 +63,7 @@ async function all(){
 	
 	// await crawHistoryDataAll();//抓取所有股票的历史数据
 	// let suits_keepDays=await selectSingleSunKeepedDays();
-	
+	// let suits_lowOpenAndHighClose=await selectLowOpenAndHighClose();
 	
 	// await selectAllAverageUp();
 	// await selectHuiTiaoToAverageLineAllType();

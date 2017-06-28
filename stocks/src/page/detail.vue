@@ -27,19 +27,43 @@
       </p>
       <svg ref="svg" preserveAspectRatio="none" class="svg"  xmlns="http://www.w3.org/2000/svg"></svg>
     </div>
+    <div>
+      <h3 class="strategy_title">所有的低开高走收益</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>时间</th>
+            <th>3日内最高收益</th>
+            <th>6日内最高收益</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in allLowOpenAndHighClose" :class="lowOpenAndHighCloseRateClass(item)">
+            <td v-text="item.time"></td>
+            <td v-text="item.rate3.toFixed(2)"></td>
+            <td v-text="item.rate6.toFixed(2)"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
 <script>
   import { mapState } from 'vuex';
+  let isLowOpenAndHighClose=require("strategy/isLowOpenAndHighClose.js");
+
 
   export default {
     data:function(){
       return {
           suits:[],
           historyData:{
-              historyData:{}
-          }
+              historyData:{
+                
+              }
+          },
+          sortData:[]
       }
     },
     computed:{
@@ -53,10 +77,61 @@
       name(){
         let self=this;
         return ""
+      },
+      allLowOpenAndHighClose(){
+        let self=this;
+        let sortData=self.$data.sortData;
+        let suits=[];
+        for(let i=1;i<sortData.length;i++){
+          let recentData=sortData.slice(i-1,i+1);
+          console.log(recentData.length)
+          if(isLowOpenAndHighClose(recentData).isSuit){
+            let laterDays3=sortData.slice(i+1,i+4);
+            let laterDays6=sortData.slice(i+1,i+7);
+
+            let max=0;
+            let max3=0;
+            let max6=0;
+            for(let j=0;j<laterDays3.length;j++){
+              if(laterDays3[j][2]>max){
+                max=laterDays3[j][2];
+              }
+            }
+            max3=max;
+
+            for(let j=0;j<laterDays6.length;j++){
+              if(laterDays6[j][2]>max){
+                max=laterDays6[j][2];
+              }
+            }
+            max6=max;
+
+            let buyTimeClose=recentData[1][4];
+            suits.push({
+              time:recentData[1][0],
+              buyTimeClose,
+              max3,
+              rate3:( (max3-buyTimeClose)/buyTimeClose )*100,
+              max6,
+              rate6:( (max6-buyTimeClose)/buyTimeClose )*100
+            });
+          }
+        };
+        suits=suits.reverse();
+        console.log(suits);
+        return suits;
+        
       }
+      
     },
     methods:{
-
+      lowOpenAndHighCloseRateClass(item){
+        if(item.rate3>4&&item.rate6>4){
+            return "high";
+        }else if(item.rate3<2){
+          return "low"
+        }
+      }
     },
     created(){
         var self=this;
@@ -71,6 +146,15 @@
             console.log(res);
             self.$data.historyData=res.body.result;
             self.name=res.body.result.name;
+
+            let data=[];
+            Object.keys(self.$data.historyData.historyData.dataColects).forEach(function(timeKey){
+                data.push(self.$data.historyData.historyData.dataColects[timeKey]);
+            });
+            self.$data.sortData=data.sort(function(prev,next){
+              return new Date(prev[0])-new Date(next[0]);
+            });
+
             window.draw=new drawKLine(self.$refs["svg"],res.body.result);
         },(res)=>{
             console.log("error")
@@ -111,7 +195,7 @@
         self.min=maxMin.min;
 
         this.draw();
-        this.setViewBox(this.length-40,this.length-1);
+        this.setViewBox(this.length-100,this.length);
     }
     init(){
         let self=this;
@@ -228,9 +312,26 @@
 <style rel="stylesheet/scss" scoped lang="sass">
   
   @import "../assets/css/ignore/mixin.scss";
-  .table{
-    width:100%;
+  .strategy_title{
+    text-align: center;
+    line-height: 0.6rem;
+    color:#456;
   }
+  table{
+    width:100%;
+    text-align: center;
+    tbody{
+      tr{
+        &.high{
+          background-color:#FF7256
+        }
+        &.low{
+          background-color:#98FB98
+        }
+      }
+    }
+  }
+
     .svg{
         display: block;
         width:7rem;
