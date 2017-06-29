@@ -22,12 +22,12 @@ function isLowOpenAndHignClose(recentData){
 
 function isFall(data){
 	let [time,open,high,low,now]=data;
-	return now<open*0.98;
+	return now<open*0.99;
 }
 
 function isUp(data){
 	let [time,open,high,low,now]=data;
-	return now>open*1.01;
+	return now>open*1.005;
 }
 
 module.exports=isLowOpenAndHignClose;
