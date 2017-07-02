@@ -52,6 +52,7 @@
 <script>
   import { mapState } from 'vuex';
   let isLowOpenAndHighClose=require("strategy/isLowOpenAndHighClose.js");
+  let calProfitFromOneDay=require("utils/calProfitFromOneDay.js");
 
 
   export default {
@@ -86,34 +87,15 @@
           let recentData=sortData.slice(i-1,i+1);
           console.log(recentData.length)
           if(isLowOpenAndHighClose(recentData).isSuit){
-            let laterDays3=sortData.slice(i+1,i+4);
-            let laterDays6=sortData.slice(i+1,i+7);
-
-            let max=0;
-            let max3=0;
-            let max6=0;
-            for(let j=0;j<laterDays3.length;j++){
-              if(laterDays3[j][2]>max){
-                max=laterDays3[j][2];
-              }
-            }
-            max3=max;
-
-            for(let j=0;j<laterDays6.length;j++){
-              if(laterDays6[j][2]>max){
-                max=laterDays6[j][2];
-              }
-            }
-            max6=max;
+            let rates=calProfitFromOneDay(i,self.$data.sortData);
+            
 
             let buyTimeClose=recentData[1][4];
             suits.push({
               time:recentData[1][0],
               buyTimeClose,
-              max3,
-              rate3:( (max3-buyTimeClose)/buyTimeClose )*100,
-              max6,
-              rate6:( (max6-buyTimeClose)/buyTimeClose )*100
+              rate3:rates.rate3,
+              rate6:rates.rate6,
             });
           }
         };

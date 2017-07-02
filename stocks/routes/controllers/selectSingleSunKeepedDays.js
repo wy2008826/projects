@@ -9,7 +9,7 @@ let prevDays=20;
 let isSingleSunKeepd=require("../../strategy/isSingleSunKeepd.js");
 let getStocksCount=require("../utils/getStocksCount.js");
 var getSortHistoryData=require('../utils/getSortHistoryData.js');
-
+let calProfitFromOneDay=require("../utils/calProfitFromOneDay.js");
 
 
 module.exports= function(needEmail){// 
@@ -76,7 +76,13 @@ function searchGroups(query){
 
 						var result=isSingleSunKeepd(recentData);
 						if(result.isSuit){
-							suits.push({code,name,buyTime:result.buyTime});
+							let rates=calProfitFromOneDay(i-1,historyData);
+							suits.push({
+								code,name,
+								buyTime:result.buyTime,
+								rate3:rates.rate3,
+								rate6:rates.rate6
+							});
 						}
 					}
 					resolve(suits);

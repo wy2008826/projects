@@ -97,6 +97,7 @@ module.exports = function () {
                 '@': path.resolve(__dirname, './src'),
                 'vue': 'vue/dist/vue.js',
                 'strategy': path.resolve(__dirname, './strategy'),
+                'utils':path.resolve(__dirname, './routes/utils')
             }
         },
     };

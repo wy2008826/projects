@@ -18,13 +18,16 @@
     
     <div>
       <h4 class='strategy_title text-center'>最近单阳不破</h4>
-      <ul class="clearfix">
+      <ul class="clearfix strategy_ul">
         <router-link tag="li" 
           class="stock text-center"
+          :class="lowOpenAndHighCloseRateClass(stock)"
           :to="'/detail/'+stock.code" 
           v-for="(stock,index) in nowKeepedDays" >
           <p v-text="stock.buyTime"></p>
           <p ><span v-text="stock.name"></span> <span v-text="stock.code"></span></p>
+          <p v-text="stock.rate3"></p>
+          <p v-text="stock.rate6"></p>
         </router-link>
       </ul>
     </div>
@@ -52,23 +55,30 @@
       toggleStocks:function(){
         this.$store.dispatch("toggleStocks",!this.showStocks);
       },
-        formatTime(_time){
-            let time=_time?new Date(_time):new Date();
+      formatTime(_time){
+          let time=_time?new Date(_time):new Date();
 
-            let o= {
-                year:time.getFullYear(),
-                month:prefix(time.getMonth()+1),
-                date:prefix(time.getDate()),
-                day:time.getDay(),
-                hour:prefix(time.getHours()),
-                minute:prefix(time.getMinutes()),
-                second:prefix(time.getSeconds())
-            };
-            function prefix(num){
-                return num<10?'0'+num:num;
-            }
-            return o.year+"-"+o.month+"-"+o.date+"  "+o.hour+":"+o.minute+":"+o.second;
+          let o= {
+              year:time.getFullYear(),
+              month:prefix(time.getMonth()+1),
+              date:prefix(time.getDate()),
+              day:time.getDay(),
+              hour:prefix(time.getHours()),
+              minute:prefix(time.getMinutes()),
+              second:prefix(time.getSeconds())
+          };
+          function prefix(num){
+              return num<10?'0'+num:num;
+          }
+          return o.year+"-"+o.month+"-"+o.date+"  "+o.hour+":"+o.minute+":"+o.second;
+      },
+      lowOpenAndHighCloseRateClass(item){
+        if(item.rate3>4&&item.rate6>4){
+            return "high";
+        }else if(item.rate3<2){
+          return "low"
         }
+      }
     },
     created(){
         let self=this;
@@ -123,6 +133,16 @@
   }
   .strategy_title{
     line-height: 0.5rem;
+  }
+  .strategy_ul{
+    li{
+      &.high{
+        background-color:#FF7256
+      }
+      &.low{
+        background-color:#98FB98
+      }
+    }
   }
   
 </style>
