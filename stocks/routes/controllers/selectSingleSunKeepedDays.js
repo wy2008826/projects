@@ -5,7 +5,7 @@ var StockModel=require("../../models/stock.js");
 mongoose.connect("127.0.0.1:27017/stock");// elevator 具体的库名称
 let sendEmail=require("../utils/sendEmail.js");
 
-let maxDaysKeep=15;
+let prevDays=20;
 let isSingleSunKeepd=require("../../strategy/isSingleSunKeepd.js");
 let getStocksCount=require("../utils/getStocksCount.js");
 var getSortHistoryData=require('../utils/getSortHistoryData.js');
@@ -34,7 +34,7 @@ module.exports= function(needEmail){//
 				let query=StockModel.findOne({code:codes[i].code});
 				let suit=await searchGroups(query);
 				if(suit){
-					suits.push(suit);
+					suits=suits.concat(suit);
 				}
 			}
 
@@ -68,13 +68,18 @@ function searchGroups(query){
 				let code=stock.code;
 				let name=stock.name;
 				let historyData=getSortHistoryData(stock.historyData.dataColects);
-				if(historyData && historyData.length>maxDaysKeep+3){
-					var recentData=historyData.slice(historyData.length-maxDaysKeep-3);
+				let hisLength=historyData.length;
+				if(historyData && hisLength>prevDays+6){
+					let suits=[];
+					for(let i=hisLength;i>hisLength-prevDays;i--){
+						var recentData=historyData.slice(i-7,i);
 
-					var result=isSingleSunKeepd(recentData);
-					if(result.isSuit){
-						resolve({code,name,buyTime:result.buyTime});
+						var result=isSingleSunKeepd(recentData);
+						if(result.isSuit){
+							suits.push({code,name,buyTime:result.buyTime});
+						}
 					}
+					resolve(suits);
 				}
 				resolve(false);
 			}

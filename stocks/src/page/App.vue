@@ -4,19 +4,31 @@
       <span class="iconfont icon-sousuo search" @click="toggleStocks"></span>
     </div>
     <div>
-
-      <ul class="clearfix row">
+      <h4 class='strategy_title text-center'>今日收T</h4>
+      <ul class="clearfix">
         <router-link tag="li" 
-          class="fn-fl stock col-all-4 text-center"
+          class="stock text-center"
           :to="'/detail/'+stock.code" 
           v-for="(stock,index) in nowT" >
-          <p v-text="stock.name"></p>
-          <p v-text="stock.code"></p>
           <p v-text="formatTime(stock.nowData[0])"></p>
+          <p ><span v-text="stock.name"></span> <span v-text="stock.code"></span></p>
         </router-link>
       </ul>
     </div>
     
+    <div>
+      <h4 class='strategy_title text-center'>最近单阳不破</h4>
+      <ul class="clearfix">
+        <router-link tag="li" 
+          class="stock text-center"
+          :to="'/detail/'+stock.code" 
+          v-for="(stock,index) in nowKeepedDays" >
+          <p v-text="stock.buyTime"></p>
+          <p ><span v-text="stock.name"></span> <span v-text="stock.code"></span></p>
+        </router-link>
+      </ul>
+    </div>
+
     <Stocks :class="{active:showStocks}" />
   </div>
 </template>
@@ -28,6 +40,7 @@
     data:function(){
       return {
           nowT:[],
+          nowKeepedDays:[]
       }
     },
     computed:{
@@ -66,6 +79,16 @@
         },(res)=>{
             console.log("error")
         });
+
+        this.$http.get("/api/selectSingleSunKeepedDays").then((res)=>{
+            console.log(res,123);
+            self.$data.nowKeepedDays=res.body.lists.sort(function(prev,next){
+              return new Date(next["buyTime"])-new Date(prev['buyTime']);
+            });
+
+        },(res)=>{
+            console.log("error")
+        });
     },
     components:{
       Stocks
@@ -90,8 +113,16 @@
     }
   }
   .stock{
-        background-color:#fff;
-        border:0.012rem solid #f9f9f9;
+    display: flex;
+    background-color:#fff;
+    border:0.012rem solid #f9f9f9;
+    line-height: 0.4rem;
+    p{
+      flex:1;
+    }
+  }
+  .strategy_title{
+    line-height: 0.5rem;
   }
   
 </style>

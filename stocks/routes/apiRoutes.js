@@ -8,6 +8,8 @@ let getOneCodeHistoryData =require("./controllers/api/getOneCodeHistoryData.js")
 
 let testSearchOneCodeAllT=require('../testStrategy/testSearchOneCodeAllT');
 let searchAllSlotsAndSearchOneDayT=require('./controllers/searchAllSlotsAndSearchOneDayT');
+let selectSingleSunKeepedDays=require("./controllers/selectSingleSunKeepedDays");
+let getYMDHMS =require("./utils/getYMDHMS.js") ;
 
 route.get("/api/test",function(req,res,error){
 	var query=req.query;
@@ -57,6 +59,31 @@ route.get("/api/getOneCodeHistoryData",async function(req,res,error){
 
 });
 
+let keepDaysLists;
+let lastSearchKeepDays;
+route.get("/api/selectSingleSunKeepedDays",async function(req,res,error){
+	console.log(keepDaysLists)
+	let data={};
+    if(!keepDaysLists){
+    	let lists=keepDaysLists=await selectSingleSunKeepedDays();
+    	lastSearchKeepDays=new Date();
+    	data.lists=lists;
+    }else{
+    	let last=getYMDHMS(lastSearchKeepDays);
+    	let now =getYMDHMS();
+    	if(`${last.day}${last.hour}`==`${now.day}${now.hour}`){
+    		data.lists=keepDaysLists;
+    	}else{
+    		let lists=keepDaysLists=await selectSingleSunKeepedDays();
+    		lastSearchKeepDays=new Date();
+    		data.lists=lists;
+    	}
+    }
+    
+    res.json(data);
+
+});
+
 route.get("/api/getOneCodeAllT",async function(req,res,error){
 	var query=req.query;
 
@@ -72,3 +99,4 @@ route.get("/api/selectIncrease",selectIncrease);
 
 
 module.exports=route;
+
