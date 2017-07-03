@@ -26,8 +26,8 @@
           v-for="(stock,index) in nowKeepedDays" >
           <p v-text="stock.buyTime"></p>
           <p ><span v-text="stock.name"></span> <span v-text="stock.code"></span></p>
-          <p v-text="stock.rate3"></p>
-          <p v-text="stock.rate6"></p>
+          <p v-text="stock.rate3.toFixed(2)+'%'"></p>
+          <p v-text="stock.rate6.toFixed(2)+'%'"></p>
         </router-link>
       </ul>
     </div>
