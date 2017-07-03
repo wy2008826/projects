@@ -136,8 +136,8 @@
             self.$data.sortData=data.sort(function(prev,next){
               return new Date(prev[0])-new Date(next[0]);
             });
-
-            window.draw=new drawKLine(self.$refs["svg"],res.body.result);
+            console.log('sortData:',self.$data.sortData)
+            window.draw=new drawKLine(self.$refs["svg"],self.$data.sortData);
         },(res)=>{
             console.log("error")
         });
@@ -152,16 +152,9 @@
     constructor(svg,data){
         let self=this;
         this.svg=window.svg=svg;
-        this.data=[];
-        Object.keys(data.historyData.dataColects).forEach(function(timeKey){
-            self.data.push(data.historyData.dataColects[timeKey]);
-        });
-        this.data=this.data.sort(function(prev,next){
-          return new Date(prev[0])-new Date(next[0]);
-        });
-
-        this.length=this.data.length;
-        this.barCount=this.data.length;
+        this.data=data;
+        this.length=data.length;
+        this.barCount=data.length;
         this.barSize=6;
         this.strokeWidth=1;
         this.barGap=3;
@@ -172,10 +165,10 @@
         this.min=100000000;
         this.init();
 
-        let maxMin=this.calMaxMinVal(0,length-1);
-        self.max=maxMin.max;
-        self.min=maxMin.min;
-
+        let maxMin=this.calMaxMinVal(0,data.length);
+        this.max=maxMin.max;
+        this.min=maxMin.min;
+        console.log('maxMin:',maxMin)
         this.draw();
         this.setViewBox(this.length-100,this.length);
     }
@@ -190,6 +183,7 @@
 
     }
     calMaxMinVal(start,end){
+      console.log(start,end)
         let self=this;
         let max=-1000000;
         let min=10000000;
@@ -205,6 +199,7 @@
                 min=low;
             }
         }
+        console.log(max,min)
         return {
           max,
           min
