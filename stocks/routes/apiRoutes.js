@@ -62,7 +62,6 @@ route.get("/api/getOneCodeHistoryData",async function(req,res,error){
 let keepDaysLists;
 let lastSearchKeepDays;
 route.get("/api/selectSingleSunKeepedDays",async function(req,res,error){
-	console.log(keepDaysLists)
 	let data={};
     if(!keepDaysLists){
     	let lists=keepDaysLists=await selectSingleSunKeepedDays();
