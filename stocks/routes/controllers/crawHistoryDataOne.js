@@ -154,7 +154,7 @@ async function saveHistoryData(code){
 }
 
 function getJiDu(time){//获取当前是第几季度
-	return Math.ceil(new Date(time).getMonth()/3);
+	return Math.ceil((new Date(time).getMonth()+1)/3);
 }
 
 function getYearJiDu(_time){
