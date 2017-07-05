@@ -28,6 +28,8 @@
           <p ><span v-text="stock.name"></span> <span v-text="stock.code"></span></p>
           <p v-text="stock.rate3.toFixed(2)+'%'"></p>
           <p v-text="stock.rate6.toFixed(2)+'%'"></p>
+          <p v-text="stock.rate9.toFixed(2)+'%'"></p>
+          <p v-text="stock.rate12.toFixed(2)+'%'"></p>
         </router-link>
       </ul>
     </div>
@@ -83,7 +85,6 @@
     created(){
         let self=this;
         this.$http.get("/api/getAllCodeNowT").then((res)=>{
-            console.log(res,123);
             self.$data.nowT=res.body.lists;
 
         },(res)=>{
@@ -91,10 +92,10 @@
         });
 
         this.$http.get("/api/selectSingleSunKeepedDays").then((res)=>{
-            console.log(res,123);
             self.$data.nowKeepedDays=res.body.lists.sort(function(prev,next){
               return new Date(next["buyTime"])-new Date(prev['buyTime']);
             });
+            console.log(res,self.$data.nowKeepedDays)
 
         },(res)=>{
             console.log("error")

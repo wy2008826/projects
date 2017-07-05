@@ -76,9 +76,10 @@ route.get("/api/selectSingleSunKeepedDays",async function(req,res,error){
     		let lists=keepDaysLists=await selectSingleSunKeepedDays();
     		lastSearchKeepDays=new Date();
     		data.lists=lists;
+            
     	}
     }
-    
+    console.log("data:",data)
     res.json(data);
 
 });
