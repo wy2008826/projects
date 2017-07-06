@@ -75,7 +75,9 @@
           return o.year+"-"+o.month+"-"+o.date+"  "+o.hour+":"+o.minute+":"+o.second;
       },
       lowOpenAndHighCloseRateClass(item){
-        if(item.rate3>4&&item.rate6>4){
+        let {rate3,rate6,rate9,rate12}=item;
+        let averRate=(rate3*1+rate6*1+rate9*1+rate12*1)/4;
+        if( averRate>=3){
             return "high";
         }else if(item.rate3<2){
           return "low"

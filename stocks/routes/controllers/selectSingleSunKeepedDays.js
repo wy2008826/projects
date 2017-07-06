@@ -5,12 +5,33 @@ var StockModel=require("../../models/stock.js");
 mongoose.connect("127.0.0.1:27017/stock");// elevator 具体的库名称
 let sendEmail=require("../utils/sendEmail.js");
 
-let prevDays=40;
+let prevDays=90;
 let isSingleSunKeepd=require("../../strategy/isSingleSunKeepd.js");
 let getStocksCount=require("../utils/getStocksCount.js");
 var getSortHistoryData=require('../utils/getSortHistoryData.js');
 let calProfitFromOneDay=require("../utils/calProfitFromOneDay.js");
 
+
+/** 参考因素 
+
+1.阳线之前k线的形态  如阳线不能低开
+2.阳线于60日均线的关系   阳线开盘价距离60日均线的涨幅百分比不能超过10%
+3.窄幅震荡的5日内 不能有较长的长上下影线
+4.阳线的成交量显著放量
+5.不能处于历史走势中的绝对高位
+6.大阳线不能有太长的上影线
+
+**/
+
+
+/** 失败记录 
+
+1.阳线低开
+2.阳线远高于60日均线
+3.满足所有条件  但出于相对历史高位
+4.
+	
+**/
 
 module.exports= function(needEmail){// 
 	
