@@ -123,7 +123,6 @@ function saveStock(_stock,day){
 	var time=_stock[14];//14:25:23
 	const dayTime=`${day} ${time}`;
 
-	console.log(code,day,time,dayTime);
 	var nowData=[dayTime,todayOpen,todayHigh,todayLow,now,num,money];
 	var nowHistoryData=[day,todayOpen,todayHigh,todayLow,now,num,money];
 	if(isOneDayT(nowData)){
@@ -166,7 +165,6 @@ function saveStock(_stock,day){
 					});
 				}else{
 					exist+=1;
-					console.log("data:",data);
 					if(data.historyData){
 						data.historyData.dataColects[day]=nowHistoryData;
 						if(!data.historyData.dataColects[day]){
