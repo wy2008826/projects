@@ -53,7 +53,7 @@
   import { mapState } from 'vuex';
   let isLowOpenAndHighClose=require("strategy/isLowOpenAndHighClose.js");
   let calProfitFromOneDay=require("utils/calProfitFromOneDay.js");
-
+  let calAverageLineData=require("utils/calAverageLineData.js");
 
   export default {
     data:function(){
@@ -85,7 +85,6 @@
         let suits=[];
         for(let i=1;i<sortData.length;i++){
           let recentData=sortData.slice(i-1,i+1);
-          console.log(recentData.length)
           if(isLowOpenAndHighClose(recentData).isSuit){
             let rates=calProfitFromOneDay(i,self.$data.sortData);
             
@@ -100,7 +99,6 @@
           }
         };
         suits=suits.reverse();
-        console.log(suits);
         return suits;
         
       }
@@ -117,7 +115,6 @@
     },
     created(){
         var self=this;
-        console.log(this)
         this.$http.get(`/api/getOneCodeAllT?code=${self.code}`).then((res)=>{
           self.$data.suits=res.body.lists;
         },(res)=>{
@@ -125,7 +122,7 @@
         });
 
         this.$http.get(`/api/getOneCodeHistoryData?code=${self.code}`).then((res)=>{
-            console.log(res);
+            // console.log(res);
             self.$data.historyData=res.body.result;
             self.name=res.body.result.name;
 
@@ -136,7 +133,8 @@
             self.$data.sortData=data.sort(function(prev,next){
               return new Date(prev[0])-new Date(next[0]);
             });
-            console.log('sortData:',self.$data.sortData)
+            
+            // console.log('sortData:',self.$data.sortData)
             window.draw=new drawKLine(self.$refs["svg"],self.$data.sortData);
         },(res)=>{
             console.log("error")
@@ -153,6 +151,7 @@
         let self=this;
         this.svg=window.svg=svg;
         this.data=data;
+        this.averageData=calAverageLineData(this.data);
         this.length=data.length;
         this.barCount=data.length;
         this.barSize=6;
@@ -163,6 +162,13 @@
         this.rightSpace=30;
         this.max=-10000000;
         this.min=100000000;
+        this.averageConfig={
+          _5:"#fafafa",
+          _10:"#f5fd00",
+          _20:"#de00dd",
+          _30:"#00f91b",
+          _60:"#707070"
+        }
         this.init();
 
         let maxMin=this.calMaxMinVal(0,data.length);
@@ -170,6 +176,7 @@
         this.min=maxMin.min;
         console.log('maxMin:',maxMin)
         this.draw();
+        this.drawAverage();
         this.setViewBox(this.length-100,this.length);
     }
     init(){
@@ -187,19 +194,18 @@
         let self=this;
         let max=-1000000;
         let min=10000000;
+        let highs=[];
+        let lows=[];
 
         for(let i=start;i<end;i++){
             let day=self.data[i];
             let high=day[2];
             let low=day[3];
-            if(high>max){
-                max=high;
-            }
-            if(low<min){
-                min=low;
-            }
+            highs.push(high);
+            lows.push(low);
         }
-        console.log(max,min)
+        max=Math.max.apply(null,highs);
+        min=Math.min.apply(null,lows);
         return {
           max,
           min
@@ -240,8 +246,8 @@
         let height=Math.abs(_height);
 
         
-        let stroke=_height>=0?"#ff0000":"#00b252";
-        let fill=_height>=0?"transparent":"#00b252";
+        let stroke=_height>=0?"#ff0000":"#00ffff";
+        let fill=_height>=0?"transparent":"#00ffff";
         let high=-_high;
         let low=-_low;
 
@@ -282,6 +288,33 @@
         line_bottom.setAttribute("vector-effect","non-scaling-stroke");
         self.svg.appendChild(line_bottom);
     }
+    drawAverage(){
+        let avers=[5,10,20,30,60];
+        for(let i=0;i<avers.length;i++){
+            this.drawAverageLine(avers[i]);
+        }
+    }
+    drawAverageLine(days){
+        let self=this;
+        let polyline=document.createElementNS("http://www.w3.org/2000/svg", "polyline");
+        let avers=[];
+        for(let i=0;i<this.averageData.length;i++){
+          let averDay=this.averageData[i][`_${days}`]
+          let x=(self.barSize+self.barGap) * i;
+          
+          if(averDay){
+            avers.push(`${x},${-averDay}`);
+          }
+        }
+        let points=avers.join(' ');
+        
+        polyline.setAttribute("points",points);
+        polyline.setAttribute("fill",'transparent');
+        polyline.setAttribute("stroke",self.averageConfig[`_${days}`]);
+        polyline.setAttribute("stroke-width",self.strokeWidth);
+        polyline.setAttribute("vector-effect","non-scaling-stroke");
+        self.svg.appendChild(polyline);
+    }
   }
 </script>
 
@@ -313,6 +346,7 @@
         display: block;
         width:7rem;
         margin:0.2rem auto;
-          border:1px solid red;
+        border:1px solid red;
+        background-color:#000;
     }
 </style>
