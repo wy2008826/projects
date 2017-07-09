@@ -4,14 +4,20 @@
       <span class="iconfont icon-sousuo search" @click="toggleStocks"></span>
     </div>
     <div>
-      <h4 class='strategy_title text-center'>今日收T</h4>
-      <ul class="clearfix">
+      <h4 class='strategy_title text-center'>最近收T</h4>
+      <ul class="clearfix strategy_ul">
         <router-link tag="li" 
           class="stock text-center"
+          :class="lowOpenAndHighCloseRateClass(stock)"
           :to="'/detail/'+stock.code" 
           v-for="(stock,index) in nowT" >
-          <p v-text="formatTime(stock.nowData[0])"></p>
+          <p v-text="stock.buyTime"></p>
           <p ><span v-text="stock.name"></span> <span v-text="stock.code"></span></p>
+          <p v-text="stock.rate3.toFixed(2)+'%'"></p>
+          <p v-text="stock.rate6.toFixed(2)+'%'"></p>
+          <p v-text="stock.rate9.toFixed(2)+'%'"></p>
+          <p v-text="stock.rate12.toFixed(2)+'%'"></p>
+          <p v-text="stock.pos.toFixed(2)+'%'"></p>
         </router-link>
       </ul>
     </div>
@@ -45,7 +51,11 @@
     data:function(){
       return {
           nowT:[],
-          nowKeepedDays:[]
+          nowKeepedDays:[],
+          count3:0,
+          count6:0,
+          count9:0,
+          count12:0,
       }
     },
     computed:{
@@ -86,8 +96,28 @@
     },
     created(){
         let self=this;
-        this.$http.get("/api/getAllCodeNowT").then((res)=>{
-            self.$data.nowT=res.body.lists;
+        this.$http.get("/api/getAllCodeRecentT").then((res)=>{
+            self.$data.nowT=res.body.lists.sort(function(prev,next){
+              return new Date(next.buyTime)-new Date(prev.buyTime);
+            });
+            const nowT=self.$data.nowT;
+
+            for(let i=0;i<nowT.length;i++){
+              let item=nowT[i];
+              if(item.rate3>=8){
+                self.$data.count3+=1;
+              }
+              if(item.rate6>=12){
+                self.$data.count6+=1;
+              }
+              if(item.rate9>=16){
+                self.$data.count9+=1;
+              }
+              if(item.rate12>=12){
+                self.$data.count12+=1;
+              }
+            }
+            console.log(`length:${nowT.length} count3:${self.$data.count3} count6:${self.$data.count6} count9:${self.$data.count9} count12:${self.$data.count12}`)
 
         },(res)=>{
             console.log("error")
@@ -135,7 +165,11 @@
     }
   }
   .strategy_title{
-    line-height: 0.5rem;
+    line-height: 1rem;
+    background-color:#fff;
+    border:0.02rem solid #d8d8d8;
+    border-left:0;
+    border-right:0;
   }
   .strategy_ul{
     li{

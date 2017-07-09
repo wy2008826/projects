@@ -6,7 +6,11 @@ module.exports=function(i,sortData){
 			rate3:0,
 			rate6:0,
 			rate9:0,
-			rate12:0
+			rate12:0,
+			rate3Days:0,
+			rate6Days:0,
+			rate9Days:0,
+			rate12Days:0,
 		}
 	}
 
@@ -56,6 +60,10 @@ module.exports=function(i,sortData){
 		rate6:( (max6-sortData[i][4])/sortData[i][4] )*100,
 		rate9:( (max9-sortData[i][4])/sortData[i][4] )*100,
 		rate12:( (max12-sortData[i][4])/sortData[i][4] )*100,
+		rate3Days:laterDays3.length,
+		rate6Days:laterDays6.length,
+		rate9Days:laterDays9.length,
+		rate12Days:laterDays12.length,
 	}
 }
 

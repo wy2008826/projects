@@ -1,3 +1,12 @@
+
+
+exports.everyHalfHour={
+	dayOfWeek:[1,2,3,4,5],
+	hour:[9,10,11,13,14],
+	minute:[20,50]
+}
+
+
 exports.beforeAmClose={
 	dayOfWeek:[1,2,3,4,5],
 	hour:[11],
@@ -22,3 +31,4 @@ exports.everyNight20={ // 除了周末之外每天晚上20:10
 	hour:[20],
 	minute:[10]
 }
+

@@ -7,7 +7,7 @@ let getAllCodes =require("./controllers/api/getAllCodes.js");
 let getOneCodeHistoryData =require("./controllers/api/getOneCodeHistoryData.js");
 
 let testSearchOneCodeAllT=require('../testStrategy/testSearchOneCodeAllT');
-let searchAllSlotsAndSearchOneDayT=require('./controllers/searchAllSlotsAndSearchOneDayT');
+let searchAllSlotsAndSearchRecentDayT=require('./controllers/searchAllSlotsAndSearchRecentDayT');
 let selectSingleSunKeepedDays=require("./controllers/selectSingleSunKeepedDays");
 let getYMDHMS =require("./utils/getYMDHMS.js") ;
 
@@ -31,16 +31,8 @@ route.get("/api/getAllCodes",async function(req,res,error){
 	res.json(data);
 });
 
-route.get("/api/getAllCodeNowT",async function(req,res,error){
-    var query=req.query;
 
-    let lists=await searchAllSlotsAndSearchOneDayT(query);
-    var data={
-        query:query,
-        lists
-    };
-    res.json(data);
-});
+
 route.get("/api/getOneCodeHistoryData",async function(req,res,error){
     var query=req.query;
 	const code=query.code;
@@ -58,6 +50,32 @@ route.get("/api/getOneCodeHistoryData",async function(req,res,error){
 	}
 
 });
+
+let recentTLists;
+let lastSearchRecentT;
+
+//每5分钟刷新一次
+route.get("/api/getAllCodeRecentT",async function(req,res,error){
+    
+    let lists=[];
+    if(!recentTLists){
+        lists=recentTLists=await searchAllSlotsAndSearchRecentDayT();
+        lastSearchRecentT=new Date();
+    }else{
+        if(new Date()-lastSearchRecentT<5*60*1000){
+            lists=recentTLists;
+        }else{
+            lists=recentTLists=await searchAllSlotsAndSearchRecentDayT();
+            lastSearchKeepDays=new Date();
+        }
+    }
+
+    var data={
+        lists
+    };
+    res.json(data);
+});
+
 
 let keepDaysLists;
 let lastSearchKeepDays;
@@ -83,6 +101,7 @@ route.get("/api/selectSingleSunKeepedDays",async function(req,res,error){
     res.json(data);
 
 });
+
 
 route.get("/api/getOneCodeAllT",async function(req,res,error){
 	var query=req.query;

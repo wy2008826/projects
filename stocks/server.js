@@ -25,6 +25,11 @@ let selectLowOpenAndHighClose=require("./routes/controllers/selectLowOpenAndHigh
 let testSearchAllCodeSingleSunKeepedDays=require("./testStrategy/testSearchAllCodeSingleSunKeepedDays");
 let testSearchOneCodeAllT=require('./testStrategy/testSearchOneCodeAllT');
 
+
+let testChangeStockDta=require('./test/changeStockData.js');
+
+
+
 app.use(express.static(__dirname+"/"));//设置静态资源路径
 app.set("view engine","hbs");//设置模板引擎
 app.set("views",__dirname+"/views");//设置视图路径
@@ -33,6 +38,12 @@ app.set("views",__dirname+"/views");//设置视图路径
 var pageRoutes=require("./routes/pageRoutes");//页面路由
 var apiRoutes=require("./routes/apiRoutes");//api路由
 var crawRoutes=require("./routes/crawRoutes");//api路由
+
+//每隔半小时更新一次历史数据
+schedule.scheduleJob(timeRules.everyHalfHour, function(){
+	crawAllSlotsAndSearchOneDayT();
+});
+
 
 
 //上、下午收盘前找出 T 字形股票
@@ -59,9 +70,14 @@ schedule.scheduleJob(timeRules.everyNight20, async function(){
 
 async function all(){
 
+	// testChangeStockDta();
+
 	// let suits_OneDayT=await crawAllSlotsAndSearchOneDayT();//抓取数据
 	
 	// await crawHistoryDataAll();//抓取所有股票的历史数据
+
+
+
 	// let suits_keepDays=await selectSingleSunKeepedDays();
 	// let suits_lowOpenAndHighClose=await selectLowOpenAndHighClose();
 	

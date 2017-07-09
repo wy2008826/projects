@@ -55,19 +55,14 @@ function crawGroups(query){
 				let historyData=stock.historyData;
 				let start;
 				if(historyData){
-					start=historyData.end;
-					if(getDay(start)==getDay(new Date())){
-						console.log(`${code} historyData is fresh to now! skiped....`);
-						resolve();
-					}else{
-						await crawHistoryDataOne(code,start);
-						resolve();
-					}
-				}else{
-					await crawHistoryDataOne(code,start);
-					resolve();
+					
+					let times=Object.keys(historyData.dataColects).sort(function(prev,next){
+						return new Date(prev)-new Date(next);
+					});
+					start=times[times.length-1];
 				}
-
+				await crawHistoryDataOne(code,start);
+				resolve();
 			}
 		});
 	});

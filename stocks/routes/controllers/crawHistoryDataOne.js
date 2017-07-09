@@ -12,16 +12,13 @@ var StockModel=require("../../models/stock.js");
 
 function getInitialHistoryData(){
 	return {
-		count:0,
-		start:"2050-01-01",
-		end:"2000-01-01",
 		dataColects:{},
 	};
 }
 let historyData=getInitialHistoryData();
 
 
-const Max_year=0.5;
+const Max_year=0.75;
 
 //要确爬取的顺序是按照时间从早到晚  如16年1季度  => 16年2季度  ... => 至今
 //爬取的数据是按照季度内的时间进行处理  如16年第一季度   2016-1-1 =>  2016-1-2 => 2016-3-31
@@ -84,13 +81,6 @@ async function crawJiDuData(code,year,jidu){
 
 					if(!historyData.dataColects[time]&&time){
 						historyData.dataColects[time]=[time,open,high,low,now,num,money];
-						historyData.count+=1;
-						if(new Date(time)>new Date(historyData.end)){
-							historyData.end=time;
-						}
-						if(new Date(time)<new Date(historyData.start)){
-							historyData.start=time;
-						}
 					}
 				}
 				resolve(historyData);
@@ -115,34 +105,37 @@ async function saveHistoryData(code){
 						if(err){
 							reject(err);
 						}else{
-							console.log(`${code} set historyData from ${historyData.start} to ${historyData.end} 历史数据成功！`)
+							let {start,end}=getStartAndEnd(historyData.dataColects);
+							console.log(`${code} set historyData from ${start} to ${end} 历史数据成功！`)
 							resolve(historyData);
 						}
 					});
 				}else{//数据库中存在历史数据
 					var push=0;
-					var pushStart="2090-01-01";
+					
+
 					Object.keys(historyData.dataColects).forEach(function(timeKey,index){
 						var dayData=historyData.dataColects[timeKey];
 						var time=dayData[0];
+						data.historyData.dataColects[time]=dayData;
 						if(!data.historyData.dataColects[time]&&time){
-							data.historyData.dataColects[time]=dayData;
-							data.historyData.count+=1;
-							if(new Date(time)>new Date(data.historyData.end)){
-								data.historyData.end=time;
-								if(new Date(time)< new Date(pushStart)){
-									pushStart=time;
-								}
-							}
 							push+=1;
 						}
 					});
-					
+					let {start,end,sortTimes}=getStartAndEnd(data.historyData.dataColects);
+
+					let sortedDataColects={};//对插入的数据重新排序 保证顺序的正确性
+					for(let i=0;i<sortTimes.length;i++){
+						const time=sortTimes[i];
+						sortedDataColects[time]=data.historyData.dataColects[time];
+					}
+					data.historyData.dataColects=sortedDataColects;
+
 					StockModel.update({code:code},data,function(err){
 						if(err){
 							reject(err);
 						}else{
-							console.log(`${code} 共插入 from ${pushStart} to ${data.historyData.end}  ${push}条 historyData 历史数据成功！`)
+							console.log(`${code} 共插入 from ${start} to ${end}  ${push}条 historyData 历史数据成功！`)
 							resolve(historyData);
 						}
 					});
@@ -151,6 +144,20 @@ async function saveHistoryData(code){
 		})
 	});
 	
+}
+
+function getStartAndEnd(timeColects){
+	let times=Object.keys(timeColects);
+	times=times.sort(function(prev,next){
+		return new Date(prev)-new Date(next);
+	});
+	const start=times[0];
+	const end=times[times.length-1];
+	return {
+		sortTimes:times,
+		start,
+		end
+	}
 }
 
 function getJiDu(time){//获取当前是第几季度

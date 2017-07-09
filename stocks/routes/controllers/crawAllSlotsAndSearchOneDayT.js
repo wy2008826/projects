@@ -39,8 +39,9 @@ module.exports= async function crawAllSlotsAndSearchOneDayT(needEmail){
 		let pageStocks = await crawPage(i,pageSize).catch(function(err){
 			console.log(`----- craw page ${i} 代码列表失败 -------!`);
 		});
-		if(pageStocks&&pageStocks.length>0){
-			let pageTongJi=await savePageStocks(pageStocks,i).catch(function(err){
+
+		if(pageStocks&&pageStocks.stockArray&&pageStocks.stockArray.length>0){
+			let pageTongJi=await savePageStocks(pageStocks.stockArray,i,pageStocks.day).catch(function(err){
 				console.log(`----- save page ${i} 代码列表失败 -------!`);
 			});
 		}
@@ -75,8 +76,11 @@ async function crawPage(page,pageSize){
 				var replaceTxt="/*<script>location.href='//sina.com';</script>*/fn(";
 
 				var dataString=text.substring(replaceTxt.length+1,text.lastIndexOf(")"));
-				var stockArr=JSON.parse(dataString)[0].items;
-				resolve(stockArr);
+				var stock=JSON.parse(dataString)[0];
+				resolve({
+					day:stock.day,
+					stockArray:stock.items
+				});
 			}
 			
 		});
@@ -84,13 +88,14 @@ async function crawPage(page,pageSize){
 }
 
 
-async function savePageStocks(stockArr,i){
+async function savePageStocks(stockArr,i,day){
 	let save=0;
 	let exists=0;
 	let saves=[];
+	
 	for(let i=0;i<stockArr.length;i++){
 		let _stock=stockArr[i];
-		let codeStatus = await saveStock(_stock).catch(function(err){
+		let codeStatus = await saveStock(_stock,day).catch(function(err){
 			console.log(`------- save stocks failed -------`);
 		});
 		if(codeStatus.save){
@@ -104,7 +109,7 @@ async function savePageStocks(stockArr,i){
 	console.log("        👇 👇 👇        ");
 }
 
-function saveStock(_stock){
+function saveStock(_stock,day){
 	var area=_stock[0].replace(/\d+/g,"");
 	var code=_stock[1];
 	var name=_stock[2];
@@ -115,8 +120,12 @@ function saveStock(_stock){
 	var now=_stock[3];//
 	var num=_stock[12];//
 	var money=_stock[13];//
+	var time=_stock[14];//14:25:23
+	const dayTime=`${day} ${time}`;
 
-	var nowData=[new Date(),todayOpen,todayHigh,todayLow,now,num,money];
+	console.log(code,day,time,dayTime);
+	var nowData=[dayTime,todayOpen,todayHigh,todayLow,now,num,money];
+	var nowHistoryData=[day,todayOpen,todayHigh,todayLow,now,num,money];
 	if(isOneDayT(nowData)){
 		suit+=1;
 		suits.push({
@@ -157,10 +166,18 @@ function saveStock(_stock){
 					});
 				}else{
 					exist+=1;
-					// console.log("data:",data);
+					console.log("data:",data);
+					if(data.historyData){
+						data.historyData.dataColects[day]=nowHistoryData;
+						if(!data.historyData.dataColects[day]){
+							data.historyData.count+=1;
+							data.historyData.end=day;
+						}
+					}
 					StockModel.update({code:code},{
 						$set:{
-							nowData:nowData
+							nowData:nowData,
+							historyData:data.historyData
 						}
 					},function(err){
 						if(err){
