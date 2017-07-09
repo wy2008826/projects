@@ -289,7 +289,7 @@
         self.svg.appendChild(line_bottom);
     }
     drawAverage(){
-        let avers=[5,10,20,30,60];
+        let avers=[10,30,60];
         for(let i=0;i<avers.length;i++){
             this.drawAverageLine(avers[i]);
         }
