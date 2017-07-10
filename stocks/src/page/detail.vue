@@ -177,7 +177,9 @@
         console.log('maxMin:',maxMin)
         this.draw();
         this.drawAverage();
-        this.setViewBox(this.length-100,this.length);
+
+        let start=this.length-130>=0?this.length-130:0;
+        this.setViewBox(start,this.length);
     }
     init(){
         let self=this;
