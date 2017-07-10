@@ -71,7 +71,7 @@ function searchOneCodeT(query){
 
                             const {rate3,rate6,rate9,rate12,rate3Days,rate6Days,rate9Days,rate12Days} =calProfitFromOneDay(historyIndex,historyData);
                             const {pos}=calPricePosition(historyIndex,historyData);
-                            console.log(rate3Days,rate6Days,rate9Days,rate12Days,pos);
+                            // console.log(rate3Days,rate6Days,rate9Days,rate12Days,pos);
                             if(new Date(nowData[0]) - new Date(buyTime) <(recentDays+12)*24*60*60*1000 &&pos<85){
                                 suits.push({
                                     code,
@@ -85,17 +85,6 @@ function searchOneCodeT(query){
                                 });
                             }
 
-                            // suits.push({
-                            //     code,
-                            //     name,
-                            //     buyTime,
-                            //     rate3,
-                            //     rate6,
-                            //     rate9,
-                            //     rate12,
-                            //     pos
-                            // });
-                            
                         }
                     }
                     resolve(suits);
