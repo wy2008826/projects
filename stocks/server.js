@@ -19,7 +19,7 @@ let selectHuiTiaoToAverageLineAllType=require("./routes/controllers/selectHuiTia
 let selectHuiTiaoToAverageLineOneType=require("./routes/controllers/selectHuiTiaoToAverageLineOneType");
 let selectSingleSunKeepedDays=require("./routes/controllers/selectSingleSunKeepedDays");
 let selectLowOpenAndHighClose=require("./routes/controllers/selectLowOpenAndHighClose.js");
-
+let searchAllStocksAllAverageLineClose=require("./routes/controllers/searchAllStocksAllAverageLineClose.js");
 
 
 let testSearchAllCodeSingleSunKeepedDays=require("./testStrategy/testSearchAllCodeSingleSunKeepedDays");
@@ -76,7 +76,7 @@ async function all(){
 	
 	// await crawHistoryDataAll();//抓取所有股票的历史数据
 
-
+	searchAllStocksAllAverageLineClose();
 
 	// let suits_keepDays=await selectSingleSunKeepedDays();
 	// let suits_lowOpenAndHighClose=await selectLowOpenAndHighClose();

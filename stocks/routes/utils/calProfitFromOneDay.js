@@ -7,63 +7,48 @@ module.exports=function(i,sortData){
 			rate6:0,
 			rate9:0,
 			rate12:0,
+			rate20:0,
 			rate3Days:0,
 			rate6Days:0,
 			rate9Days:0,
 			rate12Days:0,
+			rate20Days:0,
 		}
 	}
 
-	let laterDays3=sortData.slice(i+1,i+4);
-	let laterDays6=sortData.slice(i+1,i+7);
-	let laterDays9=sortData.slice(i+1,i+10);
-	let laterDays12=sortData.slice(i+1,i+13);
-
-
-	let max=0;
-	let max3=0;
-	let max6=0;
-	let max9=0;
-	let max12=0;
-
-	for(let j=0;j<laterDays3.length;j++){
-	  if(laterDays3[j][2]>max){
-	    max=laterDays3[j][2];
-	  }
-	}
-	max3=max;
-
-	for(let j=0;j<laterDays6.length;j++){
-	  if(laterDays6[j][2]>max){
-	    max=laterDays6[j][2];
-	  }
-	}
-	max6=max;
-
-	for(let j=0;j<laterDays9.length;j++){
-	  if(laterDays9[j][2]>max){
-	    max=laterDays9[j][2];
-	  }
-	}
-	max9=max;
-
-	for(let j=0;j<laterDays12.length;j++){
-	  if(laterDays12[j][2]>max){
-	    max=laterDays12[j][2];
-	  }
-	}
-	max12=max;
-
 	
+	let rate3s=calRate(i,3,sortData);
+	let rate6s=calRate(i,6,sortData);
+	let rate9s=calRate(i,9,sortData);
+	let rate12s=calRate(i,12,sortData);
+	let rate20s=calRate(i,20,sortData);
+	let rate30s=calRate(i,30,sortData);
+
 	return {
-		rate3:( (max3-sortData[i][4])/sortData[i][4] )*100,
-		rate6:( (max6-sortData[i][4])/sortData[i][4] )*100,
-		rate9:( (max9-sortData[i][4])/sortData[i][4] )*100,
-		rate12:( (max12-sortData[i][4])/sortData[i][4] )*100,
-		rate3Days:laterDays3.length,
-		rate6Days:laterDays6.length,
-		rate9Days:laterDays9.length,
-		rate12Days:laterDays12.length,
+		rate3:( (rate3s.max-sortData[i][4])/sortData[i][4] )*100,
+		rate6:( (rate6s.max-sortData[i][4])/sortData[i][4] )*100,
+		rate9:( (rate9s.max-sortData[i][4])/sortData[i][4] )*100,
+		rate12:( (rate12s.max-sortData[i][4])/sortData[i][4] )*100,
+		rate20:( (rate20s.max-sortData[i][4])/sortData[i][4] )*100,
+		rate30:( (rate30s.max-sortData[i][4])/sortData[i][4] )*100,
+		rate3Days:rate3s.calDays,
+		rate6Days:rate6s.calDays,
+		rate9Days:rate9s.calDays,
+		rate12Days:rate12s.calDays,
+		rate20Days:rate20s.calDays,
 	}
 }
 
+function calRate(i,days,historyData){
+	let rate;
+	let datas=historyData.slice(i+1,i+1+days);
+	let maxs=[];
+	for(let j=0;j<datas.length;j++){
+	    maxs.push(datas[j][2]);
+	}
+
+	return {
+		max:Math.max.apply(null,maxs),
+		calDays:datas.length
+	};
+}
