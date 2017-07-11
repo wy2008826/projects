@@ -27,8 +27,8 @@
       <file leaf-file-name="detail.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/page/detail.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="443">
-              <caret line="355" column="17" lean-forward="true" selection-start-line="355" selection-start-column="17" selection-end-line="355" selection-end-column="17" />
+            <state relative-caret-position="201">
+              <caret line="344" column="17" lean-forward="true" selection-start-line="344" selection-start-column="17" selection-end-line="344" selection-end-column="17" />
               <folding>
                 <element signature="e#1680#1886#0" expanded="false" />
                 <element signature="e#5909#6476#0" expanded="false" />
@@ -175,12 +175,12 @@
       <workItem from="1499781521183" duration="38000" />
       <workItem from="1499781953175" duration="116000" />
       <workItem from="1499782089251" duration="477000" />
-      <workItem from="1499782572933" duration="4868000" />
+      <workItem from="1499782572933" duration="4977000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5944000" />
+    <option name="totallyTimeSpent" value="6053000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -288,8 +288,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/page/detail.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="443">
-          <caret line="355" column="17" lean-forward="true" selection-start-line="355" selection-start-column="17" selection-end-line="355" selection-end-column="17" />
+        <state relative-caret-position="201">
+          <caret line="344" column="17" lean-forward="true" selection-start-line="344" selection-start-column="17" selection-end-line="344" selection-end-column="17" />
           <folding>
             <element signature="e#1680#1886#0" expanded="false" />
             <element signature="e#5909#6476#0" expanded="false" />

@@ -340,6 +340,9 @@
             });
             this.svg.addEventListener('touchmove',(e)=>{
                 let touch=e.touches[0];
+                if(e.touches.length==2){
+                    alert("double touch");
+                }
                 let {pageX,pageY}=touch;
 
                 let dis_x=move_x-start_x;
