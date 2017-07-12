@@ -45,97 +45,104 @@
 </template>
 
 <script type="text/babel">
-  import Stocks from "@/components/Stocks/Stocks.vue";
+    import Stocks from "@/components/Stocks/Stocks.vue";
+    const FastClick = require('fastclick');
+    window.onload=function(){
+        FastClick.attach(document.body);
+    }
 
   export default {
-    data:function(){
-      return {
-          nowT:[],
-          nowKeepedDays:[],
-          count3:0,
-          count6:0,
-          count9:0,
-          count12:0,
-      }
-    },
-    computed:{
-      showStocks(){
-        return this.$store.state.stocksIsPlain;
-      }
-    },
-    methods:{
-      toggleStocks:function(){
-        this.$store.dispatch("toggleStocks",!this.showStocks);
-      },
-      formatTime(_time){
-          let time=_time?new Date(_time):new Date();
-
-          let o= {
-              year:time.getFullYear(),
-              month:prefix(time.getMonth()+1),
-              date:prefix(time.getDate()),
-              day:time.getDay(),
-              hour:prefix(time.getHours()),
-              minute:prefix(time.getMinutes()),
-              second:prefix(time.getSeconds())
-          };
-          function prefix(num){
-              return num<10?'0'+num:num;
+      data:function(){
+          return {
+              nowT:[],
+              nowKeepedDays:[],
+              count3:0,
+              count6:0,
+              count9:0,
+              count12:0,
           }
-          return o.year+"-"+o.month+"-"+o.date+"  "+o.hour+":"+o.minute+":"+o.second;
       },
-      lowOpenAndHighCloseRateClass(item){
-        let {rate3,rate6,rate9,rate12}=item;
-        let averRate=(rate3*1+rate6*1+rate9*1+rate12*1)/4;
-        if( averRate>=3){
-            return "high";
-        }else if(item.rate3<2){
-          return "low"
+      computed:{
+        showStocks(){
+          return this.$store.state.stocksIsPlain;
         }
-      }
-    },
-    created(){
-        let self=this;
-        this.$http.get("/api/getAllCodeRecentT").then((res)=>{
-            self.$data.nowT=res.body.lists.sort(function(prev,next){
-              return new Date(next.buyTime)-new Date(prev.buyTime);
-            });
-            const nowT=self.$data.nowT;
+      },
+      methods:{
+        toggleStocks:function(){
+          this.$store.dispatch("toggleStocks",!this.showStocks);
+        },
+        formatTime(_time){
+            let time=_time?new Date(_time):new Date();
 
-            for(let i=0;i<nowT.length;i++){
-              let item=nowT[i];
-              if(item.rate3>=8){
-                self.$data.count3+=1;
-              }
-              if(item.rate6>=12){
-                self.$data.count6+=1;
-              }
-              if(item.rate9>=16){
-                self.$data.count9+=1;
-              }
-              if(item.rate12>=12){
-                self.$data.count12+=1;
-              }
+            let o= {
+                year:time.getFullYear(),
+                month:prefix(time.getMonth()+1),
+                date:prefix(time.getDate()),
+                day:time.getDay(),
+                hour:prefix(time.getHours()),
+                minute:prefix(time.getMinutes()),
+                second:prefix(time.getSeconds())
+            };
+            function prefix(num){
+                return num<10?'0'+num:num;
             }
-            console.log(`length:${nowT.length} count3:${self.$data.count3} count6:${self.$data.count6} count9:${self.$data.count9} count12:${self.$data.count12}`)
+            return o.year+"-"+o.month+"-"+o.date+"  "+o.hour+":"+o.minute+":"+o.second;
+        },
+        lowOpenAndHighCloseRateClass(item){
+          let {rate3,rate6,rate9,rate12}=item;
+          let averRate=(rate3*1+rate6*1+rate9*1+rate12*1)/4;
+          if( averRate>=3){
+              return "high";
+          }else if(item.rate3<2){
+            return "low"
+          }
+        }
+      },
+      created(){
+          let self=this;
+          this.$http.get("/api/getAllCodeRecentT").then((res)=>{
+              self.$data.nowT=res.body.lists.sort(function(prev,next){
+                return new Date(next.buyTime)-new Date(prev.buyTime);
+              });
+              const nowT=self.$data.nowT;
 
-        },(res)=>{
-            console.log("error")
-        });
+              for(let i=0;i<nowT.length;i++){
+                let item=nowT[i];
+                if(item.rate3>=8){
+                  self.$data.count3+=1;
+                }
+                if(item.rate6>=12){
+                  self.$data.count6+=1;
+                }
+                if(item.rate9>=16){
+                  self.$data.count9+=1;
+                }
+                if(item.rate12>=12){
+                  self.$data.count12+=1;
+                }
+              }
+              console.log(`length:${nowT.length} count3:${self.$data.count3} count6:${self.$data.count6} count9:${self.$data.count9} count12:${self.$data.count12}`)
 
-        this.$http.get("/api/selectSingleSunKeepedDays").then((res)=>{
-            self.$data.nowKeepedDays=res.body.lists.sort(function(prev,next){
-              return new Date(next["buyTime"])-new Date(prev['buyTime']);
-            });
-            console.log(res,self.$data.nowKeepedDays)
+          },(res)=>{
+              console.log("error")
+          });
 
-        },(res)=>{
-            console.log("error")
-        });
-    },
-    components:{
-      Stocks
-    }
+          this.$http.get("/api/selectSingleSunKeepedDays").then((res)=>{
+              self.$data.nowKeepedDays=res.body.lists.sort(function(prev,next){
+                return new Date(next["buyTime"])-new Date(prev['buyTime']);
+              });
+              console.log(res,self.$data.nowKeepedDays)
+
+          },(res)=>{
+              console.log("error")
+          });
+      },
+      mounted(){
+
+      },
+      components:{
+          Stocks
+      }
   }
 </script>
 

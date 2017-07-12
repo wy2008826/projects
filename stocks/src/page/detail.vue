@@ -1,52 +1,54 @@
 <template>
-  <div >
-    <p>{{code}}:{{historyData.name}}</p>
-    <table class="table text-center">
-      <thead>
-        <td>时间</td>
-        <td>开盘</td>
-        <td>最高</td>
-        <td>最低</td>
-        <td>收盘</td>
-      </thead>
-      <tbody>
-        <tr v-for="item in suits">
-          <td v-text="item[0]"></td>
-          <td v-text="item[1]"></td>
-          <td v-text="item[2]"></td>
-          <td v-text="item[3]"></td>
-          <td v-text="item[4]"></td>
-        </tr>
-      </tbody>
-    </table>
-    <div>
-      <p>
-        <span v-text="historyData.name"></span>
-        <span v-text="historyData.historyData.start"></span>
-        <span v-text="historyData.historyData.end"></span>
-      </p>
-      <svg ref="svg" preserveAspectRatio="none" class="svg"  xmlns="http://www.w3.org/2000/svg"></svg>
+    <div >
+        <p>{{code}}:{{historyData.name}}</p>
+        <table class="table text-center">
+          <thead>
+            <td>时间</td>
+            <td>开盘</td>
+            <td>最高</td>
+            <td>最低</td>
+            <td>收盘</td>
+          </thead>
+          <tbody>
+            <tr v-for="item in suits">
+              <td v-text="item[0]"></td>
+              <td v-text="item[1]"></td>
+              <td v-text="item[2]"></td>
+              <td v-text="item[3]"></td>
+              <td v-text="item[4]"></td>
+            </tr>
+          </tbody>
+        </table>
+        <div>
+            <p>
+                <span v-text="historyData.name"></span>
+                <span v-text="historyData.historyData.start"></span>
+                <span v-text="historyData.historyData.end"></span>
+            </p>
+            <div id="svgWraper">
+                <svg ref="svg" preserveAspectRatio="none" class="svg"  xmlns="http://www.w3.org/2000/svg"></svg>
+            </div>
+        </div>
+        <div>
+            <h3 class="strategy_title">所有的低开高走收益</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>时间</th>
+                        <th>3日内最高收益</th>
+                        <th>6日内最高收益</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="item in allLowOpenAndHighClose" :class="lowOpenAndHighCloseRateClass(item)">
+                        <td v-text="item.time"></td>
+                        <td v-text="item.rate3.toFixed(2)"></td>
+                        <td v-text="item.rate6.toFixed(2)"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-    <div>
-      <h3 class="strategy_title">所有的低开高走收益</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>时间</th>
-            <th>3日内最高收益</th>
-            <th>6日内最高收益</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="item in allLowOpenAndHighClose" :class="lowOpenAndHighCloseRateClass(item)">
-            <td v-text="item.time"></td>
-            <td v-text="item.rate3.toFixed(2)"></td>
-            <td v-text="item.rate6.toFixed(2)"></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
 </template>
 
 <script>
@@ -176,8 +178,9 @@
             this.draw();
             this.drawAverage();
 
-            let start=this.length-100>=0?this.length-100:0;
+            let start=this.length-50>=0?this.length-50:0;
             this.setViewBox(start,this.length);
+            this.drawLabel();
         }
         init(){
             let self=this;
@@ -191,7 +194,7 @@
 
         }
         calMaxMinVal(start,end){
-            console.log(start,end)
+//            console.log(start,end)
             let self=this;
             let max=-1000000;
             let min=10000000;
@@ -224,7 +227,7 @@
             this.perSize=width / this.width;
             this.start=start;
             this.canviewCount=end-start;
-            this.svg.setAttribute("viewBox",`${x} ${-max-hight*0.05} ${width} ${hight*1.1}`)
+            this.svg.setAttribute("viewBox",`${x} ${-max-hight*0.08} ${width} ${hight*1.16}`)
         }
         draw(){
             let self=this;
@@ -294,7 +297,7 @@
             self.svg.appendChild(line_bottom);
         }
         drawAverage(){
-            let avers=[10,30,60];
+            let avers=[5,10,20,30,60];
             for(let i=0;i<avers.length;i++){
                 this.drawAverageLine(avers[i]);
             }
@@ -320,6 +323,55 @@
             polyline.setAttribute("vector-effect","non-scaling-stroke");
             self.svg.appendChild(polyline);
         }
+        drawLabel(){
+            let self=this;
+            let averageData=this.averageData;
+            let historyData=this.data;
+            let hisLength=averageData.length;
+            let suitsIndex=[];
+            for(let i=60;i<hisLength-3;i++){
+                let {_5,_10,_20,_30,_60}=averageData[i];
+                let [buyTime,open,hign,low,close]=historyData[i+3];
+
+                let max_aver=Math.max.apply(null,[_5,_10,_20,_30,_60]);
+                let min_aver=Math.min.apply(null,[_5,_10,_20,_30,_60]);
+                if( (max_aver-min_aver)/close<0.015 &&nextDaysUp(i,averageData)){
+                    self.markOneDay(i+3);
+                    suitsIndex.push(i);
+                }
+            }
+            console.log('suitsIndex:',suitsIndex);
+
+            function nextDaysUp(i,averageData){
+                return averageData[i+1]['_5']<averageData[i+2]['_5']&&averageData[i+2]['_5']<averageData[i+3]['_5']
+            }
+
+        }
+        markOneDay(i){
+            let self=this;
+            let averageData=this.averageData;
+            let historyData=this.data;
+
+            let {_5,_10,_20,_30,_60}=averageData[i];
+            let [buyTime,open,hign,low,close]=historyData[i];
+
+            let rect=document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            let x=(self.barSize+self.barGap)*i;
+            let y=-low*0.99;
+            let height=low*0.03;
+
+            rect.setAttribute("x",x);
+            rect.setAttribute("y",y);
+
+            rect.setAttribute("width",self.barSize*0.4);
+            rect.setAttribute("height",height);
+            rect.setAttribute("stroke",'#f93');
+            rect.setAttribute("stroke-width",self.strokeWidth);
+            rect.setAttribute("fill",'#f93');
+            rect.setAttribute("vector-effect","non-scaling-stroke");
+            self.svg.appendChild(rect);
+
+        }
         move(){
             const self=this;
             let start_x;
@@ -328,17 +380,18 @@
             let move_y;
             let startViewBox;
             let _start;
-
-            this.svg.addEventListener('touchstart',(e)=>{
+            let wraper=document.querySelector('#svgWraper');
+            wraper.addEventListener('touchstart',(e)=>{
+                e.preventDefault();
                 let touch=e.touches[0];
                 let {pageX,pageY}=touch;
                 start_x=move_x=pageX;
                 start_y=move_y=pageY;
                 startViewBox=self.svg.getAttribute('viewBox').split(' ');
                 _start=self.start
-                console.log(pageX,e.touches);
+//                console.log(pageX,e.touches);
             });
-            this.svg.addEventListener('touchmove',(e)=>{
+            wraper.addEventListener('touchmove',(e)=>{
                 e.preventDefault();
                 let touch=e.touches[0];
                 if(e.touches.length==2){
@@ -360,7 +413,7 @@
                 }
                 _start=_start-count>=0?_start-count:0;
                 let end=_start+self.canviewCount;
-                console.log(_start,end)
+//                console.log(_start,end)
                 self.setViewBox(_start,end);
                 move_x=pageX;
                 move_y=pageY;
@@ -395,7 +448,7 @@
 
     .svg{
         display: block;
-        width:7rem;
+        width:7.5rem;
         margin:0.2rem auto;
         border:1px solid red;
         background-color:#000;
