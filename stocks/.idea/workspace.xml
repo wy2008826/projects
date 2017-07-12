@@ -27,7 +27,7 @@
       <file leaf-file-name="App.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/page/App.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="483">
+            <state relative-caret-position="-385">
               <caret line="52" column="0" lean-forward="true" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
               <folding>
                 <element signature="e#2129#2220#0" expanded="false" />
@@ -38,11 +38,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="detail.vue" pinned="false" current-in-tab="true">
+      <file leaf-file-name="base.scss" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/assets/css/base.scss">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="405">
+              <caret line="59" column="1" lean-forward="true" selection-start-line="59" selection-start-column="1" selection-end-line="59" selection-end-column="1" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="detail.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/page/detail.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="257">
-              <caret line="350" column="26" lean-forward="false" selection-start-line="350" selection-start-column="26" selection-end-line="350" selection-end-column="26" />
+            <state relative-caret-position="1281">
+              <caret line="348" column="9" lean-forward="true" selection-start-line="348" selection-start-column="9" selection-end-line="348" selection-end-column="9" />
               <folding>
                 <element signature="n#table#0;n#div#0;n#template#0;n#!!top" expanded="false" />
                 <element signature="e#2036#2242#0" expanded="false" />
@@ -50,6 +60,28 @@
                 <element signature="e#7384#7559#0" expanded="false" />
                 <element signature="e#7587#9771#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="router.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/router/router.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="99">
+              <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#22#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.hbs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/index.hbs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="516">
+              <caret line="30" column="4" lean-forward="true" selection-start-line="30" selection-start-column="4" selection-end-line="30" selection-end-column="4" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -67,6 +99,8 @@
       <list>
         <option value="$PROJECT_DIR$/src/page/App.vue" />
         <option value="$PROJECT_DIR$/src/page/detail.vue" />
+        <option value="$PROJECT_DIR$/views/index.hbs" />
+        <option value="$PROJECT_DIR$/src/assets/css/base.scss" />
       </list>
     </option>
   </component>
@@ -132,7 +166,7 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
+              <option name="myItemId" value="views" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -149,10 +183,6 @@
               <option name="myItemId" value="src" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="page" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -164,25 +194,15 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="routes" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="stocks" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="stocks" />
+              <option name="myItemId" value="src" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="routes" />
+              <option name="myItemId" value="assets" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="controllers" />
+              <option name="myItemId" value="css" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -227,12 +247,12 @@
       <workItem from="1499781521183" duration="38000" />
       <workItem from="1499781953175" duration="116000" />
       <workItem from="1499782089251" duration="477000" />
-      <workItem from="1499782572933" duration="8362000" />
+      <workItem from="1499782572933" duration="9114000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="9438000" />
+    <option name="totallyTimeSpent" value="10190000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -342,9 +362,57 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/routes/controllers/searchAllStocksAllAverageLineClose.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="87" column="0" lean-forward="false" selection-start-line="87" selection-start-column="0" selection-end-line="89" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Table/Table.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/page/detail.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1281">
+          <caret line="348" column="9" lean-forward="true" selection-start-line="348" selection-start-column="9" selection-end-line="348" selection-end-column="9" />
+          <folding>
+            <element signature="n#table#0;n#div#0;n#template#0;n#!!top" expanded="false" />
+            <element signature="e#2036#2242#0" expanded="false" />
+            <element signature="e#6293#6862#0" expanded="false" />
+            <element signature="e#7384#7559#0" expanded="false" />
+            <element signature="e#7587#9771#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/router/router.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="99">
+          <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#22#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/index.hbs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="516">
+          <caret line="30" column="4" lean-forward="true" selection-start-line="30" selection-start-column="4" selection-end-line="30" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/page/App.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
+        <state relative-caret-position="-385">
           <caret line="52" column="0" lean-forward="true" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
           <folding>
             <element signature="e#2129#2220#0" expanded="false" />
@@ -354,25 +422,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/controllers/searchAllStocksAllAverageLineClose.js">
+    <entry file="file://$PROJECT_DIR$/src/assets/css/base.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="87" column="0" lean-forward="false" selection-start-line="87" selection-start-column="0" selection-end-line="89" selection-end-column="1" />
+        <state relative-caret-position="405">
+          <caret line="59" column="1" lean-forward="true" selection-start-line="59" selection-start-column="1" selection-end-line="59" selection-end-column="1" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/page/detail.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="257">
-          <caret line="350" column="26" lean-forward="false" selection-start-line="350" selection-start-column="26" selection-end-line="350" selection-end-column="26" />
-          <folding>
-            <element signature="n#table#0;n#div#0;n#template#0;n#!!top" expanded="false" />
-            <element signature="e#2036#2242#0" expanded="false" />
-            <element signature="e#6293#6862#0" expanded="false" />
-            <element signature="e#7384#7559#0" expanded="false" />
-            <element signature="e#7587#9771#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
