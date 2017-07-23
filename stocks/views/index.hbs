@@ -12,19 +12,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no,minimum-scale=1.0, maximum-scale=1.0">
 	<title>stocks</title>
     <link rel="stylesheet" href="/dist/icon/iconfont.css">
-	<script>
-		
-		(function() {
-		    var deviceWidth = document.documentElement.clientWidth;
-		    if(deviceWidth > 750) deviceWidth = 750;
-		    document.documentElement.style.fontSize = deviceWidth / 7.5 + 'px';
-		})();
-
-	</script>
 </head>
 <body>
 	<div id="app" >
-	    <transition name='fade'>
+	    <transition name='fade1'>
 	        <router-view></router-view>
 	    </transition>
 	</div>

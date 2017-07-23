@@ -1,7 +1,7 @@
 <template>
     <div >
         <p>{{code}}:{{historyData.name}}</p>
-        <table class="table text-center">
+        <table class="table text-center hide">
           <thead>
             <td>时间</td>
             <td>开盘</td>
@@ -29,7 +29,7 @@
                 <svg ref="svg" preserveAspectRatio="none" class="svg"  xmlns="http://www.w3.org/2000/svg"></svg>
             </div>
         </div>
-        <div>
+        <div class="hide">
             <h3 class="strategy_title">所有的低开高走收益</h3>
             <table>
                 <thead>
@@ -115,11 +115,11 @@
         },
         created(){
             var self=this;
-            this.$http.get(`/api/getOneCodeAllT?code=${self.code}`).then((res)=>{
-                self.$data.suits=res.body.lists;
-            },(res)=>{
-                console.log("error")
-            });
+//            this.$http.get(`/api/getOneCodeAllT?code=${self.code}`).then((res)=>{
+//                self.$data.suits=res.body.lists;
+//            },(res)=>{
+//                console.log("error")
+//            });
 
             this.$http.get(`/api/getOneCodeHistoryData?code=${self.code}`).then((res)=>{
                 // console.log(res);
@@ -135,7 +135,8 @@
                 });
 
                 // console.log('sortData:',self.$data.sortData)
-                window.draw=new drawKLine(self.$refs["svg"],self.$data.sortData);
+                let length=self.$data.sortData.length;
+                window.draw=new drawKLine(self.$refs["svg"],length>400?self.$data.sortData.slice(length-400):self.$data.sortData);
             },(res)=>{
                 console.log("error")
             });

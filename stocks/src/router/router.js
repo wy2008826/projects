@@ -2,6 +2,7 @@ import Vue from 'vue';
 import vueRouter from 'vue-router';
 import App from "@/page/App.vue";
 import Detail from "@/page/detail.vue";
+import Lists from "@/page/Lists.vue";
 
 // const Detail = r => require.ensure([], () => r(require('@/page/detail.vue')), 'detail');
 
@@ -41,6 +42,11 @@ var routes=[
 			// },
 		]
 	},
+    {
+        name:"lists",
+        path:"/lists/:type",
+        component:Lists
+    },
 	{
 		name:"detail",
 		path:"/detail/:code",

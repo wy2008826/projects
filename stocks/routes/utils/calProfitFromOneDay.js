@@ -8,11 +8,13 @@ module.exports=function(i,sortData){
 			rate9:0,
 			rate12:0,
 			rate20:0,
+			rate30:0,
 			rate3Days:0,
 			rate6Days:0,
 			rate9Days:0,
 			rate12Days:0,
 			rate20Days:0,
+            rate30Days:0,
 		}
 	}
 
@@ -36,6 +38,7 @@ module.exports=function(i,sortData){
 		rate9Days:rate9s.calDays,
 		rate12Days:rate12s.calDays,
 		rate20Days:rate20s.calDays,
+        rate30Days:rate30s.calDays,
 	}
 }
 

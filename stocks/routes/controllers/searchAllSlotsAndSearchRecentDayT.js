@@ -4,7 +4,7 @@ var isOneDayT = require("../../strategy/isOneDayT.js");
 var getSortHistoryData=require('../utils/getSortHistoryData.js');
 const calProfitFromOneDay=require('../utils/calProfitFromOneDay.js');
 const calPricePosition=require('../utils/calPricePosition.js');
-
+let calAverageLineData=require("../utils/calAverageLineData.js");
 
 module.exports=async function(){
     let begain=new Date();
@@ -21,6 +21,12 @@ module.exports=async function(){
         }else{
             let all=[];
             for(let i=0;i<count;i++){//需要对数据进行拆分，不然会导致内存泄漏
+                let code=codes[i].code;
+                let reg=/^300\d+/;
+
+                if(reg.test(code)){//排除创业板的股票
+                    continue;
+                }
                 let query=StockModel.findOne({code:codes[i].code});
                 let suits=await searchOneCodeT(query);
                 all=all.concat(suits||[]);
@@ -39,7 +45,7 @@ module.exports=async function(){
 }
 
 //最近15天的数据
-let recentDays=15;
+let recentDays=80;
 
 function searchOneCodeT(query){
     let suits=[];
@@ -67,10 +73,12 @@ function searchOneCodeT(query){
 
                         if(isOneDayT(dayData)){
                             const buyTime=dayData[0];
+                            const low=dayData[3];
                             const historyIndex=historyData.indexOf(dayData);
 
                             const {rate3,rate6,rate9,rate12,rate3Days,rate6Days,rate9Days,rate12Days} =calProfitFromOneDay(historyIndex,historyData);
                             const {pos}=calPricePosition(historyIndex,historyData);
+                            const {_60}=calAverageLineData(historyData)[historyIndex];
                             // console.log(rate3Days,rate6Days,rate9Days,rate12Days,pos);
                             if(new Date(nowData[0]) - new Date(buyTime) <(recentDays+12)*24*60*60*1000 &&pos<85){
                                 suits.push({
@@ -81,7 +89,8 @@ function searchOneCodeT(query){
                                     rate6,
                                     rate9,
                                     rate12,
-                                    pos
+                                    pos,
+                                    isCloseToAver60:Math.abs(low-_60)/_60<0.02
                                 });
                             }
 

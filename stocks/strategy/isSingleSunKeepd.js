@@ -1,5 +1,5 @@
 
-let keepDays=5;
+let keepDays=4;
 
 module.exports=function isSingleSunKeepd(historyDataLists){//数组长度最少为18
 	let length=historyDataLists.length;
@@ -13,7 +13,7 @@ module.exports=function isSingleSunKeepd(historyDataLists){//数组长度最少�
 	let _prev_singleSunZhenFu=getZhenFu(historyDataLists[length-keepDays-2]);
 	let _platIsTop=platIsTop(historyDataLists.slice(length-keepDays -1));
 
-	if(_isZhaiFuPlat && _platIsTop && _singleSunZhenFu>0.035 && _singleSunZhenFu<0.085){//平台窄幅震荡 并且单个大阳振幅介于 4-7个点之间
+	if(_isZhaiFuPlat && _platIsTop && _singleSunZhenFu>0.04 && _singleSunZhenFu<0.09){//平台窄幅震荡 并且单个大阳振幅介于 4-7个点之间
 		return {
 			isSuit:true,
 			buyTime:historyDataLists[length-1][0]

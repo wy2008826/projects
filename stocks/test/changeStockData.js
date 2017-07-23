@@ -9,7 +9,7 @@ var StockModel=require("../models/stock.js");
 module.exports=async function(code,time=undefined){
 	
 
-	var code="600000";
+	var code="600100";
 	return new Promise(function(resolve,reject){
 		StockModel.findBy({code:code},function(err,data){
 			if(err){
@@ -25,8 +25,8 @@ module.exports=async function(code,time=undefined){
 					let times=Object.keys(data.historyData.dataColects);
 					let length=times.length;
 
-					delete data.historyData.dataColects[times[length-3]];
-					data.historyData.dataColects[times[length-1]][1]=1000;
+					delete data.historyData.dataColects[times[length-1]];
+					// data.historyData.dataColects[times[length-1]][1]=1000;
 
 					StockModel.update({code:code},data,function(err){
 						if(err){

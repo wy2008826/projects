@@ -166,8 +166,8 @@ function saveStock(_stock,day){
 				}else{
 					exist+=1;
 					if(data.historyData){
-						data.historyData.dataColects[day]=nowHistoryData;
-						if(!data.historyData.dataColects[day]){
+						if(!data.historyData.dataColects[day] && todayOpen*1){
+                            data.historyData.dataColects[day]=nowHistoryData;
 							data.historyData.count+=1;
 							data.historyData.end=day;
 						}

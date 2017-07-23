@@ -1,6 +1,8 @@
 //express的router  可以把router挂载到对应的exports上  可以定义不同的路由文件 极大地提高了灵活性   把不同的路由文件引入到app.js中即可  
 var express=require("express");
 var route=express.Router();
+let fs=require('fs');
+let path=require('path');
 
 let selectIncrease =require("./controllers/apiSelectIncrease.js");
 let getAllCodes =require("./controllers/api/getAllCodes.js");
@@ -51,25 +53,17 @@ route.get("/api/getOneCodeHistoryData",async function(req,res,error){
 
 });
 
-let recentTLists;
-let lastSearchRecentT;
 
 //每5分钟刷新一次
 route.get("/api/getAllCodeRecentT",async function(req,res,error){
     
     let lists=[];
-    if(!recentTLists){
+    let fileData=await readFile(path.resolve(__dirname,'../baseData/T.json'));
+    if(fileData){
+        lists=fileData.lists;
+	}else{
         lists=recentTLists=await searchAllSlotsAndSearchRecentDayT();
-        lastSearchRecentT=new Date();
-    }else{
-        if(new Date()-lastSearchRecentT<5*60*1000){
-            lists=recentTLists;
-        }else{
-            lists=recentTLists=await searchAllSlotsAndSearchRecentDayT();
-            lastSearchKeepDays=new Date();
-        }
-    }
-
+	}
     var data={
         lists
     };
@@ -77,27 +71,19 @@ route.get("/api/getAllCodeRecentT",async function(req,res,error){
 });
 
 
-let keepDaysLists;
-let lastSearchKeepDays;
+
 route.get("/api/selectSingleSunKeepedDays",async function(req,res,error){
-	let data={};
-    if(!keepDaysLists){
-    	let lists=keepDaysLists=await selectSingleSunKeepedDays();
-    	lastSearchKeepDays=new Date();
-    	data.lists=lists;
+
+    let lists=[];
+    let fileData=await readFile(path.resolve(__dirname,'../baseData/SingleSunKeepDays.json'));
+    if(fileData){
+        lists=fileData.lists;
     }else{
-    	let last=getYMDHMS(lastSearchKeepDays);
-    	let now =getYMDHMS();
-    	if(`${last.day}${last.hour}`==`${now.day}${now.hour}`){
-    		data.lists=keepDaysLists;
-    	}else{
-    		let lists=keepDaysLists=await selectSingleSunKeepedDays();
-    		lastSearchKeepDays=new Date();
-    		data.lists=lists;
-            
-    	}
+        lists=recentTLists=await selectSingleSunKeepedDays();
     }
-    console.log("data:",data)
+    var data={
+        lists
+    };
     res.json(data);
 
 });
@@ -116,6 +102,18 @@ route.get("/api/getOneCodeAllT",async function(req,res,error){
 
 route.get("/api/selectIncrease",selectIncrease);
 
+function readFile(dir){
+	return new Promise(function(resolve,reject){
+        fs.readFile(dir,function(err,data){
+			if(err){
+				console.log('error');
+                resolve(false);
+			}else{
+                resolve(JSON.parse(data));
+			}
+        });
+	});
+}
 
 module.exports=route;
 

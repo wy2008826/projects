@@ -21,6 +21,8 @@ let selectSingleSunKeepedDays=require("./routes/controllers/selectSingleSunKeepe
 let selectLowOpenAndHighClose=require("./routes/controllers/selectLowOpenAndHighClose.js");
 let searchAllStocksAllAverageLineClose=require("./routes/controllers/searchAllStocksAllAverageLineClose.js");
 
+let apiDIY=require("./routes/controllers/apiDIY");
+let writeApiResultsFiles=require('./routes/controllers/writeApiResultsFiles');
 
 let testSearchAllCodeSingleSunKeepedDays=require("./testStrategy/testSearchAllCodeSingleSunKeepedDays");
 let testSearchOneCodeAllT=require('./testStrategy/testSearchOneCodeAllT');
@@ -47,11 +49,11 @@ schedule.scheduleJob(timeRules.everyHalfHour, function(){
 
 
 //上、下午收盘前找出 T 字形股票
-schedule.scheduleJob(timeRules.beforeAmClose, function(){
-	crawAllSlotsAndSearchOneDayT("email");
+schedule.scheduleJob(timeRules.beforeAmClose, async function(){
+    await crawAllSlotsAndSearchOneDayT("email");
 });
-schedule.scheduleJob(timeRules.beforePmClose, function(){
-	crawAllSlotsAndSearchOneDayT("email");
+schedule.scheduleJob(timeRules.beforePmClose, async function(){
+    await crawAllSlotsAndSearchOneDayT("email");
 });
 
 
@@ -66,6 +68,10 @@ schedule.scheduleJob(timeRules.everyNight20, async function(){
 	await selectSingleSunKeepedDays("email");
 });
 
+//每隔5分钟查找一次数据并写入文件，提升查询速度
+schedule.scheduleJob(timeRules.every5Minutes, async function(){
+    await writeApiResultsFiles();
+});
 
 
 async function all(){
@@ -73,8 +79,8 @@ async function all(){
 	// testChangeStockDta();
 
 	// let suits_OneDayT=await crawAllSlotsAndSearchOneDayT();//抓取数据
-	
-	//await crawHistoryDataAll();//抓取所有股票的历史数据
+    // apiDIY();
+    // await crawHistoryDataAll();//抓取所有股票的历史数据
 
 	// searchAllStocksAllAverageLineClose();
 

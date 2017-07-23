@@ -7,20 +7,24 @@ let sendEmail=require("../utils/sendEmail.js");
 
 let prevDays=90;
 let isSingleSunKeepd=require("../../strategy/isSingleSunKeepd.js");
-let getStocksCount=require("../utils/getStocksCount.js");
-var getSortHistoryData=require('../utils/getSortHistoryData.js');
+let getSortHistoryData=require('../utils/getSortHistoryData.js');
 let calProfitFromOneDay=require("../utils/calProfitFromOneDay.js");
+let calAverageLineData=require("../utils/calAverageLineData.js");
 
 
 /** 参考因素 
 
-1.阳线之前k线的形态  如阳线不能低开
-2.阳线于60日均线的关系   阳线开盘价距离60日均线的涨幅百分比不能超过10%
-3.窄幅震荡的5日内 不能有较长的长上下影线
-4.阳线的成交量显著放量
-5.不能处于历史走势中的绝对高位
-6.大阳线不能有太长的上影线
+	1.阳线之前k线的形态  如阳线不能低开
+	2.阳线于60日均线的关系   阳线开盘价距离60日均线的涨幅百分比不能超过10%
+	3.窄幅震荡的5日内 不能有较长的长上下影线
+	4.阳线的成交量显著放量
+	5.不能处于历史走势中的绝对高位
+	6.大阳线不能有太长的上影线
 
+
+ 	大阳线本身需要具有某种特殊意义
+	a 大阳需要突破前期一段时间的最高点
+ 	b 大阳线一举突破所有的均线
 **/
 
 
@@ -52,7 +56,13 @@ module.exports= function(needEmail){//
 		}else{
 			console.log(`finding.......${strategyName}`);
 			for(let i=0;i<count;i++){//需要对数据进行拆分，不然会导致内存泄漏
-				let query=StockModel.findOne({code:codes[i].code});
+				let code=codes[i].code;
+				let reg=/^300\d+/;
+
+				if(reg.test(code)){//排除创业板的股票
+					continue;
+				}
+				let query=StockModel.findOne({code:code});
 				let suit=await searchGroups(query);
 				if(suit){
 					suits=suits.concat(suit);
@@ -63,7 +73,7 @@ module.exports= function(needEmail){//
 			let end=new Date();
 			let minutes=( (end-start) / (1000 * 60 ) );
 			console.log(`${strategyName} 😊 !!! 共耗时 ${minutes} 分钟`);
-			console.log(suits);
+			// console.log(suits);
 			resolve(suits);
 
 			if(needEmail){//是否需要发邮件
@@ -89,15 +99,55 @@ function searchGroups(query){
 				let code=stock.code;
 				let name=stock.name;
 				let historyData=getSortHistoryData(stock.historyData.dataColects);
+                let averLineData=calAverageLineData(historyData);
 				let hisLength=historyData.length;
 				if(historyData && hisLength>prevDays+6){
 					let suits=[];
 					for(let i=hisLength;i>hisLength-prevDays;i--){
 						var recentData=historyData.slice(i-7,i);
+						let pass15Days=historyData.slice(i-21,i-6);
+						let pass15Max=0;
+
+                        let passDays=historyData.slice(0,i-6);
+                        let passMax=0;
+
+                        let later15Days=historyData.slice(i-4);
+                        let later15Min=100000;
+
+						for(let j=0;j<pass15Days.length;j++){
+							if(pass15Days[j][2]>pass15Max){
+                                pass15Max=pass15Days[j][2];
+							}
+						}
+                        for(let k=0;k<passDays.length;k++){
+                            if(passDays[k][2]>passMax){
+                                passMax=passDays[k][2];
+                            }
+                        }
+
+                        for(let l=0;l<later15Days.length;l++){
+                            if(later15Days[l][3]<later15Min){
+                                later15Min=later15Days[l][3];
+                            }
+                        }
+
+						const low=historyData[i-5][3];
+                        const close=historyData[i-5][4];
+
+						const {_5,_10,_20,_30,_60}=averLineData[i-5];
+                        const minAver=Math.min.apply(null,[_5,_10,_20,_30,_60])
+						const maxAver=Math.max.apply(null,[_5,_10,_20,_30,_60])
+						const averMinMaxRate=(maxAver-minAver)/low;
 
 						var result=isSingleSunKeepd(recentData);
+
 						if(result.isSuit){
-							let rates=calProfitFromOneDay(i-1,historyData);
+							let rates=calProfitFromOneDay(i,historyData);
+							// console.log(code,low,later15Min);
+							if(code=='601166'){
+								console.log(code,historyData[i-5],later15Min,low);
+							}
+
 							suits.push({
 								code,name,
 								buyTime:result.buyTime,
@@ -105,6 +155,11 @@ function searchGroups(query){
 								rate6:rates.rate6,
 								rate9:rates.rate9,
 								rate12:rates.rate12,
+                                rate20:rates.rate20,
+                                rate30:rates.rate30,
+								isTuPo:close>maxAver,
+								averClose:averMinMaxRate<0.07,
+								diepo:later15Min<low&&rates.rate20<8,
 							});
 						}
 					}
