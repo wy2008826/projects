@@ -5,6 +5,7 @@
             <transition name="fade">
                 <ul class="clearfix strategy_ul" v-show="!loading">
                     <h4 class='strategy_title text-center' v-text="labelTxt"></h4>
+                    <p class="amount_line text-right">共<span v-text="dataLists.length"></span>条</p>
                     <li class="stock text-center">
                         <p @click="sortBy('t')">时间 &#8645</p>
                         <p>名称／代码</p>
@@ -147,6 +148,15 @@
         border:0.02rem solid #d8d8d8;
         border-left:0;
         border-right:0;
+    }
+    .amount_line{
+        line-height: 0.6rem;
+        fs:0.3rem;
+        padding-right:0.3rem;
+        span{
+            color:#f93;
+            margin:0 0.05rem;
+        }
     }
     .strategy_ul{
         li{

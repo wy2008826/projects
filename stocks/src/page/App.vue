@@ -67,14 +67,12 @@
             display: flex;
             line-height: 0.6rem;
             padding:0.2rem 0;
-            border-bottom: 1px solid #e5e5e5;
-
+            border: 1px solid #e5e5e5;
             p{
                 border-right:1px solid #e5e5e5;
                 text-align: center;
                 -webkit-flex:1;
                 flex:1;
-
             }
         }
     }
