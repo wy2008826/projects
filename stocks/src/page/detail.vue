@@ -1,52 +1,12 @@
 <template>
     <div >
-        <p>{{code}}:{{historyData.name}}</p>
-        <table class="table text-center hide">
-          <thead>
-            <td>时间</td>
-            <td>开盘</td>
-            <td>最高</td>
-            <td>最低</td>
-            <td>收盘</td>
-          </thead>
-          <tbody>
-            <tr v-for="item in suits">
-              <td v-text="item[0]"></td>
-              <td v-text="item[1]"></td>
-              <td v-text="item[2]"></td>
-              <td v-text="item[3]"></td>
-              <td v-text="item[4]"></td>
-            </tr>
-          </tbody>
-        </table>
-        <div>
-            <p>
-                <span v-text="historyData.name"></span>
-                <span v-text="historyData.historyData.start"></span>
-                <span v-text="historyData.historyData.end"></span>
-            </p>
-            <div id="svgWraper">
-                <svg ref="svg" preserveAspectRatio="none" class="svg"  xmlns="http://www.w3.org/2000/svg"></svg>
-            </div>
-        </div>
-        <div class="hide">
-            <h3 class="strategy_title">所有的低开高走收益</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>时间</th>
-                        <th>3日内最高收益</th>
-                        <th>6日内最高收益</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="item in allLowOpenAndHighClose" :class="lowOpenAndHighCloseRateClass(item)">
-                        <td v-text="item.time"></td>
-                        <td v-text="item.rate3.toFixed(2)"></td>
-                        <td v-text="item.rate6.toFixed(2)"></td>
-                    </tr>
-                </tbody>
-            </table>
+        <p class="title_desc">
+            <span v-text="code"></span>
+            <span v-text="historyData.name"></span>
+            <span v-text="start"></span>至<span v-text="end"></span>
+        </p>
+        <div id="svgWraper">
+            <svg ref="svg" preserveAspectRatio="none" class="svg"  xmlns="http://www.w3.org/2000/svg"></svg>
         </div>
     </div>
 </template>
@@ -66,60 +26,23 @@
 
                     }
                 },
-                sortData:[]
+                sortData:[],
+                start:'',
+                end:''
             }
         },
         computed:{
-            curStock(){
-                return this.$store.state.curStock;
-            },
             code(){
                 let self=this;
                 return self.$route.params.code;
             },
-            name(){
-                let self=this;
-                return ""
-            },
-            allLowOpenAndHighClose(){
-                let self=this;
-                let sortData=self.$data.sortData;
-                let suits=[];
-                for(let i=1;i<sortData.length;i++){
-                    let recentData=sortData.slice(i-1,i+1);
-                    if(isLowOpenAndHighClose(recentData).isSuit){
-                        let rates=calProfitFromOneDay(i,self.$data.sortData);
-
-                        let buyTimeClose=recentData[1][4];
-                        suits.push({
-                            time:recentData[1][0],
-                            buyTimeClose,
-                            rate3:rates.rate3,
-                            rate6:rates.rate6,
-                        });
-                    }
-                };
-                suits=suits.reverse();
-                return suits;
-
-            }
         },
         methods:{
-            lowOpenAndHighCloseRateClass(item){
-                if(item.rate3>4&&item.rate6>4){
-                    return "high";
-                }else if(item.rate3<2){
-                    return "low"
-                }
-            }
+
         },
         created(){
             var self=this;
-//            this.$http.get(`/api/getOneCodeAllT?code=${self.code}`).then((res)=>{
-//                self.$data.suits=res.body.lists;
-//            },(res)=>{
-//                console.log("error")
-//            });
+
 
             this.$http.get(`/api/getOneCodeHistoryData?code=${self.code}`).then((res)=>{
                 // console.log(res);
@@ -133,6 +56,8 @@
                 self.$data.sortData=data.sort(function(prev,next){
                   return new Date(prev[0])-new Date(next[0]);
                 });
+                this.start=this.sortData[0][0];
+                this.end=this.sortData[this.sortData.length-1][0];
 
                 // console.log('sortData:',self.$data.sortData)
                 let length=self.$data.sortData.length;
@@ -169,7 +94,7 @@
               _10:"#f5fd00",
               _20:"#de00dd",
               _30:"#00f91b",
-              _60:"#f95d21"
+              _60:"#707070"
             }
             this.init();
 
@@ -432,25 +357,19 @@
         line-height: 0.6rem;
         color:#456;
     }
-    table{
-        width:100%;
-        text-align: center;
-        tbody{
-            tr{
-                &.high{
-                    background-color:#FF7256
-                }
-                &.low{
-                    background-color:#98FB98
-                }
-            }
+    .title_desc{
+        font-size: 0.24rem;
+        line-height: 0.6rem;
+        padding-left: 0.3rem;
+        span{
+            margin:0 0.05rem;
         }
     }
 
     .svg{
         display: block;
         width:7.5rem;
-        margin:0.2rem auto;
+        margin:0 auto;
         border:1px solid red;
         background-color:#000;
     }
