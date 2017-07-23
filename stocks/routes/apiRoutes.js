@@ -12,6 +12,9 @@ let testSearchOneCodeAllT=require('../testStrategy/testSearchOneCodeAllT');
 let searchAllSlotsAndSearchRecentDayT=require('./controllers/searchAllSlotsAndSearchRecentDayT');
 let selectSingleSunKeepedDays=require("./controllers/selectSingleSunKeepedDays");
 let getYMDHMS =require("./utils/getYMDHMS.js") ;
+let apiDIY =require('./controllers/apiDIY.js');
+let suanfa =require('../const/suanfa.js');
+
 
 route.get("/api/test",function(req,res,error){
 	var query=req.query;
@@ -54,7 +57,7 @@ route.get("/api/getOneCodeHistoryData",async function(req,res,error){
 });
 
 
-//每5分钟刷新一次
+
 route.get("/api/getAllCodeRecentT",async function(req,res,error){
     
     let lists=[];
@@ -62,9 +65,10 @@ route.get("/api/getAllCodeRecentT",async function(req,res,error){
     if(fileData){
         lists=fileData.lists;
 	}else{
-        lists=recentTLists=await searchAllSlotsAndSearchRecentDayT();
+        lists=await apiDIY(suanfa.T);
 	}
     var data={
+        createTime:fileData && fileData.time,
         lists
     };
     res.json(data);
@@ -79,9 +83,27 @@ route.get("/api/selectSingleSunKeepedDays",async function(req,res,error){
     if(fileData){
         lists=fileData.lists;
     }else{
-        lists=recentTLists=await selectSingleSunKeepedDays();
+        lists=await apiDIY(suanfa.SingleSunKeepDays);
     }
     var data={
+    	createTime:fileData && fileData.time,
+        lists
+    };
+    res.json(data);
+
+});
+
+route.get("/api/bouncePrice",async function(req,res,error){
+
+    let lists=[];
+    let fileData=await readFile(path.resolve(__dirname,'../baseData/bouncePrice.json'));
+    if(fileData){
+        lists=fileData.lists;
+    }else{
+        lists=await apiDIY(suanfa.bouncePrice);
+    }
+    var data={
+        createTime:fileData && fileData.time,
         lists
     };
     res.json(data);

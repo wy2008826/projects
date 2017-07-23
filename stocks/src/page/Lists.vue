@@ -5,7 +5,7 @@
             <transition name="fade">
                 <ul class="clearfix strategy_ul" v-show="!loading">
                     <h4 class='strategy_title text-center' v-text="labelTxt"></h4>
-                    <p class="amount_line text-right">共<span v-text="dataLists.length"></span>条</p>
+                    <p class="amount_line text-right">共<span v-text="dataLists.length"></span>条 更新时间:<i v-text="createTime"></i></p>
                     <li class="stock text-center">
                         <p @click="sortBy('t')">时间 &#8645</p>
                         <p>名称／代码</p>
@@ -42,6 +42,7 @@
                 type:this.$route.params.type,
                 loading:true,
                 sortDirection:1,
+                createTime:'',
                 dataLists:[],
                 apiConfog:{
                     T:{
@@ -51,7 +52,11 @@
                     singleSunKeepDays:{
                         label:'最近单阳不破',
                         url:'/api/selectSingleSunKeepedDays'
-                    }
+                    },
+                    bouncePrice:{
+                        label:'最近涨幅居前',
+                        url:'/api/bouncePrice'
+                    },
                 }
             }
         },
@@ -120,6 +125,7 @@
                     let t=prev.buyTime?'buyTime':'t';
                     return new Date(next[t])-new Date(prev[t]);
                 });
+                self.createTime=res.body.createTime;
 
             },(res)=>{
                 this.loading=false;

@@ -9,6 +9,9 @@
                 <router-link tag="p" to="/lists/T">最近收T</router-link>
                 <router-link tag="p" to="/lists/singleSunKeepDays">最近单阳不破</router-link>
             </li>
+            <li>
+                <router-link tag="p" to="/lists/bouncePrice">最近涨幅较大</router-link>
+            </li>
         </ul>
         <Stocks :class="{active:showStocks}" />
     </div>
@@ -73,6 +76,9 @@
                 text-align: center;
                 -webkit-flex:1;
                 flex:1;
+                &:last-child{
+                    border-right: 0;
+                }
             }
         }
     }

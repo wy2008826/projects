@@ -27,8 +27,8 @@
       <file leaf-file-name="App.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/page/App.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="29">
-              <caret line="55" column="0" lean-forward="true" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
+            <state relative-caret-position="340">
+              <caret line="16" column="10" lean-forward="true" selection-start-line="16" selection-start-column="10" selection-end-line="16" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -37,8 +37,8 @@
       <file leaf-file-name="server.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="64" column="0" lean-forward="true" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
+            <state relative-caret-position="374">
+              <caret line="77" column="0" lean-forward="true" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -47,8 +47,8 @@
       <file leaf-file-name="apiRoutes.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/apiRoutes.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="93">
-              <caret line="75" column="0" lean-forward="true" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
+            <state relative-caret-position="453">
+              <caret line="98" column="79" lean-forward="false" selection-start-line="98" selection-start-column="68" selection-end-line="98" selection-end-column="79" />
               <folding />
             </state>
           </provider>
@@ -57,33 +57,30 @@
       <file leaf-file-name="Lists.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/page/Lists.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="681">
-              <caret line="156" column="23" lean-forward="false" selection-start-line="156" selection-start-column="23" selection-end-line="156" selection-end-column="23" />
+            <state relative-caret-position="66">
+              <caret line="37" column="0" lean-forward="true" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
               <folding>
-                <element signature="e#3115#3772#0" expanded="false" />
+                <element signature="e#3324#3981#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="detail.vue" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/page/detail.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="588">
-              <caret line="371" column="22" lean-forward="true" selection-start-line="371" selection-start-column="22" selection-end-line="371" selection-end-column="22" />
-              <folding>
-                <element signature="e#4858#5033#0" expanded="false" />
-                <element signature="e#5061#7245#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="writeApiResultsFiles.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="writeApiResultsFiles.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/routes/controllers/writeApiResultsFiles.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="47" column="46" lean-forward="false" selection-start-line="47" selection-start-column="32" selection-end-line="47" selection-end-column="46" />
+            <state relative-caret-position="382">
+              <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="suanfa.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/const/suanfa.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="682">
+              <caret line="31" column="19" lean-forward="false" selection-start-line="31" selection-start-column="8" selection-end-line="31" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -92,7 +89,7 @@
       <file leaf-file-name="apiDIY.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/controllers/apiDIY.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="267">
+            <state relative-caret-position="418">
               <caret line="19" column="10" lean-forward="true" selection-start-line="19" selection-start-column="10" selection-end-line="19" selection-end-column="10" />
               <folding />
             </state>
@@ -113,12 +110,13 @@
       <find>averageData</find>
       <find>console</find>
       <find>calPricePosition</find>
-      <find>res</find>
       <find>sortData</find>
       <find>curStock</find>
       <find>name</find>
       <find>allLowOpenAndHighClose</find>
       <find>lowOpenAndHighCloseRateClass</find>
+      <find>drawKLine</find>
+      <find>res</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -141,16 +139,18 @@
         <option value="$PROJECT_DIR$/src/assets/css/base.scss" />
         <option value="$PROJECT_DIR$/views/index.hbs" />
         <option value="$PROJECT_DIR$/src/components/Loading/Loading.vue" />
-        <option value="$PROJECT_DIR$/baseData/T.json" />
-        <option value="$PROJECT_DIR$/routes/controllers/writeApiResultsFiles.js" />
         <option value="$PROJECT_DIR$/routes/controllers/apiDIY.js" />
-        <option value="$PROJECT_DIR$/server.js" />
-        <option value="$PROJECT_DIR$/routes/apiRoutes.js" />
-        <option value="$PROJECT_DIR$/const/consts.js" />
-        <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/src/page/App.vue" />
-        <option value="$PROJECT_DIR$/src/page/Lists.vue" />
         <option value="$PROJECT_DIR$/src/page/detail.vue" />
+        <option value="$PROJECT_DIR$/src/page/App.vue" />
+        <option value="$PROJECT_DIR$/const/consts.js" />
+        <option value="$PROJECT_DIR$/baseData/SingleSunKeepDays.json" />
+        <option value="$PROJECT_DIR$/baseData/T.json" />
+        <option value="$PROJECT_DIR$/const/suanfa.js" />
+        <option value="$PROJECT_DIR$/src/page/Lists.vue" />
+        <option value="$PROJECT_DIR$/routes/apiRoutes.js" />
+        <option value="$PROJECT_DIR$/routes/controllers/writeApiResultsFiles.js" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/server.js" />
       </list>
     </option>
   </component>
@@ -261,6 +261,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="routes" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="stocks" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="stocks" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="routes" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controllers" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -398,12 +416,12 @@
       <workItem from="1499781953175" duration="116000" />
       <workItem from="1499782089251" duration="477000" />
       <workItem from="1499782572933" duration="16316000" />
-      <workItem from="1500173722692" duration="58221000" />
+      <workItem from="1500173722692" duration="60670000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="75613000" />
+    <option name="totallyTimeSpent" value="78062000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -756,38 +774,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/baseData/SingleSunKeepDays.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="20" lean-forward="true" selection-start-line="0" selection-start-column="20" selection-end-line="0" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/controllers/apiDIY.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="267">
-          <caret line="19" column="10" lean-forward="true" selection-start-line="19" selection-start-column="10" selection-end-line="19" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/controllers/writeApiResultsFiles.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="47" column="46" lean-forward="false" selection-start-line="47" selection-start-column="32" selection-end-line="47" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/baseData/T.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="35" lean-forward="false" selection-start-line="0" selection-start-column="30" selection-end-line="0" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/strategy/isSingleSunKeepd.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="968">
@@ -796,10 +782,53 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/page/detail.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="359" column="16" lean-forward="true" selection-start-line="359" selection-start-column="16" selection-end-line="359" selection-end-column="16" />
+          <folding>
+            <element signature="e#4858#5033#0" expanded="false" />
+            <element signature="e#5061#7245#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/controllers/apiDIY.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="19" column="10" lean-forward="true" selection-start-line="19" selection-start-column="10" selection-end-line="19" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/baseData/SingleSunKeepDays.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="20" lean-forward="true" selection-start-line="0" selection-start-column="20" selection-end-line="0" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/const/consts.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="552">
-          <caret line="36" column="23" lean-forward="false" selection-start-line="36" selection-start-column="23" selection-end-line="36" selection-end-column="23" />
+        <state relative-caret-position="250">
+          <caret line="21" column="0" lean-forward="true" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/const/suanfa.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="682">
+          <caret line="31" column="19" lean-forward="false" selection-start-line="31" selection-start-column="8" selection-end-line="31" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/page/App.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="16" column="10" lean-forward="true" selection-start-line="16" selection-start-column="10" selection-end-line="16" selection-end-column="10" />
           <folding />
         </state>
       </provider>
@@ -807,53 +836,50 @@
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="22">
-          <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <caret line="1" column="10" lean-forward="true" selection-start-line="1" selection-start-column="10" selection-end-line="1" selection-end-column="10" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/server.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="64" column="0" lean-forward="true" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
+        <state relative-caret-position="374">
+          <caret line="77" column="0" lean-forward="true" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/apiRoutes.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="93">
-          <caret line="75" column="0" lean-forward="true" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/page/App.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="29">
-          <caret line="55" column="0" lean-forward="true" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
+        <state relative-caret-position="453">
+          <caret line="98" column="79" lean-forward="false" selection-start-line="98" selection-start-column="68" selection-end-line="98" selection-end-column="79" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/page/Lists.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="681">
-          <caret line="156" column="23" lean-forward="false" selection-start-line="156" selection-start-column="23" selection-end-line="156" selection-end-column="23" />
+        <state relative-caret-position="66">
+          <caret line="37" column="0" lean-forward="true" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
           <folding>
-            <element signature="e#3115#3772#0" expanded="false" />
+            <element signature="e#3324#3981#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/page/detail.vue">
+    <entry file="file://$PROJECT_DIR$/baseData/T.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="588">
-          <caret line="371" column="22" lean-forward="true" selection-start-line="371" selection-start-column="22" selection-end-line="371" selection-end-column="22" />
-          <folding>
-            <element signature="e#4858#5033#0" expanded="false" />
-            <element signature="e#5061#7245#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="0">
+          <caret line="0" column="35" lean-forward="false" selection-start-line="0" selection-start-column="35" selection-end-line="0" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/controllers/writeApiResultsFiles.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="382">
+          <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

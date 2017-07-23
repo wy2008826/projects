@@ -1,45 +1,22 @@
 const apiDIY =require('./apiDIY.js');
 const getYMDHMS =require('../utils/getYMDHMS.js');
+const suanfa =require('../../const/suanfa.js');
+
 const path=require('path');
 const fs=require('fs');
 
-const T={
-    days:10,
-    strategyName:'本地数据查找最近收T的股票！！',
-    baseDay:{
-        formulas:[
-            '(H-L)/L>0.06',
-            '(O-L)/(H-L)>0.65',
-            '(C-L)/(H-L)>0.65'
-        ]
-    }
-};
-
-const SingleSunKeepDays={
-    days:20,
-    strategyName:'本地数据查找最近单阳不破的股票！！',
-    baseDay:{
-        formulas:[
-            '(C-O)/O>0.04',
-            '(C-O)/O<0.095',
-        ]
-    },
-    laterDays:{
-        formulas:[
-            'every("(c-o)/o<=0.012",4)',
-            'every("(o-O)/(C-O)>0.66",4)',
-            'every("(c-O)/(C-O)>0.66",4)',
-        ]
-    }
-};
 
 
 module.exports=async function(){
-    let T_Data=await apiDIY(T);
+    let T_Data=await apiDIY(suanfa.T);
     await writeFile('T',createData(T_Data));
 
-    let Single_Sun_Data=await apiDIY(SingleSunKeepDays);
+    let Single_Sun_Data=await apiDIY(suanfa.SingleSunKeepDays);
     await writeFile('SingleSunKeepDays',createData(Single_Sun_Data));
+
+    let Bounce_Price=await apiDIY(suanfa.bouncePrice);
+    await writeFile('BouncePrice',createData(Bounce_Price));
+
 }
 
 async function writeFile(file_name,data){
