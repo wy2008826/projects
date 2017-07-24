@@ -50,7 +50,7 @@ module.exports=async function(code,time=undefined){
 
 async function crawJiDuData(code,year,jidu){
     // vMS_MarketHistory 除权  vMS_FuQuanMarketHistory：复权
-	let url=`http://money.finance.sina.com.cn/corp/go.php/vMS_MarketHistory/stockid/${code}.phtml?year=${year}&jidu=${jidu}`;
+	let url=`http://money.finance.sina.com.cn/corp/go.php/vMS_FuQuanMarketHistory/stockid/${code}.phtml?year=${year}&jidu=${jidu}`;
 	console.log(`crawling  ${code} ${year}年${jidu}季度数据`);
 
 	return new Promise(function(resolve,reject){
@@ -72,6 +72,8 @@ async function crawJiDuData(code,year,jidu){
 
 					var tr=trs.eq(i);
 					var tds=tr.find("td");
+                    var fuquanRate=tds.eq(7).find("div").html()||' '.trim();//复权因子
+
 					var time=(tds.eq(0).find("a").text()||' '.trim()).replace(/\s+|\n+|\t+|\r+/g,"");
 					var open=tds.eq(1).find("div").html()||' '.trim();
 					var high=tds.eq(2).find("div").html()||' '.trim();
@@ -79,6 +81,11 @@ async function crawJiDuData(code,year,jidu){
 					var low=tds.eq(4).find("div").html()||' '.trim();
 					var num=tds.eq(5).find("div").html()||' '.trim();
 					var money=tds.eq(6).find("div").html()||' '.trim();
+
+                    open=(open/fuquanRate).toFixed(2);
+                    high=(high/fuquanRate).toFixed(2);
+                    low=(low/fuquanRate).toFixed(2);
+                    now=(now/fuquanRate).toFixed(2);
 
 					if(!historyData.dataColects[time]&&time){
 						historyData.dataColects[time]=[time,open,high,low,now,num,money];

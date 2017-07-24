@@ -63,10 +63,12 @@ schedule.scheduleJob(timeRules.excludeWeekends18, async function(){
 async function all(){
 
 	// testChangeStockDta();
-    // await writeApiResultsFiles();
-	// let suits_OneDayT=await crawAllSlotsAndSearchOneDayT();//抓取数据
-    // apiDIY();
+
+	// await crawAllSlotsAndSearchOneDayT();//抓取数据
     // await crawHistoryDataAll();//抓取所有股票的历史数据
+    // await writeApiResultsFiles();
+
+	// apiDIY();
 
 	// searchAllStocksAllAverageLineClose();
 

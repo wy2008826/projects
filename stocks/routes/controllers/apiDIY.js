@@ -23,6 +23,7 @@ module.exports=function(_res_query){
                 // 'every("(c-o)/o<0.02",3)',
                 // 'every("(c-o)/o>-0.02",3)',
                 // 'max("vol",5)<VOL*0.5',//前5日最大成交量不高于vol*0.6
+                // 'count("(c-o)/0>0.02",5)>3'
             ]
         },
         laterDays:{
