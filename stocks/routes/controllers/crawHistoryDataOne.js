@@ -49,6 +49,7 @@ module.exports=async function(code,time=undefined){
 
 
 async function crawJiDuData(code,year,jidu){
+    // vMS_MarketHistory 除权  vMS_FuQuanMarketHistory：复权
 	let url=`http://money.finance.sina.com.cn/corp/go.php/vMS_MarketHistory/stockid/${code}.phtml?year=${year}&jidu=${jidu}`;
 	console.log(`crawling  ${code} ${year}年${jidu}季度数据`);
 

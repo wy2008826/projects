@@ -42,18 +42,13 @@ var apiRoutes=require("./routes/apiRoutes");//api路由
 var crawRoutes=require("./routes/crawRoutes");//api路由
 
 //每隔半小时更新一次历史数据
-schedule.scheduleJob(timeRules.everyHalfHour, function(){
-	crawAllSlotsAndSearchOneDayT();
+schedule.scheduleJob(timeRules.everyHalfHour,async function(){
+    await crawAllSlotsAndSearchOneDayT();
 });
 
-
-
-//上、下午收盘前找出 T 字形股票
-schedule.scheduleJob(timeRules.beforeAmClose, async function(){
-    await crawAllSlotsAndSearchOneDayT("email");
-});
-schedule.scheduleJob(timeRules.beforePmClose, async function(){
-    await crawAllSlotsAndSearchOneDayT("email");
+//每隔5分钟查找一次数据并写入文件，提升查询速度
+schedule.scheduleJob(timeRules.every5Minutes, async function(){
+    await writeApiResultsFiles();
 });
 
 
@@ -63,21 +58,12 @@ schedule.scheduleJob(timeRules.excludeWeekends18, async function(){
 	await crawHistoryDataAll();
 });
 
-//每天晚上搜索单阳不破de
-schedule.scheduleJob(timeRules.everyNight20, async function(){
-	await selectSingleSunKeepedDays("email");
-});
-
-//每隔5分钟查找一次数据并写入文件，提升查询速度
-schedule.scheduleJob(timeRules.every5Minutes, async function(){
-    await writeApiResultsFiles();
-});
 
 
 async function all(){
 
 	// testChangeStockDta();
-
+    // await writeApiResultsFiles();
 	// let suits_OneDayT=await crawAllSlotsAndSearchOneDayT();//抓取数据
     // apiDIY();
     // await crawHistoryDataAll();//抓取所有股票的历史数据

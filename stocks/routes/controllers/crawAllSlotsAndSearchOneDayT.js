@@ -48,15 +48,9 @@ module.exports= async function crawAllSlotsAndSearchOneDayT(needEmail){
 	}
 	// await writeCodeFile();
 
-	console.log(suits);
+	// console.log(suits);
 	return suits;
-	if(needEmail){//是否需要发邮件
-		const html=createEmailText();
-		await sendEmail(html,"now kLine is T").catch(function(err){
-			console.log("－－－－－－邮件发送失败－－－－－！")
-		});
-	}
-		
+
 }
 
 
@@ -102,10 +96,12 @@ async function savePageStocks(stockArr,i,day){
 			save+=1;
 			saves.push({code,name}=codeStatus);
 		}
-		codeStatus.exists && (exists+=1) ;
+		if(codeStatus.exists){
+            exists+=1
+		}
 	}
 
-	console.log(`第 ${i} 页存在 ${exists} 条数据，保存 ${save} 条新数据`);
+	console.log(`第 ${i} 页本地存在 ${exists} 条数据，保存 ${save} 条新数据`);
 	console.log("        👇 👇 👇        ");
 }
 
@@ -166,10 +162,12 @@ function saveStock(_stock,day){
 				}else{
 					exist+=1;
 					if(data.historyData){
-						if(!data.historyData.dataColects[day] && todayOpen*1){
+						if(todayOpen*1){//最新数据那天没有停牌
                             data.historyData.dataColects[day]=nowHistoryData;
-							data.historyData.count+=1;
-							data.historyData.end=day;
+							if(!data.historyData.dataColects[day]){
+                                data.historyData.count+=1;
+                                data.historyData.end=day;
+							}
 						}
 					}
 					StockModel.update({code:code},{
