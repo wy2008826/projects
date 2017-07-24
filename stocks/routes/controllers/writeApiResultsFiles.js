@@ -15,7 +15,7 @@ module.exports=async function(){
     await writeFile('SingleSunKeepDays',createData(Single_Sun_Data));
 
     let Bounce_Price=await apiDIY(suanfa.bouncePrice);
-    await writeFile('BouncePrice',createData(suanfa.Bounce_Price));
+    await writeFile('BouncePrice',createData(Bounce_Price));
 
 }
 
