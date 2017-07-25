@@ -24,9 +24,10 @@ const Max_year=0.75;
 //爬取的数据是按照季度内的时间进行处理  如16年第一季度   2016-1-1 =>  2016-1-2 => 2016-3-31
 // 保证新老数据都按照次序依次插入数据库
 
-
+let fuquanRate=1;
 module.exports=async function(code,time=undefined){
 	historyData=getInitialHistoryData();
+    fuquanRate=1;
 
 	var code=code||"600000";
 	
@@ -40,7 +41,17 @@ module.exports=async function(code,time=undefined){
 		});
 		
 	}
-	
+
+    Object.keys(historyData.dataColects).forEach(function(timeKey,index){
+        let dayData=historyData.dataColects[timeKey];
+        let _fuquanRate=dayData[7];
+        let fuquanSqrt=fuquanRate*fuquanRate;
+        dayData[1]=(dayData[1]/fuquanRate).toFixed(2);
+        dayData[2]=(dayData[2]/fuquanRate).toFixed(2);
+        dayData[3]=(dayData[3]/fuquanRate).toFixed(2);
+        dayData[4]=(dayData[4]/fuquanRate).toFixed(2);
+    });
+
 	await saveHistoryData(code).catch(function(err){
 		console.log(`--------  保存 ${code}  历史数据失败 ---------!`)
 	});
@@ -72,7 +83,10 @@ async function crawJiDuData(code,year,jidu){
 
 					var tr=trs.eq(i);
 					var tds=tr.find("td");
-                    var fuquanRate=tds.eq(7).find("div").html()||' '.trim();//复权因子
+                    var _fuquanRate=(tds.eq(7).find("div").text()||'1'.trim())*1;//复权因子
+					if(_fuquanRate>fuquanRate){
+                        fuquanRate=_fuquanRate;
+					}
 
 					var time=(tds.eq(0).find("a").text()||' '.trim()).replace(/\s+|\n+|\t+|\r+/g,"");
 					var open=tds.eq(1).find("div").html()||' '.trim();
@@ -82,13 +96,9 @@ async function crawJiDuData(code,year,jidu){
 					var num=tds.eq(5).find("div").html()||' '.trim();
 					var money=tds.eq(6).find("div").html()||' '.trim();
 
-                    open=(open/fuquanRate).toFixed(2);
-                    high=(high/fuquanRate).toFixed(2);
-                    low=(low/fuquanRate).toFixed(2);
-                    now=(now/fuquanRate).toFixed(2);
 
 					if(!historyData.dataColects[time]&&time){
-						historyData.dataColects[time]=[time,open,high,low,now,num,money];
+						historyData.dataColects[time]=[time,open,high,low,now,num,money,_fuquanRate];
 					}
 				}
 				resolve(historyData);
@@ -99,6 +109,9 @@ async function crawJiDuData(code,year,jidu){
 
 
 async function saveHistoryData(code){
+	//股价除权
+
+
 	return new Promise(function(resolve,reject){
 		StockModel.findBy({code:code},function(err,data){
 			if(err){
@@ -130,7 +143,7 @@ async function saveHistoryData(code){
 							push+=1;
 						}
 					});
-					let {start,end,sortTimes}=getStartAndEnd(data.historyData.dataColects);
+					let {start,end,sortTimes}=getStartAndEnd(Object.assign({},data.historyData.dataColects,historyData.dataColects));
 
 					let sortedDataColects={};//对插入的数据重新排序 保证顺序的正确性
 					for(let i=0;i<sortTimes.length;i++){
@@ -209,6 +222,6 @@ function createYearJiDu(time){
 		}
 	}
 	
-	return arr;//[[2016,4],[2017,1],[2017,2]]
+	return arr.reverse();//[[2016,4],[2017,1],[2017,2]]
 }
 

@@ -89,6 +89,11 @@ async function savePageStocks(stockArr,i,day){
 	
 	for(let i=0;i<stockArr.length;i++){
 		let _stock=stockArr[i];
+        var code=_stock[1];
+        let reg=/^300\d{3}$/;
+		if(reg.test(code)){
+			continue;
+		}
 		let codeStatus = await saveStock(_stock,day).catch(function(err){
 			console.log(`------- save stocks failed -------`);
 		});
@@ -163,6 +168,7 @@ function saveStock(_stock,day){
 					exist+=1;
 					if(data.historyData){
 						if(todayOpen*1){//最新数据那天没有停牌
+							console.log("day:",day);
                             data.historyData.dataColects[day]=nowHistoryData;
 							if(!data.historyData.dataColects[day]){
                                 data.historyData.count+=1;
