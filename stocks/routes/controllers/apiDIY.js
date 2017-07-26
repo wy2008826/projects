@@ -159,6 +159,7 @@ function searchOneCode(query,res_query){
                             }else{
                                 passData=historyData.slice(i+1,Math.min(i+days+1,hisLength));
                                 passAverData=averageData.slice(i+1,Math.min(i+days+1,hisLength));
+                                T=passData.length && passData[passData.length-1][0];
                             }
                             if(i+days+1>hisLength){
                                 return -1000000000;
@@ -186,6 +187,7 @@ function searchOneCode(query,res_query){
                             }else{
                                 passData=historyData.slice(i+1,Math.min(i+days+1,hisLength));
                                 passAverData=averageData.slice(i+1,Math.min(i+days+1,hisLength));
+                                T=passData.length && passData[passData.length-1][0];
                             }
                             if(i+days+1>hisLength){
                                 return false;

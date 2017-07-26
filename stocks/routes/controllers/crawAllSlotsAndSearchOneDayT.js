@@ -168,7 +168,10 @@ function saveStock(_stock,day){
 					exist+=1;
 					if(data.historyData){
 						if(todayOpen*1){//最新数据那天没有停牌
-							console.log("day:",day);
+                            let nowDay=getCurDayTime();
+							if(time!='15:00:00'){//没有收盘
+                                day=nowDay;
+							}
                             data.historyData.dataColects[day]=nowHistoryData;
 							if(!data.historyData.dataColects[day]){
                                 data.historyData.count+=1;
@@ -219,3 +222,16 @@ function createEmailText(){
 	return html;
 }
 
+function getCurDayTime(){
+	const now=new Date();
+	let year=now.getFullYear();
+	let month=now.getMonth()+1;
+	let day=now.getDate();
+	if(month<10){
+        month='0'+month;
+	}
+    if(day<10){
+        day='0'+day;
+    }
+    return `${year}-${month}-${day}`
+}
