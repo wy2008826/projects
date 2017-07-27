@@ -7,7 +7,7 @@ function sendEmail(html,title){
 	    secure: true,
 	    auth: {
 	        user: "wy760104178@163.com",
-	        pass: "wy1479285"
+	        pass: "111111"
 	    }
 	});
 

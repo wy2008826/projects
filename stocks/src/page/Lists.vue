@@ -1,31 +1,35 @@
 <template>
-    <div>
+    <div class="wrap">
         <div>
             <Loading v-show="loading" />
             <transition name="fade">
                 <ul class="clearfix strategy_ul" v-show="!loading">
                     <h4 class='strategy_title text-center' v-text="labelTxt"></h4>
                     <p class="amount_line text-right">共<span v-text="dataLists.length"></span>条 更新时间:<i v-text="createTime"></i></p>
-                    <li class="stock text-center">
-                        <p @click="sortBy('t')">时间 &#8645</p>
-                        <p>名称／代码</p>
-                        <p @click="sortBy('rate3')">3日收益 &#8645</p>
+                    <li class="stock head text-center">
+                        <p @click="sortBy('t')">名称／代码 &#8645</p>
+                        <p @click="sortBy('close')">现价</p>
+                        <p @click="sortBy('baseRate')">涨幅％</p>
+                        <!--<p @click="sortBy('rate3')">3日收益 &#8645</p>-->
                         <p @click="sortBy('rate6')">6日收益 &#8645</p>
-                        <p @click="sortBy('rate9')">9日收益 &#8645</p>
+                        <!--<p @click="sortBy('rate9')">9日收益 &#8645</p>-->
                         <p @click="sortBy('rate12')">12日收益 &#8645</p>
                     </li>
                     <router-link tag="li"
                                  class="stock text-center"
-                                 :class="lowOpenAndHighCloseRateClass(stock)"
                                  :to="'/detail/'+stock.code"
-                                 v-for="(stock,index) in dataLists"
-                    >
-                        <p v-text="stock.buyTime||stock.t"></p>
-                        <p ><span v-text="stock.name"></span> <span v-text="stock.code"></span></p>
-                        <p v-text="stock.rate3.toFixed(2)+'%'"></p>
-                        <p v-text="stock.rate6.toFixed(2)+'%'"></p>
-                        <p v-text="stock.rate9.toFixed(2)+'%'"></p>
-                        <p v-text="stock.rate12.toFixed(2)+'%'"></p>
+                                 v-for="(stock,index) in dataLists">
+                        <p >
+                            <span class="name" v-text="stock.name"></span>
+                            <span class="code" v-text="stock.code"></span>
+                            <span class="time" v-text="stock.buyTime||stock.t"></span>
+                        </p>
+                        <p :class="color(stock.baseData[4]>=stock.baseData[1])" v-text="stock.baseData[4]"></p>
+                        <p :class="color(getRate(stock.baseData)>=0)" v-text="getRate(stock.baseData)"></p>
+                        <!--<p v-text="stock.rate3.toFixed(2)+'%'"></p>-->
+                        <p :class="color(stock.rate6>=4)" v-text="stock.rate6.toFixed(2)+'%'"></p>
+                        <!--<p v-text="stock.rate9.toFixed(2)+'%'"></p>-->
+                        <p :class="color(stock.rate12>=8)" v-text="stock.rate12.toFixed(2)+'%'"></p>
                     </router-link>
                 </ul>
             </transition>
@@ -69,16 +73,31 @@
             toggleStocks:function(){
                 this.$store.dispatch("toggleStocks",!this.showStocks);
             },
+            color(cal){
+                return cal?'red':'green';
+            },
+            getRate(nowData){
+                return (((nowData[4]-nowData[1])/nowData[1])*100).toFixed(2);
+            },
             sortBy(key){
                 let self=this;
                 this.sortDirection=this.sortDirection*-1;
                 this.dataLists=this.dataLists.sort(function(prev,next){
                     if(key=='t'){
-                        return new Date(next[key])-new Date(prev[key])*self.sortDirection;
+                        return (new Date(next[key])-new Date(prev[key]))*self.sortDirection;
+                    }
+                    if(key=='close'){
+                        return (next.baseData[4]-prev.baseData[4])*self.sortDirection;
+                    }
+                    if(key=='baseRate'){
+                        let prevRate=(prev.baseData[4]-prev.baseData[1])/prev.baseData[1];
+                        let nextRate=(next.baseData[4]-next.baseData[1])/next.baseData[1];
+                        return (nextRate-prevRate)*self.sortDirection;
                     }
                     return (next[key]-prev[key])*self.sortDirection;
                 });
             },
+
             formatTime(_time){
                 let time=_time?new Date(_time):new Date();
 
@@ -147,16 +166,24 @@
     @import "../assets/css/ignore/mixin.scss";
 
 
-
+    .wrap{
+        background-color: #090a0a;
+    }
+    .red{
+        color:#ff0000;
+    }
+    .green{
+        color:#00a649;
+    }
     .strategy_title{
         line-height: 1rem;
-        background-color:#fff;
-        border:0.02rem solid #d8d8d8;
-        border-left:0;
-        border-right:0;
+        background-color: #17191e;
+        color:#cc001f;
+        border-bottom:0.01rem solid #585858;
     }
     .amount_line{
-        line-height: 0.6rem;
+        line-height: 0.8rem;
+        color:#e9e9e9;
         fs:0.3rem;
         padding-right:0.3rem;
         span{
@@ -182,11 +209,30 @@
     }
     .stock{
         line-height: 0.6rem;
+        padding:0.15rem 0;
         display: flex;
-        background-color:#fff;
-        border:0.012rem solid #f9f9f9;
+        border-bottom:0.011rem solid #1c1922;
+        &.head{
+            background-color: #0d0c12;
+            color:#646464;
+        }
         p{
             flex:1;
+            line-height: 0.3rem;
+        }
+        .name{
+            font-size:0.28rem;
+            color:#e9e9e9;
+        }
+        .code{
+            display: block;
+            margin:0.07rem 0;
+            color:#606060;
+            font-size:0.24rem;
+        }
+        .time{
+            color:#606060;
+            font-size:0.26rem;
         }
     }
     .label{

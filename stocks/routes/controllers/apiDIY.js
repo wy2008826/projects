@@ -139,6 +139,7 @@ function searchOneCode(query,res_query){
                         if(isSuit && passSuit && laterSuit){
                             suits.push({
                                 t:T,
+                                baseData:historyData[i],
                                 name,
                                 code,
                                 rate3,
