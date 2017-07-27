@@ -2,7 +2,7 @@
 
 exports.everyHalfHour={
 	dayOfWeek:[1,2,3,4,5],
-	hour:[9,10,11,13,14],
+	hour:[9,10,11,13,14,15],
 	minute:[20,48]
 }
 
