@@ -122,6 +122,9 @@ function saveStock(_stock,day){
 	var num=_stock[12];//
 	var money=_stock[13];//
 	var time=_stock[14];//14:25:23
+	if(time!='15:00:00'){
+        day=getCurDayTime();
+	}
 	const dayTime=`${day} ${time}`;
 
 	var nowData=[dayTime,todayOpen,todayHigh,todayLow,now,num,money];
@@ -168,10 +171,6 @@ function saveStock(_stock,day){
 					exist+=1;
 					if(data.historyData){
 						if(todayOpen*1){//最新数据那天没有停牌
-                            let nowDay=getCurDayTime();
-							if(time!='15:00:00'){//没有收盘
-                                day=nowDay;
-							}
                             data.historyData.dataColects[day]=nowHistoryData;
 							if(!data.historyData.dataColects[day]){
                                 data.historyData.count+=1;
