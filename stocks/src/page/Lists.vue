@@ -161,7 +161,7 @@
 </script>
 
 
-<style rel="stylesheet/scss" scoped lang="sass">
+<style rel="stylesheet/scss" scoped lang="scss">
 
     @import "../assets/css/ignore/mixin.scss";
 

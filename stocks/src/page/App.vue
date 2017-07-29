@@ -107,11 +107,11 @@
     }
 </script>
 
-<style rel="stylesheet/scss"  lang="sass">
+<style rel="stylesheet/scss"  lang="scss">
     @import "../assets/css/base.scss";
 </style>
 
-<style rel="stylesheet/scss" scoped lang="sass">
+<style rel="stylesheet/scss" scoped lang="scss">
   
     @import "../assets/css/ignore/mixin.scss";
     .navs_ul{
