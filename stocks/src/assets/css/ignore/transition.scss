@@ -12,3 +12,17 @@
 .slide-enter{
 	transform:translateX(0%);
 }
+
+.slideup-enter-active, .slideup-leave-active {
+	transition: all ease 400ms;
+}
+.slideup-enter ,.slideup-leave-to {
+	transform: translateY(100%);
+}
+
+.bounce-enter-active, .bounce-leave-active {
+	transition: all ease 400ms;
+}
+.bounce-enter, .bounce-leave-to {
+	transform: scale(0,0);
+}
