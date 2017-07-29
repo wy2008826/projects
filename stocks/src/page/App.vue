@@ -32,10 +32,10 @@
         <div class="tree bottom" :class="{fadeout:curDir!='bottom'}">
             <ul class="navs_ul">
                 <li>
-
+                    1
                 </li>
                 <li>
-
+                    2
                 </li>
             </ul>
         </div>
@@ -162,9 +162,6 @@
         width:100%;
         height:100%;
         -webkit-transition: all ease 600ms;
-        -moz-transition: all ease 600ms;
-        -ms-transition: all ease 600ms;
-        -o-transition: all ease 600ms;
         transition: all ease 600ms;
     }
     .circle_wrap .item_cirle{
@@ -176,31 +173,19 @@
         cursor: pointer;
         border:1px solid #f94;
         -webkit-transition: all ease 600ms;
-        -moz-transition: all ease 600ms;
-        -ms-transition: all ease 600ms;
-        -o-transition: all ease 600ms;
         transition: all ease 600ms;
     }
 
     .circle_wrap .items_wraper.rotate1{
         -webkit-transform: rotate(90deg);
-        -moz-transform: rotate(90deg);
-        -ms-transform: rotate(90deg);
-        -o-transform: rotate(90deg);
         transform: rotate(90deg);
     }
     .circle_wrap .items_wraper.rotate2{
         -webkit-transform: rotate(180deg);
-        -moz-transform: rotate(180deg);
-        -ms-transform: rotate(180deg);
-        -o-transform:rotate(180deg);
         transform: rotate(180deg);
     }
     .circle_wrap .items_wraper.rotate3{
         -webkit-transform: rotate(270deg);
-        -moz-transform: rotate(270deg);
-        -ms-transform: rotate(270deg);
-        -o-transform:rotate(270deg);
         transform: rotate(270deg);
     }
 
@@ -227,43 +212,28 @@
 
     .circle_wrap .item_cirle.rotate1{
         -webkit-transform: rotate(-90deg);
-        -moz-transform: rotate(-90deg);
-        -ms-transform: rotate(-90deg);
-        -o-transform: rotate(-90deg);
         transform: rotate(-90deg);
     }
     .circle_wrap .item_cirle.rotate2{
         -webkit-transform: rotate(-180deg);
-        -moz-transform: rotate(-180deg);
-        -ms-transform: rotate(-180deg);
-        -o-transform:rotate(-180deg);
         transform: rotate(-180deg);
     }
     .circle_wrap .item_cirle.rotate3{
         -webkit-transform: rotate(-270deg);
-        -moz-transform: rotate(-270deg);
-        -ms-transform: rotate(-270deg);
-        -o-transform:rotate(-270deg);
         transform: rotate(-270deg);
     }
     .tree{
         left:50%;
         opacity: 1;
         width:6rem;
-        margin-left:-3rem;
-        height:6rem;
-        line-height: 6rem;
+        margin:0.5rem 0 0 -3rem;
+        height:3rem;
+        line-height: 3rem;
         border-top:1px solid #f99;
         -webkit-transform: translateY(0);
-        -moz-transform: translateY(0);
-        -ms-transform: translateY(0);
-        -o-transform: translateY(0);
         transform: translateY(0);
 
         -webkit-transition: all ease 600ms;
-        -moz-transition: all ease 600ms;
-        -ms-transition: all ease 600ms;
-        -o-transition: all ease 600ms;
         transition: all ease 600ms;
         position: absolute;
         z-index: 0;
@@ -277,6 +247,14 @@
         height:0.5rem;
         width:0.012rem;
         content:'';
+    }
+    .tree .navs_ul{
+        display:flex;
+    }
+    .tree .navs_ul li{
+        line-height: 0.6rem;
+        border:1px solid red;
+        flex:1;
     }
     .tree.bottom{
 
@@ -292,11 +270,8 @@
     }
 
     .tree.fadeout{
-        -webkit-transform: translateY(-100%);
-        -moz-transform: translateY(-100%);
-        -ms-transform: translateY(-100%);
-        -o-transform: translateY(-100%);
-        transform: translateY(-100%);
+        -webkit-transform:translateY(-100%);
+        transform:translateY(-100%);
         opacity: 0;
     }
 
