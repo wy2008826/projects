@@ -53,10 +53,7 @@ module.exports = function () {
                             }
                         },
                         {
-                            loader: 'sass-loader',
-                            options: {
-                                modules: true
-                            }
+                            loader: 'scss-loader',
                         },
                         {
                             loader: 'postcss-loader',
@@ -66,7 +63,15 @@ module.exports = function () {
                         }
                     ]
                 },
-                {test: /\.vue$/,loader: "vue-loader"},
+                {
+                    test: /\.vue$/,
+                    loader: "vue-loader",
+                    options: {
+                        loaders: {
+                            'scss': 'style-loader!css-loader!sass-loader'
+                        }
+                    }
+                },
                 {
                     test: /\.js$/,
                     loader: "babel-loader",
