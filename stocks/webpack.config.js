@@ -27,8 +27,8 @@ module.exports = function () {
         output: {
             path: path.resolve(__dirname, './dist/js/'),
             filename: '[name].min.js',
-            publicPath: '/dist/',
-            chunkFilename: './js/chunk/[name]-[id].common.js?[chunkhash]'//非主文件的命名规则
+            publicPath: '/dist/js/',
+            chunkFilename: './chunk/[name]-[id].common.js?[chunkhash]'//非主文件的命名规则
         },
         module: {
             rules: [

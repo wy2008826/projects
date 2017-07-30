@@ -94,7 +94,7 @@ function searchOneCode(query,res_query){
                 }
                 let historyData=getSortHistoryData(stock.historyData.dataColects||[]);
                 let hisLength=historyData.length;
-                if(historyData && hisLength>=60){
+                if(historyData && hisLength>=130){
                     let suits=[];
                     let averageData=calAverageLineData(historyData);
 
@@ -162,7 +162,7 @@ function searchOneCode(query,res_query){
                                 passAverData=averageData.slice(i+1,Math.min(i+days+1,hisLength));
                                 T=passData.length && passData[passData.length-1][0];
                             }
-                            if(i+days+1>hisLength){
+                            if(dir=='later' && i+days+1>hisLength){
                                 return -1000000000;
                             }
 
@@ -190,7 +190,7 @@ function searchOneCode(query,res_query){
                                 passAverData=averageData.slice(i+1,Math.min(i+days+1,hisLength));
                                 T=passData.length && passData[passData.length-1][0];
                             }
-                            if(i+days+1>hisLength){
+                            if(dir=='later' && i+days+1>hisLength){
                                 return false;
                             }
 
@@ -206,6 +206,36 @@ function searchOneCode(query,res_query){
                                 }
                             }
                             return isSuit;
+
+                        }
+
+                        function count(express,days){
+                            days=days*1;
+                            let passData;
+                            let passAverData;
+                            if(dir=='pass'){
+                                passData=historyData.slice(Math.max(i-days,0),i);
+                                passAverData=averageData.slice(Math.max(i-days,0),i);
+                            }else{
+                                passData=historyData.slice(i+1,Math.min(i+days+1,hisLength));
+                                passAverData=averageData.slice(i+1,Math.min(i+days+1,hisLength));
+                                T=passData.length && passData[passData.length-1][0];
+                            }
+                            if(dir=='later' && i+days+1>hisLength){
+                                return 0;
+                            }
+
+                            let count=0;
+
+                            for(let i=0;i<passData.length;i++){
+                                let [t,o,h,l,c,vol]=passData[i];
+                                let {_5,_10,_20,_30,_40,_60}=passAverData[i];
+                                let val=eval(express);
+                                if(val){
+                                    count+=1;
+                                }
+                            }
+                            return count;
 
                         }
                     }

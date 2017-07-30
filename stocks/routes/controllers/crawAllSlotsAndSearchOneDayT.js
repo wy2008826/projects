@@ -122,7 +122,7 @@ function saveStock(_stock,day){
 	var num=_stock[12];//
 	var money=_stock[13];//
 	var time=_stock[14];//14:25:23
-	if(time!='15:00:00'){
+	if(time.split(':')[0]<15){
         day=getCurDayTime();
 	}
 	const dayTime=`${day} ${time}`;

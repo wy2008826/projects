@@ -4,14 +4,27 @@
             <span v-text="code"></span>
             <span v-text="historyData.name"></span>
             <span v-text="start"></span>至<span v-text="end"></span>
+            <span v-if="!zixuan[code]" class="iconfont icon-tianjia search" @click="clickAddZixuan">加入自选</span>
+            <span v-if="zixuan[code]" @click="clickAddZixuan(code)">添加备注</span>
         </p>
         <div id="svgWraper">
             <svg ref="svg" preserveAspectRatio="none" class="svg"  xmlns="http://www.w3.org/2000/svg"></svg>
         </div>
+        <vDialog  :show="showDialog" :close="()=>{showDialog=false}">
+            <div class="dialog_wraper">
+                <vInput >
+                    <textarea v-model="comment" cols="30" placeholder="请输入自选备注" rows="10"></textarea></vInput>
+                <Btn :label="'确定'" :click="()=>{addZixuan(code)}" :type="'red'"></Btn>
+            </div>
+        </vDialog>
     </div>
 </template>
 
 <script>
+    import vDialog from '@/components/Dialog/Dialog.vue';
+    import vInput from '@/components/Input/Input.vue';
+    import Btn from '@/components/Btn/Btn.vue';
+
     import { mapState } from 'vuex';
     let isLowOpenAndHighClose=require("strategy/isLowOpenAndHighClose.js");
     let calProfitFromOneDay=require("utils/calProfitFromOneDay.js");
@@ -20,6 +33,7 @@
     export default {
         data:function(){
             return {
+                zixuan:this.$store.state.zixuan,
                 suits:[],
                 historyData:{
                     historyData:{
@@ -27,6 +41,8 @@
                     }
                 },
                 sortData:[],
+                showDialog:false,
+                comment:'',
                 start:'',
                 end:''
             }
@@ -38,7 +54,18 @@
             },
         },
         methods:{
+            clickAddZixuan(){
+                if(this.$store.state.user){
+                    this.showDialog=true;
+                }else{
+                    this.$router.push('/login');
+                }
 
+            },
+            addZixuan(code){
+                this.$store.dispatch('addZixuan',{code,name:this.historyData.name,comment:this.comment});
+                this.showDialog=false;
+            }
         },
         created(){
             var self=this;
@@ -68,7 +95,9 @@
 
         },
         components:{
-
+            vDialog,
+            vInput,
+            Btn
         }
     }
 
@@ -372,5 +401,8 @@
         margin:0 auto;
         border:1px solid red;
         background-color:#000;
+    }
+    .dialog_wraper{
+        @include box((p:0.3rem 0.2rem));
     }
 </style>

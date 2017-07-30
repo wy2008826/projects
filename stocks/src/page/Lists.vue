@@ -61,6 +61,10 @@
                         label:'最近涨幅居前',
                         url:'/api/bouncePrice'
                     },
+                    bounceVol:{
+                        label:'最近成交量暴增',
+                        url:'/api/bounceVol'
+                    },
                 }
             }
         },

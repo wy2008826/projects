@@ -7,6 +7,8 @@ let path=require('path');
 let selectIncrease =require("./controllers/apiSelectIncrease.js");
 let getAllCodes =require("./controllers/api/getAllCodes.js");
 let getOneCodeHistoryData =require("./controllers/api/getOneCodeHistoryData.js");
+let register =require("./controllers/api/register.js");
+let login =require("./controllers/api/login.js");
 
 let testSearchOneCodeAllT=require('../testStrategy/testSearchOneCodeAllT');
 let searchAllSlotsAndSearchRecentDayT=require('./controllers/searchAllSlotsAndSearchRecentDayT');
@@ -24,6 +26,21 @@ route.get("/api/test",function(req,res,error){
 	};
 	res.json(data);
 });
+
+route.get("/api/register",async function(req,res,error){
+    var query=req.query;
+    let result=await register(query);
+
+    res.json(result);
+});
+
+route.get("/api/login",async function(req,res,error){
+    var query=req.query;
+    let result=await login(query);
+
+    res.json(result);
+});
+
 
 route.get("/api/getAllCodes",async function(req,res,error){
 	var query=req.query;
@@ -108,6 +125,22 @@ route.get("/api/bouncePrice",async function(req,res,error){
     };
     res.json(data);
 
+});
+
+route.get("/api/bounceVol",async function(req,res,error){
+
+    let lists=[];
+    let fileData=await readFile(path.resolve(__dirname,'../baseData/bounceVol.json'));
+    if(fileData){
+        lists=fileData.lists;
+    }else{
+        lists=await apiDIY(suanfa.bounceVol);
+    }
+    var data={
+        createTime:fileData && fileData.time,
+        lists
+    };
+    res.json(data);
 });
 
 

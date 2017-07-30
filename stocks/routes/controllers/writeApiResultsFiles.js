@@ -17,6 +17,7 @@ module.exports=async function(){
     let Bounce_Price=await apiDIY(suanfa.bouncePrice);
     await writeFile('BouncePrice',createData(Bounce_Price));
 
+
 }
 
 async function writeFile(file_name,data){

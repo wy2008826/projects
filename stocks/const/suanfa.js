@@ -16,13 +16,14 @@ exports.SingleSunKeepDays={
     strategyName:'本地数据查找最近单阳不破的股票！！',
     baseDay:{
         formulas:[
-            '(C-O)/O>0.04',
+            '(C-O)/O>0.055',
             '(C-O)/O<0.095',
         ]
     },
     laterDays:{
         formulas:[
-            'every("(c-o)/o<=0.012",4)',
+            'every("(c-o)/o<=0.018",4)',
+            'every("(c-o)/o>=-0.018",4)',
             'every("(o-O)/(C-O)>0.66",4)',
             'every("(c-O)/(C-O)>0.66",4)',
         ]
@@ -38,3 +39,41 @@ exports.bouncePrice={
         ]
     }
 };
+
+exports.bounceVol={
+    days:80,
+    strategyName:'本地数据查找最近成交量暴涨的股票！！',
+    baseDay:{
+        formulas:[
+            '(C-O)/O>0.05'
+        ]
+    },
+    passDays:{
+        formulas:[
+            'max("vol",15)-VOL*0.2<0',//前5日最大成交量不高于vol*0.6
+        ]
+    },
+};
+
+exports.downAndUpRegular={
+    days:120,
+    strategyName:'本地数据查找反复震荡的股票！！',
+    baseDay:{
+        formulas:[
+            '(C-O)/O<-0.04'
+        ]
+    },
+    passDays:{
+        formulas:[
+            'every("(c-o)/o<0.005",3)',
+            'every("(c-o)/o>-0.02",3)',
+            'count("(c-o)/o>0.04",6)==1'
+        ]
+    },
+    laterDays:{
+        formulas:[
+            'every("(c-o)/o>0.005",3)',
+            'count("(c-o)/o>0.04",6)==1'
+        ]
+    }
+}
