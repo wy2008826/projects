@@ -24,23 +24,6 @@ var routes=[
 				path:"index",
 				component:App
 			},
-			
-			// {
-			// 	path:"router",
-			// 	component:Router,
-			// 	children:[
-			// 		{
-			// 			path:"",
-			// 			redirect:"routerA"
-			// 		},
-			// 		{
-			// 			path:"routerA",
-			// 			component:function(resolve,reject){
-			// 				require(['components/RouterA'],resolve);
-			// 			},
-			// 		},
-			// 	]
-			// },
 		]
 	},
     {
@@ -56,12 +39,13 @@ var routes=[
     {
         name:"lists",
         path:"/lists/:type",
-        component:Lists
+        component:Lists,
+
     },
 	{
 		name:"detail",
 		path:"/detail/:code",
-		component:Detail
+		component:Detail,
 	},
     {
         name:"zixuan",
@@ -72,7 +56,18 @@ var routes=[
         component:Zixuan
     },
 ];
-const router=new vueRouter({routes,mode:"hash"});
+const router=new vueRouter({
+    routes,
+    mode:"hash",
+    scrollBehavior(to, from, savedPosition){
+        console.log(123,savedPosition);
+        if (savedPosition) {
+            return savedPosition
+        } else {
+            return { x: 0, y: 0 }
+        }
+    }
+});
 
 // 全局导航钩子
 router.beforeEach((to, from, next) => {
@@ -93,11 +88,5 @@ router.beforeEach((to, from, next) => {
     }
 })
 
-function isEmptyObject(obj) {
-    for (var key in obj) {
-        return false;
-    }
-    return true;
-}
 
 export default router;

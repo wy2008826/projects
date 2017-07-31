@@ -1,8 +1,9 @@
 <template>
     <div class="wrap">
         <Loading v-show="loading" />
+        <p class="no_lists" v-show="zixuan.lists.length==0">暂无自选股票....</p>
         <transition name="fade">
-            <ul class="clearfix strategy_ul" v-show="!loading">
+            <ul class="clearfix strategy_ul" v-show="!loading&&zixuan.lists.length">
                 <li class="stock head text-center">
                     <p >名称／代码 &#8645</p>
                     <p>备注</p>
@@ -57,31 +58,13 @@
 
     @import "../assets/css/ignore/mixin.scss";
     .wrap{
-        background-color: #090a0a;
+
     }
-    .red{
-        color:#ff0000;
-    }
-    .green{
-        color:#00a649;
-    }
-    .strategy_title{
-        line-height: 1rem;
-        background-color: #17191e;
-        color:#cc001f;
-        border-bottom:0.01rem solid #585858;
-    }
-    .amount_line{
-        line-height: 0.8rem;
-        color:#e9e9e9;
-        fs:0.3rem;
-        padding-right:0.3rem;
-        span{
-            color:#f93;
-            margin:0 0.05rem;
-        }
+    .no_lists{
+        @include box((lh:2rem,ta:center,fs:0.24rem,c:#666));
     }
     .strategy_ul{
+        background-color: #090a0a;
         li{
             &.high{
                 background-color:#FF7256

@@ -149,14 +149,31 @@
                     return new Date(next[t])-new Date(prev[t]);
                 });
                 self.createTime=res.body.createTime;
-
             },(res)=>{
                 this.loading=false;
                 console.log("error")
             });
         },
         mounted(){
+            console.log(1,localStorage.getItem('scrollY'));
+            let sessionScrollY=localStorage.getItem('scrollY');
+            let curScrollY=0;
 
+            let scrollInterval=setInterval(()=>{
+                curScrollY+=50;
+                if(curScrollY<=sessionScrollY){
+                    document.body.scrollTop=curScrollY;
+                }else{
+                    document.body.scrollTop=sessionScrollY;
+                    clearInterval(scrollInterval)
+                }
+            },2)
+
+        },
+        beforeRouteLeave(to,from,next){
+            let scrollY=document.body.scrollTop;
+            localStorage.setItem('scrollY',scrollY);
+            next();
         },
         components: {
             Loading
