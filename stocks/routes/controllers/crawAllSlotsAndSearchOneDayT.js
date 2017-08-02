@@ -170,12 +170,12 @@ function saveStock(_stock,day){
 				}else{
 					exist+=1;
 					if(data.historyData){
-						if(todayOpen*1){//最新数据那天没有停牌
-                            data.historyData.dataColects[day]=nowHistoryData;
+						if(todayOpen*1 && time.split(':')[0]<15){//最新数据那天没有停牌 并且时间在收盘前
 							if(!data.historyData.dataColects[day]){
-                                data.historyData.count+=1;
-                                data.historyData.end=day;
+								data.historyData.count+=1;
+								data.historyData.end=day;
 							}
+							data.historyData.dataColects[day]=nowHistoryData;
 						}
 					}
 					StockModel.update({code:code},{
