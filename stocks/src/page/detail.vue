@@ -7,9 +7,27 @@
             <span v-if="!zixuan[code]" class="iconfont icon-tianjia search" @click="clickAddZixuan">加入自选</span>
             <span v-if="zixuan[code]" @click="clickAddZixuan(code)">添加备注</span>
         </p>
-        <div id="svgWraper">
-            <svg ref="svg" preserveAspectRatio="none" class="svg"  xmlns="http://www.w3.org/2000/svg"></svg>
+        <div class="svgWraper" id="svgWraper">
+            <svg ref="svg" preserveAspectRatio="none" class="svg"  xmlns="http://www.w3.org/2000/svg" @click="resetStatus">
+                <polyline v-show="averLineStatus.aver5"  id="aver5"></polyline>
+                <polyline v-show="averLineStatus.aver10" id="aver10"></polyline>
+                <polyline v-show="averLineStatus.aver20" id="aver20"></polyline>
+                <polyline v-show="averLineStatus.aver30" id="aver30"></polyline>
+                <polyline v-show="averLineStatus.aver60" id="aver60"></polyline>
+            </svg>
+            <ul class="average_set_ul">
+                <p @click="toggleAverageSettingStatus">均线设置</p>
+                <transition name="scaleY">
+                    <div v-show="show_average_settings">
+                        <li :style="{color:averLineColor['_'+aver]}" :class="{selected:averLineStatus['aver'+aver]}" @click="()=>{setLineStatus(aver)}" v-for="aver in [5,10,20,30,60]" >
+                            {{aver}}日
+                            <span v-show="averLineStatus['aver'+aver]" class="iconfont icon-wancheng fn-fr"></span>
+                        </li>
+                    </div>
+                </transition>
+            </ul>
         </div>
+        <p id="count"></p>
         <vDialog  :show="showDialog" :close="()=>{showDialog=false}">
             <div class="dialog_wraper">
                 <vInput >
@@ -29,11 +47,20 @@
     let isLowOpenAndHighClose=require("strategy/isLowOpenAndHighClose.js");
     let calProfitFromOneDay=require("utils/calProfitFromOneDay.js");
     let calAverageLineData=require("utils/calAverageLineData.js");
+    const averLineColor={
+        _5:"#fafafa",
+        _10:"#f5fd00",
+        _20:"#de00dd",
+        _30:"#00f91b",
+        _60:"#707070"
+    };
 
     export default {
         data:function(){
+
             return {
                 zixuan:this.$store.state.zixuan,
+                averLineColor,
                 suits:[],
                 historyData:{
                     historyData:{
@@ -44,7 +71,15 @@
                 showDialog:false,
                 comment:'',
                 start:'',
-                end:''
+                end:'',
+                show_average_settings:false,//显示设置均线选项
+                averLineStatus:this.$store.averLineStatus||{
+                    aver5:true,
+                    aver10:true,
+                    aver20:true,
+                    aver30:true,
+                    aver60:true,
+                }
             }
         },
         computed:{
@@ -65,11 +100,20 @@
             addZixuan(code){
                 this.$store.dispatch('addZixuan',{code,name:this.historyData.name,comment:this.comment});
                 this.showDialog=false;
+            },
+            toggleAverageSettingStatus(){
+                this.$data.show_average_settings=!this.$data.show_average_settings;
+            },
+            setLineStatus(days){
+                this.$data.averLineStatus['aver'+days]=!this.$data.averLineStatus['aver'+days];
+            },
+            resetStatus(){
+                this.show_average_settings=false;
             }
         },
         created(){
             var self=this;
-
+            this.$store.averLineStatus=this.$data.averLineStatus;
 
             this.$http.get(`/api/getOneCodeHistoryData?code=${self.code}`).then((res)=>{
                 // console.log(res);
@@ -118,13 +162,7 @@
             this.max=-10000000;
             this.min=100000000;
             this.perSize=0;
-            this.averageConfig={
-              _5:"#fafafa",
-              _10:"#f5fd00",
-              _20:"#de00dd",
-              _30:"#00f91b",
-              _60:"#707070"
-            }
+            this.averageConfig=averLineColor;
             this.init();
 
             let maxMin=this.calMaxMinVal(0,data.length);
@@ -134,8 +172,11 @@
             this.drawAverage();
 
             let start=this.length-50>=0?this.length-50:0;
+            this.start=start;
+            this.end=this.length;
+
             this.setViewBox(start,this.length);
-            this.drawLabel();
+//            this.drawLabel();
         }
         init(){
             let self=this;
@@ -259,7 +300,7 @@
         }
         drawAverageLine(days){
             let self=this;
-            let polyline=document.createElementNS("http://www.w3.org/2000/svg", "polyline");
+            let polyline=document.getElementById(`aver${days}`)
             let avers=[];
             for(let i=0;i<this.averageData.length;i++){
                 let averDay=this.averageData[i][`_${days}`]
@@ -329,49 +370,96 @@
         }
         move(){
             const self=this;
-            let start_x;
-            let start_y;
-            let move_x;
-            let move_y;
+            let start_x0,start_x1;
+            let start_y0,start_y1;
+            let move_x0,move_x1;
+            let move_y0,move_y1;
             let startViewBox;
-            let _start;
+            let _start=self.start;
+            let click_relativeX;
+            let cickStart=self.start;
             let wraper=document.querySelector('#svgWraper');
             wraper.addEventListener('touchstart',(e)=>{
                 e.preventDefault();
-                let touch=e.touches[0];
-                let {pageX,pageY}=touch;
-                start_x=move_x=pageX;
-                start_y=move_y=pageY;
+                let touch0=e.touches[0];
+
+                let pageX0=touch0['pageX'];
+                let pageY0=touch0['pageY'];
+                start_x0=move_x0=pageX0;
+                start_y0=move_y0=pageY0;
+
+                if(e.touches[1]){
+                    let touch1=e.touches[1];
+                    let pageX1=touch1['pageX'];
+                    let pageY1=touch1['pageY'];
+                    start_x1=move_x1=pageX1;
+                    start_y1=move_y1=pageY1;
+
+                    click_relativeX=start_x1-start_x0;
+                    cickStart=self.start;
+                }
+
                 startViewBox=self.svg.getAttribute('viewBox').split(' ');
                 _start=self.start
-//                console.log(pageX,e.touches);
+
             });
             wraper.addEventListener('touchmove',(e)=>{
                 e.preventDefault();
-                let touch=e.touches[0];
+                let touch0=e.touches[0];
+                let pageX0=touch0['pageX'];
+                let pageY0=touch0['pageY'];
+
+                let dis_x0=move_x0-start_x0;
+                let move_dis_x0=(pageX0-move_x0)*self.perSize;
+
                 if(e.touches.length==2){
-                    alert("double touch");
-                }
-                let {pageX,pageY}=touch;
+                    let touch1=e.touches[1];
+                    let pageX1=touch1['pageX'];
+                    let pageY1=touch1['pageY'];
 
-                let dis_x=move_x-start_x;
 
-                let viewBoxDis=dis_x*self.perSize;
-                let move_dis_x=(pageX-move_x)*self.perSize;
+                    let move_relativeX=pageX1-pageX0;
 
-                let count=Math.round(move_dis_x / (self.barSize+self.barGap));
-                if(_start-count<0){
-                    _start=0
+                    let count=3*Math.round((move_relativeX-click_relativeX) / (self.barSize+self.barGap));
+
+                    document.getElementById('count').innerHTML=count;
+
+                    _start=cickStart-count>=0?cickStart-count:0;
+
+                    if(_start<0){
+                        _start=self.start=0
+                    }
+                    if(_start>self.length-5){
+                        _start=self.start=self.length-5 ;
+                    }
+
+                    document.getElementById('count').innerHTML=`count:${count},_start:${_start}`;
+
+                    self.setViewBox(_start,self.end);
+                    move_x1=pageX1;
+                    move_y1=pageY1;
+
+                }else{
+
+
+                    let count=Math.round(move_dis_x0 / (self.barSize+self.barGap));
+                    if(_start-count<0){
+                        _start=0
+                    }
+                    if(_start-count>self.length-self.canviewCount){
+                        return ;
+                    }
+                    _start=_start-count>=0?_start-count:0;
+                    let end=_start+(self.end-self.start);
+
+                    self.setViewBox(_start,end);
+                    self.start=_start;
+                    self.end=end;
+
+                    move_x0=pageX0;
+                    move_y0=pageY0;
                 }
-                if(_start-count>self.length-self.canviewCount){
-                    return ;
-                }
-                _start=_start-count>=0?_start-count:0;
-                let end=_start+self.canviewCount;
-//                console.log(_start,end)
-                self.setViewBox(_start,end);
-                move_x=pageX;
-                move_y=pageY;
+
             });
         }
     }
@@ -394,7 +482,9 @@
             margin:0 0.05rem;
         }
     }
-
+    .svgWraper{
+        position: relative;
+    }
     .svg{
         display: block;
         width:7.5rem;
@@ -404,5 +494,18 @@
     }
     .dialog_wraper{
         @include box((p:0.3rem 0.2rem));
+    }
+    .average_set_ul {
+        position: absolute;
+        right: 0.1rem;
+        top: 0;
+        line-height: 0.4rem;
+        color:#fff;
+        border:1px solid red;
+        background-color: rgba(0,0,0,0.7);
+        li {
+            padding: 0 0.1rem;
+            border-bottom:1px solid red;
+        }
     }
 </style>

@@ -80,6 +80,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "to": '/detail/' + stock.code
       }
     }, [_c('p', [_c('span', {
+      staticClass: "index",
+      domProps: {
+        "textContent": _vm._s(index)
+      }
+    }), _vm._v(" "), _c('span', {
       staticClass: "name",
       domProps: {
         "textContent": _vm._s(stock.name)
@@ -680,34 +685,49 @@ exports.default = {
 
         var self = this;
         var url = this.$data.apiConfog[this.$data.type].url;
+        var type = this.$data.type;
 
-        this.$http.get(url).then(function (res) {
+        var storeLists = this.$store[type];
+        console.log(this.$store, storeLists);
+        if (storeLists) {
+            self.$data.dataLists = self.$store[type]['dataLists'];
+            self.createTime = self.$store[type]['createTime'];
+            this.loading = false;
+        } else {
+            this.$http.get(url).then(function (res) {
 
-            _this.loading = false;
-            self.$data.dataLists = res.body.lists.sort(function (prev, next) {
-                var t = prev.buyTime ? 'buyTime' : 't';
-                return new Date(next[t]) - new Date(prev[t]);
+                _this.loading = false;
+                self.$data.dataLists = res.body.lists.sort(function (prev, next) {
+                    var t = prev.buyTime ? 'buyTime' : 't';
+                    return new Date(next[t]) - new Date(prev[t]);
+                });
+                self.$data.createTime = res.body.createTime;
+
+                self.$set(self.$store, type, {});
+                self.$store[type]['dataLists'] = self.$data.dataLists;
+                self.$store[type]['createTime'] = self.$data.createTime;
+            }, function (res) {
+                _this.loading = false;
+                console.log("error");
             });
-            self.createTime = res.body.createTime;
-        }, function (res) {
-            _this.loading = false;
-            console.log("error");
-        });
+        }
     },
     mounted: function mounted() {
         console.log(1, localStorage.getItem('scrollY'));
         var sessionScrollY = localStorage.getItem('scrollY');
         var curScrollY = 0;
 
-        var scrollInterval = setInterval(function () {
-            curScrollY += 50;
-            if (curScrollY <= sessionScrollY) {
-                document.body.scrollTop = curScrollY;
-            } else {
-                document.body.scrollTop = sessionScrollY;
-                clearInterval(scrollInterval);
-            }
-        }, 2);
+        setTimeout(function () {
+            var scrollInterval = setInterval(function () {
+                curScrollY += 50;
+                if (curScrollY <= sessionScrollY) {
+                    document.body.scrollTop = curScrollY;
+                } else {
+                    document.body.scrollTop = sessionScrollY;
+                    clearInterval(scrollInterval);
+                }
+            }, 2);
+        }, 10);
     },
     beforeRouteLeave: function beforeRouteLeave(to, from, next) {
         var scrollY = document.body.scrollTop;
@@ -757,6 +777,7 @@ exports.default = {
 //
 //
 //
+//
 
 /***/ }),
 
@@ -768,7 +789,7 @@ exports = module.exports = __webpack_require__(1)();
 
 
 // module
-exports.push([module.i, "\n.wrap[data-v-45e438f1] {\n  background-color: #090a0a;\n}\n.red[data-v-45e438f1] {\n  color: #ff0000;\n}\n.green[data-v-45e438f1] {\n  color: #00a649;\n}\n.strategy_title[data-v-45e438f1] {\n  line-height: 1rem;\n  background-color: #17191e;\n  color: #cc001f;\n  border-bottom: 0.01rem solid #585858;\n}\n.amount_line[data-v-45e438f1] {\n  line-height: 0.8rem;\n  color: #e9e9e9;\n  fs: 0.3rem;\n  padding-right: 0.3rem;\n}\n.amount_line span[data-v-45e438f1] {\n    color: #f93;\n    margin: 0 0.05rem;\n}\n.strategy_ul li.high[data-v-45e438f1] {\n  background-color: #FF7256;\n}\n.strategy_ul li.low[data-v-45e438f1] {\n  background-color: #98FB98;\n}\n.strategy_ul li.tupo[data-v-45e438f1] {\n  background-color: #f93;\n}\n.strategy_ul li.diepo[data-v-45e438f1] {\n  background-color: #3f3;\n}\n.stock[data-v-45e438f1] {\n  line-height: 0.6rem;\n  padding: 0.15rem 0;\n  display: flex;\n  border-bottom: 0.011rem solid #1c1922;\n}\n.stock.head[data-v-45e438f1] {\n    background-color: #0d0c12;\n    color: #646464;\n}\n.stock p[data-v-45e438f1] {\n    flex: 1;\n    line-height: 0.3rem;\n}\n.stock .name[data-v-45e438f1] {\n    font-size: 0.28rem;\n    color: #e9e9e9;\n}\n.stock .code[data-v-45e438f1] {\n    display: block;\n    margin: 0.07rem 0;\n    color: #606060;\n    font-size: 0.24rem;\n}\n.stock .time[data-v-45e438f1] {\n    color: #606060;\n    font-size: 0.26rem;\n}\n.label[data-v-45e438f1] {\n  padding: 0.05rem 0.1rem;\n  border: 1px solid #f93;\n  margin: 0.2rem;\n  display: inline-block;\n}\n", ""]);
+exports.push([module.i, "\n.wrap[data-v-45e438f1] {\n  background-color: #090a0a;\n}\n.red[data-v-45e438f1] {\n  color: #ff0000;\n}\n.green[data-v-45e438f1] {\n  color: #00a649;\n}\n.strategy_title[data-v-45e438f1] {\n  line-height: 1rem;\n  background-color: #17191e;\n  color: #cc001f;\n  border-bottom: 0.01rem solid #585858;\n}\n.amount_line[data-v-45e438f1] {\n  line-height: 0.8rem;\n  color: #e9e9e9;\n  fs: 0.3rem;\n  padding-right: 0.3rem;\n}\n.amount_line span[data-v-45e438f1] {\n    color: #f93;\n    margin: 0 0.05rem;\n}\n.strategy_ul li.high[data-v-45e438f1] {\n  background-color: #FF7256;\n}\n.strategy_ul li.low[data-v-45e438f1] {\n  background-color: #98FB98;\n}\n.strategy_ul li.tupo[data-v-45e438f1] {\n  background-color: #f93;\n}\n.strategy_ul li.diepo[data-v-45e438f1] {\n  background-color: #3f3;\n}\n.stock[data-v-45e438f1] {\n  line-height: 0.6rem;\n  padding: 0.15rem 0;\n  display: flex;\n  border-bottom: 0.011rem solid #1c1922;\n}\n.stock.head[data-v-45e438f1] {\n    background-color: #0d0c12;\n    color: #646464;\n}\n.stock p[data-v-45e438f1] {\n    flex: 1;\n    line-height: 0.3rem;\n}\n.stock .index[data-v-45e438f1] {\n    color: #f93;\n    font-size: 0.2rem;\n    margin: 0 0.06rem;\n}\n.stock .name[data-v-45e438f1] {\n    font-size: 0.28rem;\n    color: #e9e9e9;\n}\n.stock .code[data-v-45e438f1] {\n    display: block;\n    margin: 0.07rem 0;\n    color: #606060;\n    font-size: 0.24rem;\n}\n.stock .time[data-v-45e438f1] {\n    color: #606060;\n    font-size: 0.26rem;\n}\n.label[data-v-45e438f1] {\n  padding: 0.05rem 0.1rem;\n  border: 1px solid #f93;\n  margin: 0.2rem;\n  display: inline-block;\n}\n", ""]);
 
 // exports
 

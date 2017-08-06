@@ -131,6 +131,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   }, [_vm._v("添加备注")]) : _vm._e()]), _vm._v(" "), _c('div', {
+    staticClass: "svgWraper",
     attrs: {
       "id": "svgWraper"
     }
@@ -140,8 +141,104 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "preserveAspectRatio": "none",
       "xmlns": "http://www.w3.org/2000/svg"
+    },
+    on: {
+      "click": _vm.resetStatus
     }
-  })]), _vm._v(" "), _c('vDialog', {
+  }, [_c('polyline', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.averLineStatus.aver5),
+      expression: "averLineStatus.aver5"
+    }],
+    attrs: {
+      "id": "aver5"
+    }
+  }), _vm._v(" "), _c('polyline', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.averLineStatus.aver10),
+      expression: "averLineStatus.aver10"
+    }],
+    attrs: {
+      "id": "aver10"
+    }
+  }), _vm._v(" "), _c('polyline', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.averLineStatus.aver20),
+      expression: "averLineStatus.aver20"
+    }],
+    attrs: {
+      "id": "aver20"
+    }
+  }), _vm._v(" "), _c('polyline', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.averLineStatus.aver30),
+      expression: "averLineStatus.aver30"
+    }],
+    attrs: {
+      "id": "aver30"
+    }
+  }), _vm._v(" "), _c('polyline', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.averLineStatus.aver60),
+      expression: "averLineStatus.aver60"
+    }],
+    attrs: {
+      "id": "aver60"
+    }
+  })]), _vm._v(" "), _c('ul', {
+    staticClass: "average_set_ul"
+  }, [_c('p', {
+    on: {
+      "click": _vm.toggleAverageSettingStatus
+    }
+  }, [_vm._v("均线设置")]), _vm._v(" "), _c('transition', {
+    attrs: {
+      "name": "scaleY"
+    }
+  }, [_c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.show_average_settings),
+      expression: "show_average_settings"
+    }]
+  }, _vm._l(([5, 10, 20, 30, 60]), function(aver) {
+    return _c('li', {
+      class: {
+        selected: _vm.averLineStatus['aver' + aver]
+      },
+      style: ({
+        color: _vm.averLineColor['_' + aver]
+      }),
+      on: {
+        "click": function () {
+          _vm.setLineStatus(aver)
+        }
+      }
+    }, [_vm._v("\n                        " + _vm._s(aver) + "日\n                        "), _c('span', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: (_vm.averLineStatus['aver' + aver]),
+        expression: "averLineStatus['aver'+aver]"
+      }],
+      staticClass: "iconfont icon-wancheng fn-fr"
+    })])
+  }))])], 1)]), _vm._v(" "), _c('p', {
+    attrs: {
+      "id": "count"
+    }
+  }), _vm._v(" "), _c('vDialog', {
     attrs: {
       "show": _vm.showDialog,
       "close": function () {
@@ -620,6 +717,24 @@ var _createClass = function () { function defineProperties(target, props) { for 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 var _Dialog = __webpack_require__(101);
 
@@ -642,11 +757,20 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var isLowOpenAndHighClose = __webpack_require__(88);
 var calProfitFromOneDay = __webpack_require__(87);
 var calAverageLineData = __webpack_require__(17);
+var averLineColor = {
+    _5: "#fafafa",
+    _10: "#f5fd00",
+    _20: "#de00dd",
+    _30: "#00f91b",
+    _60: "#707070"
+};
 
 exports.default = {
     data: function data() {
+
         return {
             zixuan: this.$store.state.zixuan,
+            averLineColor: averLineColor,
             suits: [],
             historyData: {
                 historyData: {}
@@ -655,7 +779,15 @@ exports.default = {
             showDialog: false,
             comment: '',
             start: '',
-            end: ''
+            end: '',
+            show_average_settings: false, //显示设置均线选项
+            averLineStatus: this.$store.averLineStatus || {
+                aver5: true,
+                aver10: true,
+                aver20: true,
+                aver30: true,
+                aver60: true
+            }
         };
     },
     computed: {
@@ -675,12 +807,22 @@ exports.default = {
         addZixuan: function addZixuan(code) {
             this.$store.dispatch('addZixuan', { code: code, name: this.historyData.name, comment: this.comment });
             this.showDialog = false;
+        },
+        toggleAverageSettingStatus: function toggleAverageSettingStatus() {
+            this.$data.show_average_settings = !this.$data.show_average_settings;
+        },
+        setLineStatus: function setLineStatus(days) {
+            this.$data.averLineStatus['aver' + days] = !this.$data.averLineStatus['aver' + days];
+        },
+        resetStatus: function resetStatus() {
+            this.show_average_settings = false;
         }
     },
     created: function created() {
         var _this = this;
 
         var self = this;
+        this.$store.averLineStatus = this.$data.averLineStatus;
 
         this.$http.get('/api/getOneCodeHistoryData?code=' + self.code).then(function (res) {
             // console.log(res);
@@ -731,13 +873,7 @@ var drawKLine = function () {
         this.max = -10000000;
         this.min = 100000000;
         this.perSize = 0;
-        this.averageConfig = {
-            _5: "#fafafa",
-            _10: "#f5fd00",
-            _20: "#de00dd",
-            _30: "#00f91b",
-            _60: "#707070"
-        };
+        this.averageConfig = averLineColor;
         this.init();
 
         var maxMin = this.calMaxMinVal(0, data.length);
@@ -747,8 +883,11 @@ var drawKLine = function () {
         this.drawAverage();
 
         var start = this.length - 50 >= 0 ? this.length - 50 : 0;
+        this.start = start;
+        this.end = this.length;
+
         this.setViewBox(start, this.length);
-        this.drawLabel();
+        //            this.drawLabel();
     }
 
     _createClass(drawKLine, [{
@@ -883,7 +1022,7 @@ var drawKLine = function () {
         key: 'drawAverageLine',
         value: function drawAverageLine(days) {
             var self = this;
-            var polyline = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
+            var polyline = document.getElementById('aver' + days);
             var avers = [];
             for (var i = 0; i < this.averageData.length; i++) {
                 var averDay = this.averageData[i]['_' + days];
@@ -979,53 +1118,95 @@ var drawKLine = function () {
         key: 'move',
         value: function move() {
             var self = this;
-            var start_x = void 0;
-            var start_y = void 0;
-            var move_x = void 0;
-            var move_y = void 0;
+            var start_x0 = void 0,
+                start_x1 = void 0;
+            var start_y0 = void 0,
+                start_y1 = void 0;
+            var move_x0 = void 0,
+                move_x1 = void 0;
+            var move_y0 = void 0,
+                move_y1 = void 0;
             var startViewBox = void 0;
-            var _start = void 0;
+            var _start = self.start;
+            var click_relativeX = void 0;
+            var cickStart = self.start;
             var wraper = document.querySelector('#svgWraper');
             wraper.addEventListener('touchstart', function (e) {
                 e.preventDefault();
-                var touch = e.touches[0];
-                var pageX = touch.pageX,
-                    pageY = touch.pageY;
+                var touch0 = e.touches[0];
 
-                start_x = move_x = pageX;
-                start_y = move_y = pageY;
+                var pageX0 = touch0['pageX'];
+                var pageY0 = touch0['pageY'];
+                start_x0 = move_x0 = pageX0;
+                start_y0 = move_y0 = pageY0;
+
+                if (e.touches[1]) {
+                    var touch1 = e.touches[1];
+                    var pageX1 = touch1['pageX'];
+                    var pageY1 = touch1['pageY'];
+                    start_x1 = move_x1 = pageX1;
+                    start_y1 = move_y1 = pageY1;
+
+                    click_relativeX = start_x1 - start_x0;
+                    cickStart = self.start;
+                }
+
                 startViewBox = self.svg.getAttribute('viewBox').split(' ');
                 _start = self.start;
-                //                console.log(pageX,e.touches);
             });
             wraper.addEventListener('touchmove', function (e) {
                 e.preventDefault();
-                var touch = e.touches[0];
+                var touch0 = e.touches[0];
+                var pageX0 = touch0['pageX'];
+                var pageY0 = touch0['pageY'];
+
+                var dis_x0 = move_x0 - start_x0;
+                var move_dis_x0 = (pageX0 - move_x0) * self.perSize;
+
                 if (e.touches.length == 2) {
-                    alert("double touch");
+                    var touch1 = e.touches[1];
+                    var pageX1 = touch1['pageX'];
+                    var pageY1 = touch1['pageY'];
+
+                    var move_relativeX = pageX1 - pageX0;
+
+                    var count = 3 * Math.round((move_relativeX - click_relativeX) / (self.barSize + self.barGap));
+
+                    document.getElementById('count').innerHTML = count;
+
+                    _start = cickStart - count >= 0 ? cickStart - count : 0;
+
+                    if (_start < 0) {
+                        _start = self.start = 0;
+                    }
+                    if (_start > self.length - 5) {
+                        _start = self.start = self.length - 5;
+                    }
+
+                    document.getElementById('count').innerHTML = 'count:' + count + ',_start:' + _start;
+
+                    self.setViewBox(_start, self.end);
+                    move_x1 = pageX1;
+                    move_y1 = pageY1;
+                } else {
+
+                    var _count = Math.round(move_dis_x0 / (self.barSize + self.barGap));
+                    if (_start - _count < 0) {
+                        _start = 0;
+                    }
+                    if (_start - _count > self.length - self.canviewCount) {
+                        return;
+                    }
+                    _start = _start - _count >= 0 ? _start - _count : 0;
+                    var end = _start + (self.end - self.start);
+
+                    self.setViewBox(_start, end);
+                    self.start = _start;
+                    self.end = end;
+
+                    move_x0 = pageX0;
+                    move_y0 = pageY0;
                 }
-                var pageX = touch.pageX,
-                    pageY = touch.pageY;
-
-
-                var dis_x = move_x - start_x;
-
-                var viewBoxDis = dis_x * self.perSize;
-                var move_dis_x = (pageX - move_x) * self.perSize;
-
-                var count = Math.round(move_dis_x / (self.barSize + self.barGap));
-                if (_start - count < 0) {
-                    _start = 0;
-                }
-                if (_start - count > self.length - self.canviewCount) {
-                    return;
-                }
-                _start = _start - count >= 0 ? _start - count : 0;
-                var end = _start + self.canviewCount;
-                //                console.log(_start,end)
-                self.setViewBox(_start, end);
-                move_x = pageX;
-                move_y = pageY;
             });
         }
     }]);
@@ -1187,7 +1368,7 @@ exports = module.exports = __webpack_require__(1)();
 
 
 // module
-exports.push([module.i, "\n.strategy_title[data-v-79771185] {\n  text-align: center;\n  line-height: 0.6rem;\n  color: #456;\n}\n.title_desc[data-v-79771185] {\n  font-size: 0.24rem;\n  line-height: 0.6rem;\n  padding-left: 0.3rem;\n}\n.title_desc span[data-v-79771185] {\n    margin: 0 0.05rem;\n}\n.svg[data-v-79771185] {\n  display: block;\n  width: 7.5rem;\n  margin: 0 auto;\n  border: 1px solid red;\n  background-color: #000;\n}\n.dialog_wraper[data-v-79771185] {\n  padding: 0.3rem 0.2rem;\n}\n", ""]);
+exports.push([module.i, "\n.strategy_title[data-v-79771185] {\n  text-align: center;\n  line-height: 0.6rem;\n  color: #456;\n}\n.title_desc[data-v-79771185] {\n  font-size: 0.24rem;\n  line-height: 0.6rem;\n  padding-left: 0.3rem;\n}\n.title_desc span[data-v-79771185] {\n    margin: 0 0.05rem;\n}\n.svgWraper[data-v-79771185] {\n  position: relative;\n}\n.svg[data-v-79771185] {\n  display: block;\n  width: 7.5rem;\n  margin: 0 auto;\n  border: 1px solid red;\n  background-color: #000;\n}\n.dialog_wraper[data-v-79771185] {\n  padding: 0.3rem 0.2rem;\n}\n.average_set_ul[data-v-79771185] {\n  position: absolute;\n  right: 0.1rem;\n  top: 0;\n  line-height: 0.4rem;\n  color: #fff;\n  border: 1px solid red;\n  background-color: rgba(0, 0, 0, 0.7);\n}\n.average_set_ul li[data-v-79771185] {\n    padding: 0 0.1rem;\n    border-bottom: 1px solid red;\n}\n", ""]);
 
 // exports
 

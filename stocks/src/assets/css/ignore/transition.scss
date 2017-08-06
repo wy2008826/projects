@@ -26,3 +26,11 @@
 .bounce-enter, .bounce-leave-to {
 	transform: scale(0,0);
 }
+
+.scaleY-enter-active, .scaleY-leave-active {
+	transition: all ease 400ms;
+	transform-origin: 50% 0;
+}
+.scaleY-enter, .scaleY-leave-to {
+	transform: scaleY(0);
+}

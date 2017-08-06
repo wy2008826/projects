@@ -20,6 +20,7 @@
                                  :to="'/detail/'+stock.code"
                                  v-for="(stock,index) in dataLists">
                         <p >
+                            <span class="index" v-text="index"></span>
                             <span class="name" v-text="stock.name"></span>
                             <span class="code" v-text="stock.code"></span>
                             <span class="time" v-text="stock.buyTime||stock.t"></span>
@@ -140,34 +141,52 @@
         created(){
             let self=this;
             let url=this.$data.apiConfog[this.$data.type].url;
+            let type=this.$data.type;
 
-            this.$http.get(url).then((res)=>{
-
+            const storeLists=this.$store[type];
+            console.log(this.$store,storeLists);
+            if(storeLists){
+                self.$data.dataLists=self.$store[type]['dataLists'];
+                self.createTime=self.$store[type]['createTime'];
                 this.loading=false;
-                self.$data.dataLists=res.body.lists.sort(function(prev,next){
-                    let t=prev.buyTime?'buyTime':'t';
-                    return new Date(next[t])-new Date(prev[t]);
+            }else{
+                this.$http.get(url).then((res)=>{
+
+                    this.loading=false;
+                    self.$data.dataLists=res.body.lists.sort(function(prev,next){
+                        let t=prev.buyTime?'buyTime':'t';
+                        return new Date(next[t])-new Date(prev[t]);
+                    });
+                    self.$data.createTime=res.body.createTime;
+
+                    self.$set(self.$store,type,{});
+                    self.$store[type]['dataLists']=self.$data.dataLists;
+                    self.$store[type]['createTime']=self.$data.createTime;
+
+                },(res)=>{
+                    this.loading=false;
+                    console.log("error")
                 });
-                self.createTime=res.body.createTime;
-            },(res)=>{
-                this.loading=false;
-                console.log("error")
-            });
+            }
+
         },
         mounted(){
             console.log(1,localStorage.getItem('scrollY'));
             let sessionScrollY=localStorage.getItem('scrollY');
             let curScrollY=0;
 
-            let scrollInterval=setInterval(()=>{
-                curScrollY+=50;
-                if(curScrollY<=sessionScrollY){
-                    document.body.scrollTop=curScrollY;
-                }else{
-                    document.body.scrollTop=sessionScrollY;
-                    clearInterval(scrollInterval)
-                }
-            },2)
+            setTimeout(()=>{
+                let scrollInterval=setInterval(()=>{
+                    curScrollY+=50;
+                    if(curScrollY<=sessionScrollY){
+                        document.body.scrollTop=curScrollY;
+                    }else{
+                        document.body.scrollTop=sessionScrollY;
+                        clearInterval(scrollInterval)
+                    }
+                },2)
+            },10)
+
 
         },
         beforeRouteLeave(to,from,next){
@@ -240,6 +259,11 @@
         p{
             flex:1;
             line-height: 0.3rem;
+        }
+        .index{
+            color:#f93;
+            font-size:0.2rem;
+            margin:0 0.06rem;
         }
         .name{
             font-size:0.28rem;
