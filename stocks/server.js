@@ -60,13 +60,6 @@ async function all(){
 
 	// apiDIY();
 
-	// await selectAllAverageUp();
-
-
-
-	// console.log("one day T:",suits_OneDayT);
-	// console.log("Single sun keeped days:",suits_keepDays);
-
 }
 
 all();
