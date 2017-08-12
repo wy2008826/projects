@@ -4,15 +4,11 @@ var route=express.Router();
 let fs=require('fs');
 let path=require('path');
 
-let selectIncrease =require("./controllers/apiSelectIncrease.js");
 let getAllCodes =require("./controllers/api/getAllCodes.js");
 let getOneCodeHistoryData =require("./controllers/api/getOneCodeHistoryData.js");
 let register =require("./controllers/api/register.js");
 let login =require("./controllers/api/login.js");
 
-let testSearchOneCodeAllT=require('../testStrategy/testSearchOneCodeAllT');
-let searchAllSlotsAndSearchRecentDayT=require('./controllers/searchAllSlotsAndSearchRecentDayT');
-let selectSingleSunKeepedDays=require("./controllers/selectSingleSunKeepedDays");
 let getYMDHMS =require("./utils/getYMDHMS.js") ;
 let apiDIY =require('./controllers/apiDIY.js');
 let suanfa =require('../const/suanfa.js');
@@ -144,18 +140,6 @@ route.get("/api/bounceVol",async function(req,res,error){
 });
 
 
-route.get("/api/getOneCodeAllT",async function(req,res,error){
-	var query=req.query;
-
-	let lists=await testSearchOneCodeAllT(query.code||"600000");
-	var data={
-		query:query,
-		lists
-	};
-	res.json(data);
-});
-
-route.get("/api/selectIncrease",selectIncrease);
 
 function readFile(dir){
 	return new Promise(function(resolve,reject){

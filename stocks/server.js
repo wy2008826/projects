@@ -13,19 +13,9 @@ let timeRules=require ("./const/consts.js");
 
 let crawAllSlotsAndSearchOneDayT =require("./routes/controllers/crawAllSlotsAndSearchOneDayT.js");
 let crawHistoryDataAll=require("./routes/controllers/crawHistoryDataAll");
-let crawHistoryDataOne=require("./routes/controllers/crawHistoryDataOne");
-let selectAllAverageUp=require("./routes/controllers/selectAllAverageUp");
-let selectHuiTiaoToAverageLineAllType=require("./routes/controllers/selectHuiTiaoToAverageLineAllType");
-let selectHuiTiaoToAverageLineOneType=require("./routes/controllers/selectHuiTiaoToAverageLineOneType");
-let selectSingleSunKeepedDays=require("./routes/controllers/selectSingleSunKeepedDays");
-let selectLowOpenAndHighClose=require("./routes/controllers/selectLowOpenAndHighClose.js");
-let searchAllStocksAllAverageLineClose=require("./routes/controllers/searchAllStocksAllAverageLineClose.js");
 
 let apiDIY=require("./routes/controllers/apiDIY");
 let writeApiResultsFiles=require('./routes/controllers/writeApiResultsFiles');
-
-let testSearchAllCodeSingleSunKeepedDays=require("./testStrategy/testSearchAllCodeSingleSunKeepedDays");
-let testSearchOneCodeAllT=require('./testStrategy/testSearchOneCodeAllT');
 
 
 let testChangeStockDta=require('./test/changeStockData.js');
@@ -70,16 +60,8 @@ async function all(){
 
 	// apiDIY();
 
-	// searchAllStocksAllAverageLineClose();
-
-	// let suits_keepDays=await selectSingleSunKeepedDays();
-	// let suits_lowOpenAndHighClose=await selectLowOpenAndHighClose();
-	
 	// await selectAllAverageUp();
-	// await selectHuiTiaoToAverageLineAllType();
 
-	// await testSearchAllCodeSingleSunKeepedDays();
-	// await testSearchOneCodeAllT("603133");
 
 
 	// console.log("one day T:",suits_OneDayT);
