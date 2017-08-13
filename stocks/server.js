@@ -11,6 +11,7 @@ let schedule = require("node-schedule");//定时任务
 
 let timeRules=require ("./const/consts.js");
 
+let crawIps=require('./routes/controllers/crawIps');
 let crawAllSlotsAndSearchOneDayT =require("./routes/controllers/crawAllSlotsAndSearchOneDayT.js");
 let crawHistoryDataAll=require("./routes/controllers/crawHistoryDataAll");
 
@@ -53,6 +54,7 @@ schedule.scheduleJob(timeRules.excludeWeekends18, async function(){
 async function all(){
 
 	// testChangeStockDta();
+    // await crawIps();
 
     // await crawAllSlotsAndSearchOneDayT();//抓取数据
     // await crawHistoryDataAll();//抓取所有股票的历史数据

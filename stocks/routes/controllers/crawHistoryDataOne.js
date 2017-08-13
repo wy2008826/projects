@@ -3,12 +3,15 @@ var superagent = charset(require('superagent'));
 var fs=require("fs");
 var path=require("path");
 var cheerio=require("cheerio");
+require('superagent-proxy')(superagent);
+
 
 var mongoose=require("mongoose");
 
 
 var StockModel=require("../../models/stock.js");
-
+let sleep=require('../utils/sleep.js');
+let getProxy=require('../utils/getProxy.js');
 
 function getInitialHistoryData(){
 	return {
@@ -32,14 +35,21 @@ module.exports=async function(code,time=undefined){
 	var code=code||"600000";
 	
 	let yearJiduArr=createYearJiDu(time);
+	let proxies=await getProxy();
+	let proxy_index=0;
 	for(let i=0;i<yearJiduArr.length;i++){
-		let data=await crawJiDuData(code,yearJiduArr[i][0],yearJiduArr[i][1]).catch(async function(err){
+        if(proxy_index>=proxies.length){
+            proxy_index=0;
+        }
+		let proxy=proxies[proxy_index].proxy;
+        proxy_index+=1;
+		console.log(proxy);
+		let data=await crawJiDuData(code,yearJiduArr[i][0],yearJiduArr[i][1],proxy).catch(async function(err){
 			console.log(`---------craw ${yearJiduArr[i][0]} 年 ${yearJiduArr[i][1]} 季度数据出错 重试中。。。 ---------`)
 			await crawJiDuData(code,yearJiduArr[i][0],yearJiduArr[i][1]).catch(function(err){
 				console.log("-------  craw ${yearJiduArr[i][0]} 年 ${yearJiduArr[i][1]} 季度数据出错    不再尝试。。。 ---------")
 			});//再次尝试
 		});
-		
 	}
 
     Object.keys(historyData.dataColects).forEach(function(timeKey,index){
@@ -59,14 +69,14 @@ module.exports=async function(code,time=undefined){
 }
 
 
-async function crawJiDuData(code,year,jidu){
+async function crawJiDuData(code,year,jidu,proxy){
     // vMS_MarketHistory 除权  vMS_FuQuanMarketHistory：复权
 	let url=`http://money.finance.sina.com.cn/corp/go.php/vMS_FuQuanMarketHistory/stockid/${code}.phtml?year=${year}&jidu=${jidu}`;
 	console.log(`crawling  ${code} ${year}年${jidu}季度数据`);
 
 	return new Promise(function(resolve,reject){
 
-		let sup=superagent.get(url).timeout({
+		let sup=superagent.get(url).set('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.86 Safari/537.36').proxy(proxy).timeout({
 			deadline:1000*10,//10s超时时间  超时之后不继续执行代码怎么破
 			response:1000*10
 		}).end(function(error,resHtml){

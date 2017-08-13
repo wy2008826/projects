@@ -19,20 +19,24 @@ module.exports=async function(code,time=undefined){
 					reject(false);
 				}else{//数据库中存在历史数据
 					
-					if(!data.historyData.dataColects[time]&&time){
-						data.historyData.dataColects[time]=dayData;
-					}
 					let times=Object.keys(data.historyData.dataColects);
 					let length=times.length;
-                    data.historyData.dataColects={};
-					// delete data.historyData.dataColects[times[length-1]];
-					// data.historyData.dataColects[times[length-1]][1]=1000;
+					console.log(length);
+                    // data.historyData.dataColects={};
+					let newData={};
+                    for(let k=0;k<length;k++){
+                    	console.log(times[k]);
+                        newData[times[k]]=data.historyData.dataColects[times[k]]
+					}
 
-					StockModel.update({code:code},data,function(err){
+                    delete newData['2017-08-11'];
+                    data.historyData.dataColects=newData;
+
+					StockModel.update({code},data,function(err){
 						if(err){
 							reject(err);
 						}else{
-							console.log(`数据更新成功！`)
+							console.log(`数据更新成功！`,data)
 							resolve(true);
 						}
 					});

@@ -3,7 +3,6 @@ let superagent = charset(require('superagent'));
 let fs=require("fs");
 let path=require("path");
 let cheerio=require("cheerio");
-
 let mongoose=require("mongoose");
 
 let StockModel=require("../../models/stock.js");
@@ -11,6 +10,7 @@ mongoose.connect("127.0.0.1:27017/stock");// elevator 具体的库名称
 
 let isOneDayT=require("../../strategy/isOneDayT.js");
 let sendEmail=require("../utils/sendEmail.js");
+let sleep=require('../utils/sleep.js');
 
 
 let exist=0;
@@ -45,6 +45,7 @@ module.exports= async function crawAllSlotsAndSearchOneDayT(needEmail){
 				console.log(`----- save page ${i} 代码列表失败 -------!`);
 			});
 		}
+		await sleep(6000);
 	}
 	// await writeCodeFile();
 
