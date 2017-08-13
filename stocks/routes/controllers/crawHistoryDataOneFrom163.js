@@ -54,8 +54,8 @@ module.exports=async function(code,area,start=undefined){
 }
 
 async function crawHistory(code,area,start,end){
-    let type=(area=='sh'?0:1);
-    let url=`http://quotes.money.163.com/service/chddata.html?code=${type}600000&start=${start}&end=${end}&fields=TOPEN;HIGH;LOW;TCLOSE;VOTURNOVER;VATURNOVER;`;
+    let type=(area=='sh'?1:0);
+    let url=`http://quotes.money.163.com/service/chddata.html?code=1${code}&start=${start}&end=${end}&fields=TOPEN;HIGH;LOW;TCLOSE;VOTURNOVER;VATURNOVER;`;
     console.log(`crawling  ${code} ${start}至${end} 历史数据`);
 
     return new Promise(function(resolve,reject){
