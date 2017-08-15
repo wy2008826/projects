@@ -1,151 +1,19 @@
 webpackJsonp([4],{
 
-/***/ 105:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "wrap"
-  }, [_c('div', [_c('Loading', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.loading),
-      expression: "loading"
-    }]
-  }), _vm._v(" "), _c('transition', {
-    attrs: {
-      "name": "fade"
-    }
-  }, [_c('ul', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (!_vm.loading),
-      expression: "!loading"
-    }],
-    staticClass: "clearfix strategy_ul"
-  }, [_c('h4', {
-    staticClass: "strategy_title text-center",
-    domProps: {
-      "textContent": _vm._s(_vm.labelTxt)
-    }
-  }), _vm._v(" "), _c('p', {
-    staticClass: "amount_line text-right"
-  }, [_vm._v("共"), _c('span', {
-    domProps: {
-      "textContent": _vm._s(_vm.dataLists.length)
-    }
-  }), _vm._v("条 更新时间:"), _c('i', {
-    domProps: {
-      "textContent": _vm._s(_vm.createTime)
-    }
-  })]), _vm._v(" "), _c('li', {
-    staticClass: "stock head text-center"
-  }, [_c('p', {
-    on: {
-      "click": function($event) {
-        _vm.sortBy('t')
-      }
-    }
-  }, [_vm._v("名称／代码 ⇅")]), _vm._v(" "), _c('p', {
-    on: {
-      "click": function($event) {
-        _vm.sortBy('close')
-      }
-    }
-  }, [_vm._v("现价")]), _vm._v(" "), _c('p', {
-    on: {
-      "click": function($event) {
-        _vm.sortBy('baseRate')
-      }
-    }
-  }, [_vm._v("涨幅％")]), _vm._v(" "), _c('p', {
-    on: {
-      "click": function($event) {
-        _vm.sortBy('rate6')
-      }
-    }
-  }, [_vm._v("6日收益 ⇅")]), _vm._v(" "), _c('p', {
-    on: {
-      "click": function($event) {
-        _vm.sortBy('rate12')
-      }
-    }
-  }, [_vm._v("12日收益 ⇅")])]), _vm._v(" "), _vm._l((_vm.dataLists), function(stock, index) {
-    return _c('router-link', {
-      staticClass: "stock text-center",
-      attrs: {
-        "tag": "li",
-        "to": '/detail/' + stock.code
-      }
-    }, [_c('p', [_c('span', {
-      staticClass: "index",
-      domProps: {
-        "textContent": _vm._s(index)
-      }
-    }), _vm._v(" "), _c('span', {
-      staticClass: "name",
-      domProps: {
-        "textContent": _vm._s(stock.name)
-      }
-    }), _vm._v(" "), _c('span', {
-      staticClass: "code",
-      domProps: {
-        "textContent": _vm._s(stock.code)
-      }
-    }), _vm._v(" "), _c('span', {
-      staticClass: "time",
-      domProps: {
-        "textContent": _vm._s(stock.buyTime || stock.t)
-      }
-    })]), _vm._v(" "), _c('p', {
-      class: _vm.color(stock.baseData[4] >= stock.baseData[1]),
-      domProps: {
-        "textContent": _vm._s(stock.baseData[4])
-      }
-    }), _vm._v(" "), _c('p', {
-      class: _vm.color(_vm.getRate(stock.baseData) >= 0),
-      domProps: {
-        "textContent": _vm._s(_vm.getRate(stock.baseData))
-      }
-    }), _vm._v(" "), _c('p', {
-      class: _vm.color(stock.rate6 >= 4),
-      domProps: {
-        "textContent": _vm._s(stock.rate6.toFixed(2) + '%')
-      }
-    }), _vm._v(" "), _c('p', {
-      class: _vm.color(stock.rate12 >= 8),
-      domProps: {
-        "textContent": _vm._s(stock.rate12.toFixed(2) + '%')
-      }
-    })])
-  })], 2)])], 1)])
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-loader/node_modules/vue-hot-reload-api").rerender("data-v-45e438f1", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ 60:
+/***/ 51:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = {}
 
 /* styles */
-__webpack_require__(98)
+__webpack_require__(90)
 
 /* script */
-__vue_exports__ = __webpack_require__(82)
+__vue_exports__ = __webpack_require__(73)
 
 /* template */
-var __vue_template__ = __webpack_require__(105)
+var __vue_template__ = __webpack_require__(97)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -181,7 +49,7 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 75:
+/***/ 66:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -218,10 +86,10 @@ exports.default = {
 
 /***/ }),
 
-/***/ 76:
+/***/ 67:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(1)();
+exports = module.exports = __webpack_require__(2)();
 // imports
 
 
@@ -233,20 +101,20 @@ exports.push([module.i, "\n.loading[data-v-13d6cdac] {\n  position: absolute;\n 
 
 /***/ }),
 
-/***/ 77:
+/***/ 68:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = {}
 
 /* styles */
-__webpack_require__(80)
+__webpack_require__(71)
 
 /* script */
-__vue_exports__ = __webpack_require__(75)
+__vue_exports__ = __webpack_require__(66)
 
 /* template */
-var __vue_template__ = __webpack_require__(78)
+var __vue_template__ = __webpack_require__(69)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -282,7 +150,7 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 78:
+/***/ 69:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -312,7 +180,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 79:
+/***/ 70:
 /***/ (function(module, exports) {
 
 /*
@@ -535,16 +403,16 @@ function applyToTag(styleElement, obj) {
 
 /***/ }),
 
-/***/ 80:
+/***/ 71:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(76);
+var content = __webpack_require__(67);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
-var update = __webpack_require__(79)(content, {});
+var update = __webpack_require__(70)(content, {});
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -562,7 +430,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 82:
+/***/ 73:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -572,7 +440,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _Loading = __webpack_require__(77);
+var _Loading = __webpack_require__(68);
 
 var _Loading2 = _interopRequireDefault(_Loading);
 
@@ -781,10 +649,10 @@ exports.default = {
 
 /***/ }),
 
-/***/ 92:
+/***/ 84:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(1)();
+exports = module.exports = __webpack_require__(2)();
 // imports
 
 
@@ -796,16 +664,16 @@ exports.push([module.i, "\n.wrap[data-v-45e438f1] {\n  background-color: #090a0a
 
 /***/ }),
 
-/***/ 98:
+/***/ 90:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(92);
+var content = __webpack_require__(84);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
-var update = __webpack_require__(2)(content, {});
+var update = __webpack_require__(7)(content, {});
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -819,6 +687,138 @@ if(false) {
 	}
 	// When the module is disposed, remove the <style> tags
 	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ 97:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "wrap"
+  }, [_c('div', [_c('Loading', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.loading),
+      expression: "loading"
+    }]
+  }), _vm._v(" "), _c('transition', {
+    attrs: {
+      "name": "fade"
+    }
+  }, [_c('ul', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (!_vm.loading),
+      expression: "!loading"
+    }],
+    staticClass: "clearfix strategy_ul"
+  }, [_c('h4', {
+    staticClass: "strategy_title text-center",
+    domProps: {
+      "textContent": _vm._s(_vm.labelTxt)
+    }
+  }), _vm._v(" "), _c('p', {
+    staticClass: "amount_line text-right"
+  }, [_vm._v("共"), _c('span', {
+    domProps: {
+      "textContent": _vm._s(_vm.dataLists.length)
+    }
+  }), _vm._v("条 更新时间:"), _c('i', {
+    domProps: {
+      "textContent": _vm._s(_vm.createTime)
+    }
+  })]), _vm._v(" "), _c('li', {
+    staticClass: "stock head text-center"
+  }, [_c('p', {
+    on: {
+      "click": function($event) {
+        _vm.sortBy('t')
+      }
+    }
+  }, [_vm._v("名称／代码 ⇅")]), _vm._v(" "), _c('p', {
+    on: {
+      "click": function($event) {
+        _vm.sortBy('close')
+      }
+    }
+  }, [_vm._v("现价")]), _vm._v(" "), _c('p', {
+    on: {
+      "click": function($event) {
+        _vm.sortBy('baseRate')
+      }
+    }
+  }, [_vm._v("涨幅％")]), _vm._v(" "), _c('p', {
+    on: {
+      "click": function($event) {
+        _vm.sortBy('rate6')
+      }
+    }
+  }, [_vm._v("6日收益 ⇅")]), _vm._v(" "), _c('p', {
+    on: {
+      "click": function($event) {
+        _vm.sortBy('rate12')
+      }
+    }
+  }, [_vm._v("12日收益 ⇅")])]), _vm._v(" "), _vm._l((_vm.dataLists), function(stock, index) {
+    return _c('router-link', {
+      staticClass: "stock text-center",
+      attrs: {
+        "tag": "li",
+        "to": '/detail/' + stock.code
+      }
+    }, [_c('p', [_c('span', {
+      staticClass: "index",
+      domProps: {
+        "textContent": _vm._s(index)
+      }
+    }), _vm._v(" "), _c('span', {
+      staticClass: "name",
+      domProps: {
+        "textContent": _vm._s(stock.name)
+      }
+    }), _vm._v(" "), _c('span', {
+      staticClass: "code",
+      domProps: {
+        "textContent": _vm._s(stock.code)
+      }
+    }), _vm._v(" "), _c('span', {
+      staticClass: "time",
+      domProps: {
+        "textContent": _vm._s(stock.buyTime || stock.t)
+      }
+    })]), _vm._v(" "), _c('p', {
+      class: _vm.color(stock.baseData[4] >= stock.baseData[1]),
+      domProps: {
+        "textContent": _vm._s(stock.baseData[4])
+      }
+    }), _vm._v(" "), _c('p', {
+      class: _vm.color(_vm.getRate(stock.baseData) >= 0),
+      domProps: {
+        "textContent": _vm._s(_vm.getRate(stock.baseData))
+      }
+    }), _vm._v(" "), _c('p', {
+      class: _vm.color(stock.rate6 >= 4),
+      domProps: {
+        "textContent": _vm._s(stock.rate6.toFixed(2) + '%')
+      }
+    }), _vm._v(" "), _c('p', {
+      class: _vm.color(stock.rate12 >= 8),
+      domProps: {
+        "textContent": _vm._s(stock.rate12.toFixed(2) + '%')
+      }
+    })])
+  })], 2)])], 1)])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-loader/node_modules/vue-hot-reload-api").rerender("data-v-45e438f1", module.exports)
+  }
 }
 
 /***/ })

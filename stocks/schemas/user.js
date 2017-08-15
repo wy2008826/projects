@@ -6,6 +6,7 @@ var UserSchema=new mongoose.Schema({//注意各种数据的格式  数组怎么�
     username:String,
     password:String,
     zixuan:mongoose.Schema.Types.Mixed,
+    online:Array,
     meta:{
         createAt:{
             type:Date,

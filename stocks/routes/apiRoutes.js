@@ -8,6 +8,8 @@ let getAllCodes =require("./controllers/api/getAllCodes.js");
 let getOneCodeHistoryData =require("./controllers/api/getOneCodeHistoryData.js");
 let register =require("./controllers/api/register.js");
 let login =require("./controllers/api/login.js");
+let online =require("./controllers/api/online.js");
+let addZixuan =require("./controllers/api/addZixuan.js");
 
 let getYMDHMS =require("./utils/getYMDHMS.js") ;
 let apiDIY =require('./controllers/apiDIY.js');
@@ -24,20 +26,28 @@ route.get("/api/test",function(req,res,error){
 });
 
 route.get("/api/register",async function(req,res,error){
-    var query=req.query;
+    let query=req.query;
     let result=await register(query);
 
     res.json(result);
 });
 
 route.get("/api/login",async function(req,res,error){
-    var query=req.query;
+    let query=req.query;
     let result=await login(query);
 
     res.json(result);
 });
-
-
+route.get("/api/online",async function(req,res,error){
+    let query=req.query;
+    let result=await online(query);
+    res.json(result);
+});
+route.get("/api/addZixuan",async function(req,res,error){
+    let query=req.query;
+    let result=await addZixuan(query);
+    res.json(result);
+});
 route.get("/api/getAllCodes",async function(req,res,error){
 	var query=req.query;
 

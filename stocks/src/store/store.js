@@ -13,6 +13,13 @@ var state={
     stocks:[]
 };
 
+const getters = {
+    user: (state) => state.user,
+    stocksIsPlain: (state) => state.stocksIsPlain,
+    curStock: (state) => state.curStock,
+    zixuan:(state) => state.zixuan,
+    stocks:(state) => state.stocks,
+}
 
 //mutations:mutations
 var mutations={
@@ -31,22 +38,35 @@ var mutations={
         if(!code){
             return false;
         }
+        let {year,month,date,hour,minute,second}=getYMD(new Date());
+        month=fullNum(month);
+        date=fullNum(date);
+        hour=fullNum(hour);
+        minute=fullNum(minute);
+        second=fullNum(second);
+        let time=`${year}-${month}-${date} ${hour}:${minute}:${second}`;
 
         if(!state.zixuan[code]){
-            let {year,month,date,hour,minute,second}=getYMD(new Date());
-            month=fullNum(month);
-            date=fullNum(date);
-            hour=fullNum(hour);
-            minute=fullNum(minute);
-            second=fullNum(second);
-
-            let time=`${year}-${month}-${date} ${hour}:${minute}:${second}`;
             state.zixuan.lists.push(code);
             state.zixuan[code]={comments:[],time,name};
         }
         comment && state.zixuan[code].comments.push(comment);
         let zixuan_Str=JSON.stringify(state.zixuan);
-        localStorage.setItem('zixuan',zixuan_Str)
+        localStorage.setItem('zixuan',zixuan_Str);
+        Vue.http({
+            url:'/api/addZixuan',
+            method: 'get',
+            params:{
+                code,
+                name,
+                time,
+                comment,
+                user:state.user
+            }
+        }).then((res)=>{
+
+        });
+
     },
     DO_LOGIN(state,payload){
         state.user=payload||'';
@@ -77,11 +97,14 @@ function fullNum(num){
     return num<10?'0'+num:num;
 }
 
+
+
 //store
 var store=new Vuex.Store({
-	state:state,
-	mutations:mutations,
-    actions:actions
+	state,
+	mutations,
+    actions,
+    getters
 });
 
 export default store;

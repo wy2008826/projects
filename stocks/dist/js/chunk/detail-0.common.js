@@ -1,307 +1,19 @@
 webpackJsonp([0],{
 
-/***/ 101:
+/***/ 55:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = {}
 
 /* styles */
-__webpack_require__(97)
+__webpack_require__(91)
 
 /* script */
-__vue_exports__ = __webpack_require__(81)
+__vue_exports__ = __webpack_require__(77)
 
 /* template */
-var __vue_template__ = __webpack_require__(104)
-__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-if (
-  typeof __vue_exports__.default === "object" ||
-  typeof __vue_exports__.default === "function"
-) {
-if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-__vue_options__ = __vue_exports__ = __vue_exports__.default
-}
-if (typeof __vue_options__ === "function") {
-  __vue_options__ = __vue_options__.options
-}
-__vue_options__.__file = "/Users/wangyu/github/projects/stocks/src/components/Dialog/Dialog.vue"
-__vue_options__.render = __vue_template__.render
-__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-__vue_options__._scopeId = "data-v-30bec232"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-loader/node_modules/vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-30bec232", __vue_options__)
-  } else {
-    hotAPI.reload("data-v-30bec232", __vue_options__)
-  }
-})()}
-if (__vue_options__.functional) {console.error("[vue-loader] Dialog.vue: functional components are not supported and should be defined in plain js files using render functions.")}
-
-module.exports = __vue_exports__
-
-
-/***/ }),
-
-/***/ 104:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('transition', {
-    attrs: {
-      "name": "fade1"
-    }
-  }, [_c('div', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.showStatus),
-      expression: "showStatus"
-    }],
-    staticClass: "shade",
-    on: {
-      "click": _vm.closeSelf
-    }
-  })]), _vm._v(" "), _c('transition', {
-    attrs: {
-      "name": "bounce"
-    }
-  }, [_c('div', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.showStatus),
-      expression: "showStatus"
-    }],
-    staticClass: "dialog"
-  }, [_c('span', {
-    staticClass: "close",
-    on: {
-      "click": _vm.closeSelf
-    }
-  }), _vm._v(" "), _vm._t("default")], 2)])], 1)
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-loader/node_modules/vue-hot-reload-api").rerender("data-v-30bec232", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ 106:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('p', {
-    staticClass: "title_desc"
-  }, [_c('span', {
-    domProps: {
-      "textContent": _vm._s(_vm.code)
-    }
-  }), _vm._v(" "), _c('span', {
-    domProps: {
-      "textContent": _vm._s(_vm.historyData.name)
-    }
-  }), _vm._v(" "), _c('span', {
-    domProps: {
-      "textContent": _vm._s(_vm.start)
-    }
-  }), _vm._v("至"), _c('span', {
-    domProps: {
-      "textContent": _vm._s(_vm.end)
-    }
-  }), _vm._v(" "), (!_vm.zixuan[_vm.code]) ? _c('span', {
-    staticClass: "iconfont icon-tianjia search",
-    on: {
-      "click": _vm.clickAddZixuan
-    }
-  }, [_vm._v("加入自选")]) : _vm._e(), _vm._v(" "), (_vm.zixuan[_vm.code]) ? _c('span', {
-    on: {
-      "click": function($event) {
-        _vm.clickAddZixuan(_vm.code)
-      }
-    }
-  }, [_vm._v("添加备注")]) : _vm._e()]), _vm._v(" "), _c('div', {
-    staticClass: "svgWraper",
-    attrs: {
-      "id": "svgWraper"
-    }
-  }, [_c('svg', {
-    ref: "svg",
-    staticClass: "svg",
-    attrs: {
-      "preserveAspectRatio": "none",
-      "xmlns": "http://www.w3.org/2000/svg"
-    },
-    on: {
-      "click": _vm.resetStatus
-    }
-  }, [_c('polyline', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.averLineStatus.aver5),
-      expression: "averLineStatus.aver5"
-    }],
-    attrs: {
-      "id": "aver5"
-    }
-  }), _vm._v(" "), _c('polyline', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.averLineStatus.aver10),
-      expression: "averLineStatus.aver10"
-    }],
-    attrs: {
-      "id": "aver10"
-    }
-  }), _vm._v(" "), _c('polyline', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.averLineStatus.aver20),
-      expression: "averLineStatus.aver20"
-    }],
-    attrs: {
-      "id": "aver20"
-    }
-  }), _vm._v(" "), _c('polyline', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.averLineStatus.aver30),
-      expression: "averLineStatus.aver30"
-    }],
-    attrs: {
-      "id": "aver30"
-    }
-  }), _vm._v(" "), _c('polyline', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.averLineStatus.aver60),
-      expression: "averLineStatus.aver60"
-    }],
-    attrs: {
-      "id": "aver60"
-    }
-  })]), _vm._v(" "), _c('ul', {
-    staticClass: "average_set_ul"
-  }, [_c('p', {
-    on: {
-      "click": _vm.toggleAverageSettingStatus
-    }
-  }, [_vm._v("均线设置")]), _vm._v(" "), _c('transition', {
-    attrs: {
-      "name": "scaleY"
-    }
-  }, [_c('div', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.show_average_settings),
-      expression: "show_average_settings"
-    }]
-  }, _vm._l(([5, 10, 20, 30, 60]), function(aver) {
-    return _c('li', {
-      class: {
-        selected: _vm.averLineStatus['aver' + aver]
-      },
-      style: ({
-        color: _vm.averLineColor['_' + aver]
-      }),
-      on: {
-        "click": function () {
-          _vm.setLineStatus(aver)
-        }
-      }
-    }, [_vm._v("\n                        " + _vm._s(aver) + "日\n                        "), _c('span', {
-      directives: [{
-        name: "show",
-        rawName: "v-show",
-        value: (_vm.averLineStatus['aver' + aver]),
-        expression: "averLineStatus['aver'+aver]"
-      }],
-      staticClass: "iconfont icon-wancheng fn-fr"
-    })])
-  }))])], 1)]), _vm._v(" "), _c('p', {
-    attrs: {
-      "id": "count"
-    }
-  }), _vm._v(" "), _c('vDialog', {
-    attrs: {
-      "show": _vm.showDialog,
-      "close": function () {
-        _vm.showDialog = false
-      }
-    }
-  }, [_c('div', {
-    staticClass: "dialog_wraper"
-  }, [_c('vInput', [_c('textarea', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.comment),
-      expression: "comment"
-    }],
-    attrs: {
-      "cols": "30",
-      "placeholder": "请输入自选备注",
-      "rows": "10"
-    },
-    domProps: {
-      "value": (_vm.comment)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.comment = $event.target.value
-      }
-    }
-  })]), _vm._v(" "), _c('Btn', {
-    attrs: {
-      "label": '确定',
-      "click": function () {
-        _vm.addZixuan(_vm.code)
-      },
-      "type": 'red'
-    }
-  })], 1)])], 1)
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-loader/node_modules/vue-hot-reload-api").rerender("data-v-79771185", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ 64:
-/***/ (function(module, exports, __webpack_require__) {
-
-var __vue_exports__, __vue_options__
-var __vue_styles__ = {}
-
-/* styles */
-__webpack_require__(99)
-
-/* script */
-__vue_exports__ = __webpack_require__(86)
-
-/* template */
-var __vue_template__ = __webpack_require__(106)
+var __vue_template__ = __webpack_require__(98)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -337,7 +49,7 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 65:
+/***/ 56:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -371,7 +83,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 66:
+/***/ 57:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -403,10 +115,10 @@ exports.default = {
 
 /***/ }),
 
-/***/ 67:
+/***/ 58:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(1)();
+exports = module.exports = __webpack_require__(2)();
 // imports
 
 
@@ -418,10 +130,10 @@ exports.push([module.i, "\n.btn[data-v-2234bd28], .red[data-v-2234bd28], .blue[d
 
 /***/ }),
 
-/***/ 68:
+/***/ 59:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(1)();
+exports = module.exports = __webpack_require__(2)();
 // imports
 
 
@@ -433,16 +145,16 @@ exports.push([module.i, "\n@charset \"UTF-8\";\n/**带边框的输入框**/\n.in
 
 /***/ }),
 
-/***/ 69:
+/***/ 60:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(67);
+var content = __webpack_require__(58);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
-var update = __webpack_require__(2)(content, {});
+var update = __webpack_require__(7)(content, {});
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -460,16 +172,16 @@ if(false) {
 
 /***/ }),
 
-/***/ 70:
+/***/ 61:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(68);
+var content = __webpack_require__(59);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
-var update = __webpack_require__(2)(content, {});
+var update = __webpack_require__(7)(content, {});
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -487,20 +199,20 @@ if(false) {
 
 /***/ }),
 
-/***/ 71:
+/***/ 62:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = {}
 
 /* styles */
-__webpack_require__(69)
+__webpack_require__(60)
 
 /* script */
-__vue_exports__ = __webpack_require__(65)
+__vue_exports__ = __webpack_require__(56)
 
 /* template */
-var __vue_template__ = __webpack_require__(73)
+var __vue_template__ = __webpack_require__(64)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -536,20 +248,20 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 72:
+/***/ 63:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = {}
 
 /* styles */
-__webpack_require__(70)
+__webpack_require__(61)
 
 /* script */
-__vue_exports__ = __webpack_require__(66)
+__vue_exports__ = __webpack_require__(57)
 
 /* template */
-var __vue_template__ = __webpack_require__(74)
+var __vue_template__ = __webpack_require__(65)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -585,7 +297,7 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 73:
+/***/ 64:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -614,7 +326,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 74:
+/***/ 65:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -632,7 +344,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 81:
+/***/ 72:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -683,7 +395,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 86:
+/***/ 77:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -736,27 +448,27 @@ var _createClass = function () { function defineProperties(target, props) { for 
 //
 //
 
-var _Dialog = __webpack_require__(101);
+var _Dialog = __webpack_require__(93);
 
 var _Dialog2 = _interopRequireDefault(_Dialog);
 
-var _Input = __webpack_require__(72);
+var _Input = __webpack_require__(63);
 
 var _Input2 = _interopRequireDefault(_Input);
 
-var _Btn = __webpack_require__(71);
+var _Btn = __webpack_require__(62);
 
 var _Btn2 = _interopRequireDefault(_Btn);
 
-var _vuex = __webpack_require__(18);
+var _vuex = __webpack_require__(17);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var isLowOpenAndHighClose = __webpack_require__(88);
-var calProfitFromOneDay = __webpack_require__(87);
-var calAverageLineData = __webpack_require__(17);
+var isLowOpenAndHighClose = __webpack_require__(80);
+var calProfitFromOneDay = __webpack_require__(79);
+var calAverageLineData = __webpack_require__(78);
 var averLineColor = {
     _5: "#fafafa",
     _10: "#f5fd00",
@@ -1216,7 +928,7 @@ var drawKLine = function () {
 
 /***/ }),
 
-/***/ 87:
+/***/ 79:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1279,7 +991,7 @@ function calRate(i, days, historyData) {
 
 /***/ }),
 
-/***/ 88:
+/***/ 80:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1345,10 +1057,10 @@ module.exports = isLowOpenAndHignClose;
 
 /***/ }),
 
-/***/ 91:
+/***/ 83:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(1)();
+exports = module.exports = __webpack_require__(2)();
 // imports
 
 
@@ -1360,10 +1072,10 @@ exports.push([module.i, "\n.shade[data-v-30bec232] {\n  width: 100%;\n  height: 
 
 /***/ }),
 
-/***/ 93:
+/***/ 85:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(1)();
+exports = module.exports = __webpack_require__(2)();
 // imports
 
 
@@ -1375,16 +1087,16 @@ exports.push([module.i, "\n.strategy_title[data-v-79771185] {\n  text-align: cen
 
 /***/ }),
 
-/***/ 97:
+/***/ 89:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(91);
+var content = __webpack_require__(83);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
-var update = __webpack_require__(2)(content, {});
+var update = __webpack_require__(7)(content, {});
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -1402,16 +1114,16 @@ if(false) {
 
 /***/ }),
 
-/***/ 99:
+/***/ 91:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(93);
+var content = __webpack_require__(85);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
-var update = __webpack_require__(2)(content, {});
+var update = __webpack_require__(7)(content, {});
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -1425,6 +1137,294 @@ if(false) {
 	}
 	// When the module is disposed, remove the <style> tags
 	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ 93:
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = {}
+
+/* styles */
+__webpack_require__(89)
+
+/* script */
+__vue_exports__ = __webpack_require__(72)
+
+/* template */
+var __vue_template__ = __webpack_require__(96)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "/Users/wangyu/github/projects/stocks/src/components/Dialog/Dialog.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-30bec232"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-loader/node_modules/vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-30bec232", __vue_options__)
+  } else {
+    hotAPI.reload("data-v-30bec232", __vue_options__)
+  }
+})()}
+if (__vue_options__.functional) {console.error("[vue-loader] Dialog.vue: functional components are not supported and should be defined in plain js files using render functions.")}
+
+module.exports = __vue_exports__
+
+
+/***/ }),
+
+/***/ 96:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('transition', {
+    attrs: {
+      "name": "fade1"
+    }
+  }, [_c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.showStatus),
+      expression: "showStatus"
+    }],
+    staticClass: "shade",
+    on: {
+      "click": _vm.closeSelf
+    }
+  })]), _vm._v(" "), _c('transition', {
+    attrs: {
+      "name": "bounce"
+    }
+  }, [_c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.showStatus),
+      expression: "showStatus"
+    }],
+    staticClass: "dialog"
+  }, [_c('span', {
+    staticClass: "close",
+    on: {
+      "click": _vm.closeSelf
+    }
+  }), _vm._v(" "), _vm._t("default")], 2)])], 1)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-loader/node_modules/vue-hot-reload-api").rerender("data-v-30bec232", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ 98:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('p', {
+    staticClass: "title_desc"
+  }, [_c('span', {
+    domProps: {
+      "textContent": _vm._s(_vm.code)
+    }
+  }), _vm._v(" "), _c('span', {
+    domProps: {
+      "textContent": _vm._s(_vm.historyData.name)
+    }
+  }), _vm._v(" "), _c('span', {
+    domProps: {
+      "textContent": _vm._s(_vm.start)
+    }
+  }), _vm._v("至"), _c('span', {
+    domProps: {
+      "textContent": _vm._s(_vm.end)
+    }
+  }), _vm._v(" "), (!_vm.zixuan[_vm.code]) ? _c('span', {
+    staticClass: "iconfont icon-tianjia search",
+    on: {
+      "click": _vm.clickAddZixuan
+    }
+  }, [_vm._v("加入自选")]) : _vm._e(), _vm._v(" "), (_vm.zixuan[_vm.code]) ? _c('span', {
+    on: {
+      "click": function($event) {
+        _vm.clickAddZixuan(_vm.code)
+      }
+    }
+  }, [_vm._v("添加备注")]) : _vm._e()]), _vm._v(" "), _c('div', {
+    staticClass: "svgWraper",
+    attrs: {
+      "id": "svgWraper"
+    }
+  }, [_c('svg', {
+    ref: "svg",
+    staticClass: "svg",
+    attrs: {
+      "preserveAspectRatio": "none",
+      "xmlns": "http://www.w3.org/2000/svg"
+    },
+    on: {
+      "click": _vm.resetStatus
+    }
+  }, [_c('polyline', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.averLineStatus.aver5),
+      expression: "averLineStatus.aver5"
+    }],
+    attrs: {
+      "id": "aver5"
+    }
+  }), _vm._v(" "), _c('polyline', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.averLineStatus.aver10),
+      expression: "averLineStatus.aver10"
+    }],
+    attrs: {
+      "id": "aver10"
+    }
+  }), _vm._v(" "), _c('polyline', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.averLineStatus.aver20),
+      expression: "averLineStatus.aver20"
+    }],
+    attrs: {
+      "id": "aver20"
+    }
+  }), _vm._v(" "), _c('polyline', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.averLineStatus.aver30),
+      expression: "averLineStatus.aver30"
+    }],
+    attrs: {
+      "id": "aver30"
+    }
+  }), _vm._v(" "), _c('polyline', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.averLineStatus.aver60),
+      expression: "averLineStatus.aver60"
+    }],
+    attrs: {
+      "id": "aver60"
+    }
+  })]), _vm._v(" "), _c('ul', {
+    staticClass: "average_set_ul"
+  }, [_c('p', {
+    on: {
+      "click": _vm.toggleAverageSettingStatus
+    }
+  }, [_vm._v("均线设置")]), _vm._v(" "), _c('transition', {
+    attrs: {
+      "name": "scaleY"
+    }
+  }, [_c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.show_average_settings),
+      expression: "show_average_settings"
+    }]
+  }, _vm._l(([5, 10, 20, 30, 60]), function(aver) {
+    return _c('li', {
+      class: {
+        selected: _vm.averLineStatus['aver' + aver]
+      },
+      style: ({
+        color: _vm.averLineColor['_' + aver]
+      }),
+      on: {
+        "click": function () {
+          _vm.setLineStatus(aver)
+        }
+      }
+    }, [_vm._v("\n                        " + _vm._s(aver) + "日\n                        "), _c('span', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: (_vm.averLineStatus['aver' + aver]),
+        expression: "averLineStatus['aver'+aver]"
+      }],
+      staticClass: "iconfont icon-wancheng fn-fr"
+    })])
+  }))])], 1)]), _vm._v(" "), _c('p', {
+    attrs: {
+      "id": "count"
+    }
+  }), _vm._v(" "), _c('vDialog', {
+    attrs: {
+      "show": _vm.showDialog,
+      "close": function () {
+        _vm.showDialog = false
+      }
+    }
+  }, [_c('div', {
+    staticClass: "dialog_wraper"
+  }, [_c('vInput', [_c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.comment),
+      expression: "comment"
+    }],
+    attrs: {
+      "cols": "30",
+      "placeholder": "请输入自选备注",
+      "rows": "10"
+    },
+    domProps: {
+      "value": (_vm.comment)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.comment = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('Btn', {
+    attrs: {
+      "label": '确定',
+      "click": function () {
+        _vm.addZixuan(_vm.code)
+      },
+      "type": 'red'
+    }
+  })], 1)])], 1)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-loader/node_modules/vue-hot-reload-api").rerender("data-v-79771185", module.exports)
+  }
 }
 
 /***/ })

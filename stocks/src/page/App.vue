@@ -67,6 +67,7 @@
     import Stocks from "@/components/Stocks/Stocks.vue";
     const FastClick = require('fastclick');
     const calAverageLineData=require("utils/calAverageLineData.js");
+    import {mapGetters,mapActions} from 'vuex'
 
     window.onload=function(){
         FastClick.attach(document.body);
@@ -80,10 +81,13 @@
                 count9:0,
                 count12:0,
                 curDir:'bottom',
-                zixuan:this.$store.state.zixuan
             }
         },
         computed:{
+            ...mapGetters([
+                'zixuan',
+                'user'
+            ]),
             showStocks(){
                 return this.$store.state.stocksIsPlain;
             }
@@ -111,7 +115,11 @@
 
         },
         mounted(){
+            if(this.user){
+                this.$http.get(`/api/online?user=${this.user}`).then((res)=>{
 
+                });
+            }
         },
         components:{
             Stocks

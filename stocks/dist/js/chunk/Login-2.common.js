@@ -1,88 +1,19 @@
 webpackJsonp([2],{
 
-/***/ 103:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "wrap"
-  }, [_c('vInput', [_c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.username),
-      expression: "username"
-    }],
-    attrs: {
-      "placeholder": "请输入账户名"
-    },
-    domProps: {
-      "value": (_vm.username)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.username = $event.target.value
-      }
-    }
-  })]), _vm._v(" "), _c('vInput', [_c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.password),
-      expression: "password"
-    }],
-    attrs: {
-      "placeholder": "请输入密码"
-    },
-    domProps: {
-      "value": (_vm.password)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.password = $event.target.value
-      }
-    }
-  })]), _vm._v(" "), _c('p', {
-    staticClass: "login_row"
-  }, [_c('router-link', {
-    attrs: {
-      "tag": "span",
-      "to": "/register"
-    }
-  }, [_vm._v("没有账号？立即注册")])], 1), _vm._v(" "), _c('Btn', {
-    attrs: {
-      "label": '登录',
-      "click": _vm.doLogin,
-      "type": 'red'
-    }
-  })], 1)
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-loader/node_modules/vue-hot-reload-api").rerender("data-v-2754bac5", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ 61:
+/***/ 52:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = {}
 
 /* styles */
-__webpack_require__(96)
+__webpack_require__(88)
 
 /* script */
-__vue_exports__ = __webpack_require__(83)
+__vue_exports__ = __webpack_require__(74)
 
 /* template */
-var __vue_template__ = __webpack_require__(103)
+var __vue_template__ = __webpack_require__(95)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -118,7 +49,7 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 65:
+/***/ 56:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -152,7 +83,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 66:
+/***/ 57:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -184,10 +115,10 @@ exports.default = {
 
 /***/ }),
 
-/***/ 67:
+/***/ 58:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(1)();
+exports = module.exports = __webpack_require__(2)();
 // imports
 
 
@@ -199,10 +130,10 @@ exports.push([module.i, "\n.btn[data-v-2234bd28], .red[data-v-2234bd28], .blue[d
 
 /***/ }),
 
-/***/ 68:
+/***/ 59:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(1)();
+exports = module.exports = __webpack_require__(2)();
 // imports
 
 
@@ -214,16 +145,16 @@ exports.push([module.i, "\n@charset \"UTF-8\";\n/**带边框的输入框**/\n.in
 
 /***/ }),
 
-/***/ 69:
+/***/ 60:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(67);
+var content = __webpack_require__(58);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
-var update = __webpack_require__(2)(content, {});
+var update = __webpack_require__(7)(content, {});
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -241,16 +172,16 @@ if(false) {
 
 /***/ }),
 
-/***/ 70:
+/***/ 61:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(68);
+var content = __webpack_require__(59);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
-var update = __webpack_require__(2)(content, {});
+var update = __webpack_require__(7)(content, {});
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -268,20 +199,20 @@ if(false) {
 
 /***/ }),
 
-/***/ 71:
+/***/ 62:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = {}
 
 /* styles */
-__webpack_require__(69)
+__webpack_require__(60)
 
 /* script */
-__vue_exports__ = __webpack_require__(65)
+__vue_exports__ = __webpack_require__(56)
 
 /* template */
-var __vue_template__ = __webpack_require__(73)
+var __vue_template__ = __webpack_require__(64)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -317,20 +248,20 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 72:
+/***/ 63:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = {}
 
 /* styles */
-__webpack_require__(70)
+__webpack_require__(61)
 
 /* script */
-__vue_exports__ = __webpack_require__(66)
+__vue_exports__ = __webpack_require__(57)
 
 /* template */
-var __vue_template__ = __webpack_require__(74)
+var __vue_template__ = __webpack_require__(65)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -366,7 +297,7 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 73:
+/***/ 64:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -395,7 +326,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 74:
+/***/ 65:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -413,7 +344,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 83:
+/***/ 74:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -423,11 +354,11 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _Input = __webpack_require__(72);
+var _Input = __webpack_require__(63);
 
 var _Input2 = _interopRequireDefault(_Input);
 
-var _Btn = __webpack_require__(71);
+var _Btn = __webpack_require__(62);
 
 var _Btn2 = _interopRequireDefault(_Btn);
 
@@ -496,10 +427,10 @@ exports.default = {
 
 /***/ }),
 
-/***/ 90:
+/***/ 82:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(1)();
+exports = module.exports = __webpack_require__(2)();
 // imports
 
 
@@ -511,16 +442,16 @@ exports.push([module.i, "\n.wrap[data-v-2754bac5] {\n  padding: 0.6rem 0.3rem;\n
 
 /***/ }),
 
-/***/ 96:
+/***/ 88:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(90);
+var content = __webpack_require__(82);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
-var update = __webpack_require__(2)(content, {});
+var update = __webpack_require__(7)(content, {});
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -534,6 +465,75 @@ if(false) {
 	}
 	// When the module is disposed, remove the <style> tags
 	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ 95:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "wrap"
+  }, [_c('vInput', [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.username),
+      expression: "username"
+    }],
+    attrs: {
+      "placeholder": "请输入账户名"
+    },
+    domProps: {
+      "value": (_vm.username)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.username = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('vInput', [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.password),
+      expression: "password"
+    }],
+    attrs: {
+      "placeholder": "请输入密码"
+    },
+    domProps: {
+      "value": (_vm.password)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.password = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('p', {
+    staticClass: "login_row"
+  }, [_c('router-link', {
+    attrs: {
+      "tag": "span",
+      "to": "/register"
+    }
+  }, [_vm._v("没有账号？立即注册")])], 1), _vm._v(" "), _c('Btn', {
+    attrs: {
+      "label": '登录',
+      "click": _vm.doLogin,
+      "type": 'red'
+    }
+  })], 1)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-loader/node_modules/vue-hot-reload-api").rerender("data-v-2754bac5", module.exports)
+  }
 }
 
 /***/ })
