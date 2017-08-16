@@ -10,6 +10,7 @@ let register =require("./controllers/api/register.js");
 let login =require("./controllers/api/login.js");
 let online =require("./controllers/api/online.js");
 let addZixuan =require("./controllers/api/addZixuan.js");
+let getZixuan =require("./controllers/api/getZixuan.js");
 
 let getYMDHMS =require("./utils/getYMDHMS.js") ;
 let apiDIY =require('./controllers/apiDIY.js');
@@ -46,6 +47,11 @@ route.get("/api/online",async function(req,res,error){
 route.get("/api/addZixuan",async function(req,res,error){
     let query=req.query;
     let result=await addZixuan(query);
+    res.json(result);
+});
+route.get("/api/getZixuan",async function(req,res,error){
+    let query=req.query;
+    let result=await getZixuan(query);
     res.json(result);
 });
 route.get("/api/getAllCodes",async function(req,res,error){

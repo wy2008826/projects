@@ -2,9 +2,6 @@
  * Created by wangyu on 17/8/15.
  */
 
-/**
- * Created by wangyu on 17/8/15.
- */
 
 const UserModel=require("../../../models/user.js");
 

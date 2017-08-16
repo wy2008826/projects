@@ -57,12 +57,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       domProps: {
         "textContent": _vm._s(_vm.zixuan[code].time.split(' ')[0])
       }
-    })]), _vm._v(" "), _c('p', _vm._l((_vm.zixuan[code].comments), function(comment) {
-      return _c('label', {
+    })]), _vm._v(" "), _c('div', _vm._l((_vm.zixuan[code].comments), function(comment) {
+      return _c('p', [_c('span', {
         domProps: {
-          "textContent": _vm._s(comment)
+          "textContent": _vm._s(comment.comment)
         }
-      })
+      }), _vm._v(" "), _c('span', {
+        domProps: {
+          "textContent": _vm._s(comment.time)
+        }
+      })])
     }))])
   })], 2)])], 1)
 },staticRenderFns: []}
@@ -516,59 +520,77 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 var _Loading = __webpack_require__(77);
 
 var _Loading2 = _interopRequireDefault(_Loading);
+
+var _vuex = __webpack_require__(8);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
     data: function data() {
         return {
-            zixuan: this.$store.state.zixuan,
+            zixuan: {
+                lists: []
+            },
             loading: true
         };
     },
-    computed: {},
+    computed: _extends({}, (0, _vuex.mapGetters)(['user'])),
     methods: {},
     created: function created() {
-        var self = this;
-        console.log(this.zixuan);
-        this.loading = false;
+        var _this = this;
+
+        if (this.user) {
+            this.$http.get('/api/getZixuan?user=' + this.user).then(function (res) {
+                var body = res.body;
+
+                _this.zixuan = body.zixuan;
+
+                _this.loading = false;
+            });
+        }
     },
     mounted: function mounted() {},
 
     components: {
         Loading: _Loading2.default
     }
-}; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+};
 
 /***/ }),
 

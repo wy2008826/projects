@@ -17,9 +17,12 @@
                         <span class="code" v-text="code"></span>
                         <span class="time" v-text="zixuan[code].time.split(' ')[0]"></span>
                     </p>
-                    <p>
-                        <label  v-text="comment" v-for="comment in zixuan[code].comments"></label>
-                    </p>
+                    <div>
+                        <p v-for="comment in zixuan[code].comments">
+                            <span v-text="comment.comment"></span>
+                            <span v-text="comment.time"></span>
+                        </p>
+                    </div>
                 </router-link>
             </ul>
         </transition>
@@ -29,20 +32,33 @@
 <script type="text/babel">
 
     import Loading from "@/components/Loading/Loading.vue";
+    import {mapGetters,mapActions} from 'vuex'
 
     export default {
         data: function () {
             return {
-                zixuan:this.$store.state.zixuan,
+                zixuan:{
+                    lists:[]
+                },
                 loading:true,
             }
         },
-        computed: {},
+        computed: {
+            ...mapGetters([
+                'user'
+            ])
+        },
         methods: {},
         created(){
-            let self = this;
-            console.log(this.zixuan);
-            this.loading=false;
+            if(this.user){
+                this.$http.get(`/api/getZixuan?user=${this.user}`).then((res)=>{
+                    let {body}=res;
+                    this.zixuan=body.zixuan;
+
+                    this.loading=false;
+                })
+            }
+
         },
         mounted(){
 
