@@ -4,7 +4,8 @@ var http=require("http");
 var express=require("express");
 var hbs=require("hbs");
 var mongoose=require("mongoose");
-mongoose.connect("127.0.0.1:27017/stock");
+mongoose.connect("mongodb://wangyu:wangyu@127.0.0.1:27017/admin");//需要先认证
+mongoose.connect("mongodb://wangyu:wangyu@127.0.0.1:27017/stock");
 
 var app=express();
 let schedule = require("node-schedule");//定时任务
