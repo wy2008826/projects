@@ -57,7 +57,7 @@ async function all(){
 	// testChangeStockDta();
     // await crawIps();
 
-    await crawAllSlotsAndSearchOneDayT();//抓取数据
+    // await crawAllSlotsAndSearchOneDayT();//抓取数据
     // await crawHistoryDataAll();//抓取所有股票的历史数据
     // await writeApiResultsFiles();
 

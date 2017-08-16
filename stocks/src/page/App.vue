@@ -93,6 +93,9 @@
             }
         },
         methods:{
+            ...mapActions([
+                'login'
+            ]),
             toggleStocks:function(){
                 this.$store.dispatch("toggleStocks",!this.showStocks);
             },
@@ -117,7 +120,10 @@
         mounted(){
             if(this.user){
                 this.$http.get(`/api/online?user=${this.user}`).then((res)=>{
-
+                    if(!res.body.r){
+                        localStorage.setItem('user','');
+                        this.login('');
+                    }
                 });
             }
         },
