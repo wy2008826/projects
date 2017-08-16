@@ -45,6 +45,7 @@
                 }
                 if(this.password!=this.password1){
                     alert('两次密码不一致！');
+                    return;
                 }
 
                 this.$http.get(`/api/register?username=${this.username}&password=${this.password}`).then((res)=>{
