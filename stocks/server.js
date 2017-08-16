@@ -4,8 +4,8 @@ var http=require("http");
 var express=require("express");
 var hbs=require("hbs");
 var mongoose=require("mongoose");
-mongoose.connect("mongodb://wangyu:wangyu@127.0.0.1:27017/admin");//需要先认证
-mongoose.connect("mongodb://wangyu:wangyu@127.0.0.1:27017/stock");
+mongoose.connect("mongodb://wangyu:wangyu@127.0.0.1:27017/admin");
+
 
 var app=express();
 let schedule = require("node-schedule");//定时任务
@@ -57,7 +57,7 @@ async function all(){
 	// testChangeStockDta();
     // await crawIps();
 
-    // await crawAllSlotsAndSearchOneDayT();//抓取数据
+    await crawAllSlotsAndSearchOneDayT();//抓取数据
     // await crawHistoryDataAll();//抓取所有股票的历史数据
     // await writeApiResultsFiles();
 

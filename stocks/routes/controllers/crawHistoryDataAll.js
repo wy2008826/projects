@@ -6,7 +6,6 @@ let crawHistoryDataOneFrom163=require("./crawHistoryDataOneFrom163.js");
 var mongoose=require("mongoose");
 
 var StockModel=require("../../models/stock.js");
-mongoose.connect("127.0.0.1:27017/stock");
 
 //使用process.nextTick()可以避免console过多导致的内存崩溃
 
