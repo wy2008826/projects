@@ -153,9 +153,9 @@
             this.averageData=calAverageLineData(this.data);
             this.length=data.length;
             this.barCount=data.length;
-            this.barSize=5;
+            this.barSize=8;
             this.strokeWidth=1;
-            this.barGap=6;
+            this.barGap=10;
             this.topSpace=0;
             this.bottomSpace=0;
             this.rightSpace=30;
@@ -171,7 +171,7 @@
             this.draw();
             this.drawAverage();
 
-            let start=this.length-50>=0?this.length-50:0;
+            let start=this.length-60>=0?this.length-60:0;
             this.start=start;
             this.end=this.length;
 
