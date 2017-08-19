@@ -119,7 +119,7 @@
         },
         mounted(){
             if(this.user){
-                this.$http.get(`/api/online?user=${this.user}`).then((res)=>{
+                this.$http.get(`/api/online?user=${this.user}&ua=${window.navigator.appVersion}`).then((res)=>{
                     if(!res.body.r){
                         localStorage.setItem('user','');
                         this.login('');

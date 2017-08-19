@@ -1,13 +1,13 @@
-//schema的文件名会默认为数据库的表名
+/**
+ * Created by wangyu on 17/8/19.
+ */
 
-var mongoose=require("mongoose");
-var UserSchema=new mongoose.Schema({//注意各种数据的格式  数组怎么定义呢
+
+let mongoose=require("mongoose");
+let VisitorSchema=new mongoose.Schema({
     id: mongoose.Schema.Types.ObjectId,
-    username:String,
-    password:String,
-    zixuan:mongoose.Schema.Types.Mixed,
-    online:Array,
-    ua:String,
+    ua:Array,
+    own:String,
     meta:{
         createAt:{
             type:Date,
@@ -21,7 +21,7 @@ var UserSchema=new mongoose.Schema({//注意各种数据的格式  数组怎么�
 });
 
 
-UserSchema.pre('save',function(next){//添加事件
+VisitorSchema.pre('save',function(next){//添加事件
     if(this.isNew){
         this.meta.createAt=this.meta.updateAt=Date.now();
     }
@@ -34,4 +34,4 @@ UserSchema.pre('save',function(next){//添加事件
 
 
 
-module.exports=UserSchema;
+module.exports=VisitorSchema;

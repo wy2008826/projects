@@ -4,10 +4,11 @@
 
 const UserModel=require("../../../models/user.js");
 let getYMDHMS=require('../../utils/getYMDHMS.js');
+let addVisitor = require('./addVisitor.js');
 
 module.exports=async function(req_query){
     return new Promise(async function(resolve,reject){
-        let {user}=req_query;
+        let {user,ua}=req_query;
 
         let Query=UserModel.findOne({username:user});
         Query.exec(function(err,User){
@@ -36,11 +37,13 @@ module.exports=async function(req_query){
                     if(User.online.length>10){
                         User.online.pop();
                     }
-                    UserModel.update({username:user},User,function(err){
+                    User.ua=ua;
+                    UserModel.update({username:user},User,async function(err){
                         if(err){
                             reject(err);
                         }else{
                             console.log(`${user} 上线记录成功`)
+                            await addVisitor({ua,time});
                             resolve({
                                 r:true,
                                 time,
@@ -61,3 +64,4 @@ module.exports=async function(req_query){
 function fullNum(num){
     return num<10?'0'+num:num;
 }
+
