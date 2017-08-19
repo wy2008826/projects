@@ -5,6 +5,7 @@ let crawHistoryDataOneFrom163=require("./crawHistoryDataOneFrom163.js");
 
 var mongoose=require("mongoose");
 
+
 var StockModel=require("../../models/stock.js");
 
 //使用process.nextTick()可以避免console过多导致的内存崩溃
@@ -15,8 +16,8 @@ let sleep=require('../utils/sleep.js');
 //从数据库中查找股票的历史数据，按照历史数据最近一次的日期进行历史数据查询  完善数据库历史数据记录
 module.exports=async function(){
 	let begain=new Date();
+	console.log('begain craw history data all');
 	return new Promise(async function(resolve,reject){
-
 		let Query=StockModel.find({},["code"]);
 		let codes;
 		let count=await Query.then(function(docs){
@@ -24,7 +25,7 @@ module.exports=async function(){
 			return docs.length||0;
 		});
 		if(!count){
-			reject("find local database error");
+			resolve("find local database error");
 		}else{
 			for(let i=0;i<count;i++){//需要对数据进行拆分，不然会导致内存泄漏
 				let query=StockModel.findOne({code:codes[i].code});
@@ -33,7 +34,7 @@ module.exports=async function(){
 			let end=new Date();
 			let minutes=( (end-begain) / (1000 * 60 ) );
 			console.log(`loaded all historyData 😊 !!! 共耗时 ${minutes} 分钟`);
-			resolve();
+			resolve(true);
 		}
 
 
@@ -62,9 +63,11 @@ function crawCode(query){
 				// await crawHistoryDataOne(code,start);
                 await crawHistoryDataOneFrom163(code,area,start);
 				await sleep(4000);
-				resolve();
+				resolve(true);
 			}
 		});
+	}).catch(function(){
+		console.log('craw code error!');
 	});
 }
 

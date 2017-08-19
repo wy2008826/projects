@@ -81,6 +81,8 @@ async function crawHistory(code,area,start,end){
             }
         })
 
+    }).catch(function(){
+        console.log(`craw historyData ${code} fail`)
     });
 }
 
