@@ -5,25 +5,21 @@
         <transition name="fade">
             <ul class="clearfix strategy_ul" v-show="!loading&&zixuan.lists.length">
                 <li class="stock head text-center">
-                    <p >名称／代码 &#8645</p>
-                    <p>备注</p>
+                    <p >名称 &#8645</p>
+                    <div>备注</div>
                 </li>
-                <router-link tag="li"
-                             class="stock text-center"
-                             :to="'/detail/'+code"
-                             v-for="(code,index) in zixuan.lists">
-                    <p >
+                <li class="stock text-center" v-for="(code,index) in zixuan.lists">
+                    <router-link tag="p" :to="'/detail/'+code">
                         <span class="name" v-text="zixuan[code].name"></span>
                         <span class="code" v-text="code"></span>
                         <span class="time" v-text="zixuan[code].time.split(' ')[0]"></span>
-                    </p>
-                    <div>
+                    </router-link>
+                    <div class="desc" @click="showComments($event,code)">
                         <p v-for="comment in zixuan[code].comments">
-                            <span v-text="comment.comment"></span>
-                            <span v-text="comment.time"></span>
+                            <span class="comment" v-text="comment.comment"></span>
                         </p>
                     </div>
-                </router-link>
+                </li>
             </ul>
         </transition>
     </div>
@@ -48,7 +44,12 @@
                 'user'
             ])
         },
-        methods: {},
+        methods: {
+            showComments(e,code){
+                e.preventDefault();
+                alert(code);
+            }
+        },
         created(){
             if(this.user){
                 this.$http.get(`/api/getZixuan?user=${this.user}`).then((res)=>{
@@ -105,9 +106,14 @@
             background-color: #0d0c12;
             color:#646464;
         }
-        p{
+        >p{
             flex:1;
             line-height: 0.3rem;
+        }
+        >div{
+            line-height: 0.3rem;
+            flex:2;
+            text-align: left;
         }
         .name{
             font-size:0.28rem;
@@ -122,6 +128,16 @@
         .time{
             color:#606060;
             font-size:0.26rem;
+        }
+        .desc{
+            color:#f93;
+            .comment{
+                font-size: 0.28rem;
+            }
+            .time{
+                font-size: 0.2rem;
+                color:#f9f9f9;
+            }
         }
     }
     .label{

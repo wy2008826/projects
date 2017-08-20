@@ -68,6 +68,9 @@ var mutations={
         });
 
     },
+    SET_ZIXUAN(state,payload){
+        state.zixuan=payload;
+    },
     DO_LOGIN(state,payload){
         state.user=payload||'';
         localStorage.setItem('user',payload||'')
@@ -87,6 +90,9 @@ var actions={
     },
     addZixuan(context,payload){
         context.commit('ADD_ZIXUAN',payload);
+    },
+    setZixuan(context,payload){
+        context.commit('SET_ZIXUAN',payload);
     },
     login(context,payload){
         context.commit('DO_LOGIN',payload);

@@ -35,14 +35,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "clearfix strategy_ul"
   }, [_c('li', {
     staticClass: "stock head text-center"
-  }, [_c('p', [_vm._v("名称／代码 ⇅")]), _vm._v(" "), _c('p', [_vm._v("备注")])]), _vm._v(" "), _vm._l((_vm.zixuan.lists), function(code, index) {
-    return _c('router-link', {
-      staticClass: "stock text-center",
+  }, [_c('p', [_vm._v("名称 ⇅")]), _vm._v(" "), _c('div', [_vm._v("备注")])]), _vm._v(" "), _vm._l((_vm.zixuan.lists), function(code, index) {
+    return _c('li', {
+      staticClass: "stock text-center"
+    }, [_c('router-link', {
       attrs: {
-        "tag": "li",
+        "tag": "p",
         "to": '/detail/' + code
       }
-    }, [_c('p', [_c('span', {
+    }, [_c('span', {
       staticClass: "name",
       domProps: {
         "textContent": _vm._s(_vm.zixuan[code].name)
@@ -57,17 +58,21 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       domProps: {
         "textContent": _vm._s(_vm.zixuan[code].time.split(' ')[0])
       }
-    })]), _vm._v(" "), _c('div', _vm._l((_vm.zixuan[code].comments), function(comment) {
+    })]), _vm._v(" "), _c('div', {
+      staticClass: "desc",
+      on: {
+        "click": function($event) {
+          _vm.showComments($event, code)
+        }
+      }
+    }, _vm._l((_vm.zixuan[code].comments), function(comment) {
       return _c('p', [_c('span', {
+        staticClass: "comment",
         domProps: {
           "textContent": _vm._s(comment.comment)
         }
-      }), _vm._v(" "), _c('span', {
-        domProps: {
-          "textContent": _vm._s(comment.time)
-        }
       })])
-    }))])
+    }))], 1)
   })], 2)])], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
@@ -547,10 +552,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
-//
 
 
 var _Loading = __webpack_require__(77);
@@ -571,7 +572,12 @@ exports.default = {
         };
     },
     computed: _extends({}, (0, _vuex.mapGetters)(['user'])),
-    methods: {},
+    methods: {
+        showComments: function showComments(e, code) {
+            e.preventDefault();
+            alert(code);
+        }
+    },
     created: function created() {
         var _this = this;
 
@@ -602,7 +608,7 @@ exports = module.exports = __webpack_require__(1)();
 
 
 // module
-exports.push([module.i, "\n.no_lists[data-v-18bdbe26] {\n  font-size: 0.24rem;\n  line-height: 2rem;\n  color: #666;\n  text-align: center;\n}\n.strategy_ul[data-v-18bdbe26] {\n  background-color: #090a0a;\n}\n.strategy_ul li.high[data-v-18bdbe26] {\n    background-color: #FF7256;\n}\n.strategy_ul li.low[data-v-18bdbe26] {\n    background-color: #98FB98;\n}\n.strategy_ul li.tupo[data-v-18bdbe26] {\n    background-color: #f93;\n}\n.strategy_ul li.diepo[data-v-18bdbe26] {\n    background-color: #3f3;\n}\n.stock[data-v-18bdbe26] {\n  line-height: 0.6rem;\n  padding: 0.15rem 0;\n  display: flex;\n  border-bottom: 0.011rem solid #1c1922;\n}\n.stock.head[data-v-18bdbe26] {\n    background-color: #0d0c12;\n    color: #646464;\n}\n.stock p[data-v-18bdbe26] {\n    flex: 1;\n    line-height: 0.3rem;\n}\n.stock .name[data-v-18bdbe26] {\n    font-size: 0.28rem;\n    color: #e9e9e9;\n}\n.stock .code[data-v-18bdbe26] {\n    display: block;\n    margin: 0.07rem 0;\n    color: #606060;\n    font-size: 0.24rem;\n}\n.stock .time[data-v-18bdbe26] {\n    color: #606060;\n    font-size: 0.26rem;\n}\n.label[data-v-18bdbe26] {\n  padding: 0.05rem 0.1rem;\n  border: 1px solid #f93;\n  margin: 0.2rem;\n  display: inline-block;\n}\n", ""]);
+exports.push([module.i, "\n.no_lists[data-v-18bdbe26] {\n  font-size: 0.24rem;\n  line-height: 2rem;\n  color: #666;\n  text-align: center;\n}\n.strategy_ul[data-v-18bdbe26] {\n  background-color: #090a0a;\n}\n.strategy_ul li.high[data-v-18bdbe26] {\n    background-color: #FF7256;\n}\n.strategy_ul li.low[data-v-18bdbe26] {\n    background-color: #98FB98;\n}\n.strategy_ul li.tupo[data-v-18bdbe26] {\n    background-color: #f93;\n}\n.strategy_ul li.diepo[data-v-18bdbe26] {\n    background-color: #3f3;\n}\n.stock[data-v-18bdbe26] {\n  line-height: 0.6rem;\n  padding: 0.15rem 0;\n  display: flex;\n  border-bottom: 0.011rem solid #1c1922;\n}\n.stock.head[data-v-18bdbe26] {\n    background-color: #0d0c12;\n    color: #646464;\n}\n.stock > p[data-v-18bdbe26] {\n    flex: 1;\n    line-height: 0.3rem;\n}\n.stock > div[data-v-18bdbe26] {\n    line-height: 0.3rem;\n    flex: 2;\n    text-align: left;\n}\n.stock .name[data-v-18bdbe26] {\n    font-size: 0.28rem;\n    color: #e9e9e9;\n}\n.stock .code[data-v-18bdbe26] {\n    display: block;\n    margin: 0.07rem 0;\n    color: #606060;\n    font-size: 0.24rem;\n}\n.stock .time[data-v-18bdbe26] {\n    color: #606060;\n    font-size: 0.26rem;\n}\n.stock .desc[data-v-18bdbe26] {\n    color: #f93;\n}\n.stock .desc .comment[data-v-18bdbe26] {\n      font-size: 0.28rem;\n}\n.stock .desc .time[data-v-18bdbe26] {\n      font-size: 0.2rem;\n      color: #f9f9f9;\n}\n.label[data-v-18bdbe26] {\n  padding: 0.05rem 0.1rem;\n  border: 1px solid #f93;\n  margin: 0.2rem;\n  display: inline-block;\n}\n", ""]);
 
 // exports
 

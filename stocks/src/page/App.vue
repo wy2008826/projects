@@ -125,6 +125,11 @@
                         this.login('');
                     }
                 });
+                this.$http.get(`/api/getZixuan?user=${this.user}`).then((res)=>{
+                    let {body}=res;
+                    this.zixuan=body.zixuan;
+
+                })
             }
         },
         components:{
