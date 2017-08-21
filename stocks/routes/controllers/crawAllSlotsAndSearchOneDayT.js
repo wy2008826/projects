@@ -44,7 +44,7 @@ module.exports= async function crawAllSlotsAndSearchOneDayT(needEmail){
 				console.log(`----- save page ${i} 代码列表失败 -------!`);
 			});
 		}
-		await sleep(6000);
+		await sleep(10000);
 	}
 	// await writeCodeFile();
 
@@ -60,25 +60,34 @@ async function crawPage(page,pageSize){
 	console.log("loading "+page);
 	
 	return new Promise(function(resolve,reject){
-		superagent.get(stockUrl).end(function(error,resHtml){
-			if(error){
-				console.log(`-------  load ${page} failed ------- !`);
-				reject(error);
-			}else{
-				console.log("loaded "+page);
-				var text=resHtml.text;
-				var replaceTxt="/*<script>location.href='//sina.com';</script>*/fn(";
 
-				var dataString=text.substring(replaceTxt.length+1,text.lastIndexOf(")"));
-				var stock=JSON.parse(dataString)[0];
-				resolve({
-					day:stock.day,
-					stockArray:stock.items
-				});
-			}
-			
-		});
-	});
+		try{
+            superagent.get(stockUrl).end(function(error,resHtml){
+                if(error){
+                    console.log(`-------  load ${page} failed ------- !`);
+                    resolve(false);
+                }else{
+                    console.log("loaded "+page);
+                    var text=resHtml.text;
+                    var replaceTxt="/*<script>location.href='//sina.com';</script>*/fn(";
+
+                    var dataString=text.substring(replaceTxt.length+1,text.lastIndexOf(")"));
+                    var stock=JSON.parse(dataString)[0];
+                    resolve({
+                        day:stock.day,
+                        stockArray:stock.items
+                    });
+                }
+
+            });
+		}catch(e){
+            console.log('erro');
+			resolve(false)
+		}
+
+	}).catch(function (e) {
+		console.log('catch error');
+    });
 }
 
 
