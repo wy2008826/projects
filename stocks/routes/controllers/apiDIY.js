@@ -88,7 +88,7 @@ function searchOneCode(query,res_query){
                 let code=stock.code;
                 let name=stock.name;
                 if(!stock.historyData){
-                    console.log(code);
+                    // console.log(code);
                     resolve([]);
                     return [];
                 }
@@ -134,7 +134,7 @@ function searchOneCode(query,res_query){
                             }
                         }
 
-                        isSuit && passSuit && laterSuit && console.log(code,name,T, passSuit ,eval('max("vol",5)'),eval('VOL*0.6'));
+                        // isSuit && passSuit && laterSuit && console.log(code,name,T, passSuit ,eval('max("vol",5)'),eval('VOL*0.6'));
                         let {rate3,rate6,rate9,rate12,rate20}=calProfitFromOneDay(i,historyData);
                         if(isSuit && passSuit && laterSuit){
                             suits.push({
