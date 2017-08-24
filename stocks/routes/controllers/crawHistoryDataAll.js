@@ -62,7 +62,7 @@ function crawCode(query){
 				}
 				// await crawHistoryDataOne(code,start);
                 await crawHistoryDataOneFrom163(code,area,start);
-				await sleep(4000);
+				await sleep(2000);
 				resolve(true);
 			}
 		});
