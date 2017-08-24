@@ -35,7 +35,7 @@ var crawRoutes=require("./routes/crawRoutes");//api路由
 
 //每隔半小时更新一次历史数据
 schedule.scheduleJob(timeRules.everyHalfHour,async function(){
-    // await crawAllSlotsAndSearchOneDayT();
+    await crawAllSlotsAndSearchOneDayT();
 });
 
 //每隔5分钟查找一次数据并写入文件，提升查询速度
@@ -48,7 +48,6 @@ schedule.scheduleJob(timeRules.every5Minutes, async function(){
 schedule.scheduleJob(timeRules.excludeWeekends18, async function(){
 	// await crawAllSlotsAndSearchOneDayT();
 	await crawHistoryDataAll();
-    await writeApiResultsFiles();
 });
 
 
