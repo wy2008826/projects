@@ -74,6 +74,8 @@ module.exports=function(_res_query){
             //console.log(suits,suits.length);
             resolve(suits);
         };
+    }).catch(function () {
+        console.log(`${strategyName} 失败！`);
     });
 }
 
