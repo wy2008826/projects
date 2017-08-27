@@ -94,7 +94,8 @@
         },
         methods:{
             ...mapActions([
-                'login'
+                'login',
+                'setZixuan'
             ]),
             toggleStocks:function(){
                 this.$store.dispatch("toggleStocks",!this.showStocks);
@@ -128,7 +129,7 @@
                 this.$http.get(`/api/getZixuan?user=${this.user}`).then((res)=>{
                     let {body}=res;
                     this.zixuan=body.zixuan;
-
+                    this.setZixuan(body.zixuan);
                 })
             }
         },
