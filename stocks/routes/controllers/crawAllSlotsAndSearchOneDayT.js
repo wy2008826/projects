@@ -44,7 +44,7 @@ module.exports= async function crawAllSlotsAndSearchOneDayT(needEmail){
 				console.log(`----- save page ${i} 代码列表失败 -------!`);
 			});
 		}
-		await sleep(10000);
+		//await sleep(10000);
 	}
 	// await writeCodeFile();
 
@@ -202,6 +202,9 @@ function saveStock(_stock,day){
 				}
 			}
 		});
+	}).catch(function(){
+		console.log(`save ${code} failed`);
+        return {save:false,code,name}
 	});
 }
 
