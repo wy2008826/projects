@@ -12,18 +12,24 @@ var StockModel=require("../../models/stock.js");
 
 let timeFormat=require("../utils/getYMDHMS.js");
 let sleep=require('../utils/sleep.js');
+let getAllCodes=require("../utils/getAllCodes.js");
+
 
 //从数据库中查找股票的历史数据，按照历史数据最近一次的日期进行历史数据查询  完善数据库历史数据记录
 module.exports=async function(){
 	let begain=new Date();
 	console.log('begain craw history data all');
 	return new Promise(async function(resolve,reject){
-		let Query=StockModel.find({},["code"]);
-		let codes;
-		let count=await Query.then(function(docs){
-			codes=docs;
-			return docs.length||0;
-		});
+		// let Query=StockModel.find({},["code"]);
+		// let codes;
+		// let count=await Query.then(function(docs){
+		// 	codes=docs;
+		// 	return docs.length||0;
+		// });
+
+        let codes=getAllCodes();
+        let count=codes.length;
+
 		if(!count){
 			resolve("find local database error");
 		}else{

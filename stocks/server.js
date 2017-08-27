@@ -23,7 +23,6 @@ let writeApiResultsFiles=require('./routes/controllers/writeApiResultsFiles');
 let testChangeStockDta=require('./test/changeStockData.js');
 
 
-
 app.use(express.static(__dirname+"/"));//设置静态资源路径
 app.set("view engine","hbs");//设置模板引擎
 app.set("views",__dirname+"/views");//设置视图路径
@@ -42,10 +41,8 @@ schedule.scheduleJob(timeRules.everyHalfHour,async function(){
 
 //每天晚上6:10爬取数据  完善数据库股票的历史数据
 schedule.scheduleJob(timeRules.excludeWeekends18, async function(){
-	// await crawAllSlotsAndSearchOneDayT();
 	await crawHistoryDataAll();
 });
-
 
 
 async function all(){
@@ -58,7 +55,6 @@ async function all(){
     // await writeApiResultsFiles();
 
 	// apiDIY();
-
 }
 
 all();

@@ -46,7 +46,7 @@ module.exports= async function crawAllSlotsAndSearchOneDayT(needEmail){
 		}
 		//await sleep(10000);
 	}
-	// await writeCodeFile();
+	await writeCodeFile();
 
 	// console.log(suits);
 	return suits;

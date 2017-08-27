@@ -6,6 +6,8 @@ var getSortHistoryData=require('../utils/getSortHistoryData.js');
 let calAverageLineData=require("../utils/calAverageLineData.js");
 let calProfitFromOneDay=require("../utils/calProfitFromOneDay.js");
 let calMaxMinFromStartToEnd=require("../utils/calMaxMinFromStartToEnd.js");
+let getAllCodes=require("../utils/getAllCodes.js");
+
 
 module.exports=function(_res_query){
 
@@ -40,16 +42,20 @@ module.exports=function(_res_query){
         let start=new Date();
         let suits=[];
 
-        let Query=StockModel.find({},["code"]);
-        let codes;
-        let count=await Query.then(function(docs){
-            codes=docs;
-            return docs.length||0;
-        }).catch(function(){
-            console.log('search all codes error!');
-            return false;
-        });
+        // let Query=StockModel.find({},["code"]);
+        // let codes;
+        // let count=await Query.then(function(docs){
+        //     codes=docs;
+        //     return docs.length||0;
+        // }).catch(function(){
+        //     console.log('search all codes error!');
+        //     return false;
+        // });
 
+        let codes=getAllCodes();
+        let count=codes.length;
+
+        console.log('count:',count);
         if(!count){
             resolve(false);
         }else{
