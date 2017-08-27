@@ -52,7 +52,7 @@ var mutations={
         }
         comment && state.zixuan[code].comments.push(comment);
         let zixuan_Str=JSON.stringify(state.zixuan);
-        // localStorage.setItem('zixuan',zixuan_Str);
+        localStorage.setItem('zixuan',zixuan_Str);
         Vue.http({
             url:'/api/addZixuan',
             method: 'get',
@@ -70,6 +70,8 @@ var mutations={
     },
     SET_ZIXUAN(state,payload){
         state.zixuan=payload;
+        let zixuan_Str=JSON.stringify(payload);
+        localStorage.setItem('zixuan',zixuan_Str);
     },
     DO_LOGIN(state,payload){
         state.user=payload||'';

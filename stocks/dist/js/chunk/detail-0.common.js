@@ -695,7 +695,9 @@ Object.defineProperty(exports, "__esModule", {
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); //
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
 //
 //
 //
@@ -769,7 +771,6 @@ exports.default = {
     data: function data() {
 
         return {
-            zixuan: this.$store.state.zixuan,
             averLineColor: averLineColor,
             suits: [],
             historyData: {
@@ -790,12 +791,12 @@ exports.default = {
             }
         };
     },
-    computed: {
+    computed: _extends({}, (0, _vuex.mapGetters)(['zixuan']), {
         code: function code() {
             var self = this;
             return self.$route.params.code;
         }
-    },
+    }),
     methods: {
         clickAddZixuan: function clickAddZixuan() {
             if (this.$store.state.user) {
@@ -839,9 +840,11 @@ exports.default = {
             _this.start = _this.sortData[0][0];
             _this.end = _this.sortData[_this.sortData.length - 1][0];
 
-            // console.log('sortData:',self.$data.sortData)
+            var isZixuan = _this.zixuan[_this.code];
+            var zixuanTime = isZixuan ? isZixuan.time.split(' ')[0] : '';
+
             var length = self.$data.sortData.length;
-            window.draw = new drawKLine(self.$refs["svg"], length > 400 ? self.$data.sortData.slice(length - 400) : self.$data.sortData);
+            window.draw = new drawKLine(self.$refs["svg"], length > 400 ? self.$data.sortData.slice(length - 400) : self.$data.sortData, zixuanTime);
         }, function (res) {
             console.log("error");
         });
@@ -855,12 +858,13 @@ exports.default = {
 };
 
 var drawKLine = function () {
-    function drawKLine(svg, data) {
+    function drawKLine(svg, data, zixuanTime) {
         _classCallCheck(this, drawKLine);
 
         var self = this;
         this.svg = window.svg = svg;
         this.data = data;
+        this.zixuanTime = zixuanTime;
         this.averageData = calAverageLineData(this.data);
         this.length = data.length;
         this.barCount = data.length;
@@ -959,6 +963,7 @@ var drawKLine = function () {
         value: function drawOneK(bar, index) {
             var self = this;
 
+            var _time = bar[0];
             var _open = bar[1];
             var _high = bar[2];
             var _low = bar[3];
@@ -973,6 +978,11 @@ var drawKLine = function () {
 
             var stroke = _height >= 0 ? "#ff0000" : "#00ffff";
             var fill = _height >= 0 ? "transparent" : "#00ffff";
+
+            if (_time == this.zixuanTime) {
+                stroke = '#f93';
+                fill = _height >= 0 ? "transparent" : "#f93";
+            }
             var high = -_high;
             var low = -_low;
 

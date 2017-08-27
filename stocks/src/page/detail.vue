@@ -42,8 +42,8 @@
     import vDialog from '@/components/Dialog/Dialog.vue';
     import vInput from '@/components/Input/Input.vue';
     import Btn from '@/components/Btn/Btn.vue';
+    import {mapGetters,mapActions} from 'vuex';
 
-    import { mapState } from 'vuex';
     let isLowOpenAndHighClose=require("strategy/isLowOpenAndHighClose.js");
     let calProfitFromOneDay=require("utils/calProfitFromOneDay.js");
     let calAverageLineData=require("utils/calAverageLineData.js");
@@ -59,7 +59,6 @@
         data:function(){
 
             return {
-                zixuan:this.$store.state.zixuan,
                 averLineColor,
                 suits:[],
                 historyData:{
@@ -83,6 +82,9 @@
             }
         },
         computed:{
+            ...mapGetters([
+                'zixuan'
+            ]),
             code(){
                 let self=this;
                 return self.$route.params.code;
@@ -130,9 +132,11 @@
                 this.start=this.sortData[0][0];
                 this.end=this.sortData[this.sortData.length-1][0];
 
-                // console.log('sortData:',self.$data.sortData)
+                let isZixuan=this.zixuan[this.code];
+                let zixuanTime=isZixuan?isZixuan.time.split(' ')[0]:'';
+
                 let length=self.$data.sortData.length;
-                window.draw=new drawKLine(self.$refs["svg"],length>400?self.$data.sortData.slice(length-400):self.$data.sortData);
+                window.draw=new drawKLine(self.$refs["svg"],length>400?self.$data.sortData.slice(length-400):self.$data.sortData,zixuanTime);
             },(res)=>{
                 console.log("error")
             });
@@ -146,10 +150,11 @@
     }
 
     class drawKLine{
-        constructor(svg,data){
+        constructor(svg,data,zixuanTime){
             let self=this;
             this.svg=window.svg=svg;
             this.data=data;
+            this.zixuanTime=zixuanTime;
             this.averageData=calAverageLineData(this.data);
             this.length=data.length;
             this.barCount=data.length;
@@ -236,6 +241,7 @@
         drawOneK(bar,index){
             let self=this;
 
+            let _time=bar[0];
             let _open=bar[1];
             let _high=bar[2];
             let _low=bar[3];
@@ -249,9 +255,13 @@
             // let y=start_y * 1;
             let height=Math.abs(_height);
 
-
             let stroke=_height>=0?"#ff0000":"#00ffff";
             let fill=_height>=0?"transparent":"#00ffff";
+
+            if(_time==this.zixuanTime){
+                stroke='#f93';
+                fill=_height>=0?"transparent":"#f93";
+            }
             let high=-_high;
             let low=-_low;
 
