@@ -1,3 +1,4 @@
+let mongoose=require("mongoose");
 const apiDIY =require('./apiDIY.js');
 const getYMDHMS =require('../utils/getYMDHMS.js');
 const suanfa =require('../../const/suanfa.js');
@@ -9,13 +10,22 @@ const fs=require('fs');
 
 module.exports=async function(){
     let T_Data=await apiDIY(suanfa.T);
-    await writeFile('T',createData(T_Data));
+    if(T_Data){
+        await writeFile('T',createData(T_Data));
+    }
+    
 
     let Single_Sun_Data=await apiDIY(suanfa.SingleSunKeepDays);
-    await writeFile('SingleSunKeepDays',createData(Single_Sun_Data));
+    if(Single_Sun_Data){
+        await writeFile('SingleSunKeepDays',createData(Single_Sun_Data));
+    }
+    
 
     let Bounce_Price=await apiDIY(suanfa.bouncePrice);
-    await writeFile('BouncePrice',createData(Bounce_Price));
+     if(Bounce_Price){
+        await writeFile('BouncePrice',createData(Bounce_Price));
+    }
+    
 
 
 }

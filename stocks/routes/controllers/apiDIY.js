@@ -47,11 +47,11 @@ module.exports=function(_res_query){
             return docs.length||0;
         }).catch(function(){
             console.log('search all codes error!');
-            mongoose.connect("mongodb://wangyu:wangyu@127.0.0.1:27017/admin");
+            return false;
         });
 
         if(!count){
-            reject("find local database error");
+            resolve(false);
         }else{
             console.log(`finding.......${strategyName}`);
             for(let i=0;i<count;i++){//需要对数据进行拆分，不然会导致内存泄漏
