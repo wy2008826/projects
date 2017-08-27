@@ -71,7 +71,7 @@ module.exports=function(_res_query){
             let minutes=( (end-start) / (1000 * 60 ) );
             console.log(`${strategyName} 😊 !!! 共耗时 ${minutes} 分钟`);
 
-            console.log(suits,suits.length);
+            //console.log(suits,suits.length);
             resolve(suits);
         };
     });
