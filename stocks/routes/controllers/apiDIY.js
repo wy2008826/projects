@@ -45,6 +45,9 @@ module.exports=function(_res_query){
         let count=await Query.then(function(docs){
             codes=docs;
             return docs.length||0;
+        }).catch(function(){
+            console.log('search all codes error!');
+            mongoose.connect("mongodb://wangyu:wangyu@127.0.0.1:27017/admin");
         });
 
         if(!count){
