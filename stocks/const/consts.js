@@ -3,8 +3,7 @@
 exports.everyHalfHour={
 	dayOfWeek:[1,2,3,4,5,0],
 	hour:[9,10,11,13,14,15],
-	// hour:[12],
-	minute:[0,5,10,15,20,28,35,40,45,50,55]
+	minute:[10,20,30,40,50,59]
 }
 
 
@@ -36,5 +35,5 @@ exports.everyNight20={ // 除了周末之外每天晚上20:10
 exports.every5Minutes={ // 交易日每10分钟
     dayOfWeek:[1,2,3,4,5,0],
     hour:[9,10,11,13,14,15],
-    minute:[10,20,30,40,50,59]
+    minute:[14,24,34,44,54]
 }
