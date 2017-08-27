@@ -1,5 +1,5 @@
 var mongoose=require("mongoose");
-
+mongoose.connect("mongodb://wangyu:wangyu@127.0.0.1:27017/admin");
 var StockModel=require("../../models/stock.js");
 
 var getSortHistoryData=require('../utils/getSortHistoryData.js');
