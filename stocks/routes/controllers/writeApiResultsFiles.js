@@ -10,22 +10,22 @@ const fs=require('fs');
 
 module.exports=async function(){
     // 最近收T
-    // let T_Data=await apiDIY(suanfa.T);
-    // if(T_Data){
-    //     await writeFile('T',createData(T_Data));
-    // }
-    //
-    // //最近单阳不破
-    // let Single_Sun_Data=await apiDIY(suanfa.SingleSunKeepDays);
-    // if(Single_Sun_Data){
-    //     await writeFile('SingleSunKeepDays',createData(Single_Sun_Data));
-    // }
-    //
-    // // 最近涨幅巨大
-    // let Bounce_Price=await apiDIY(suanfa.bouncePrice);
-    //  if(Bounce_Price){
-    //     await writeFile('BouncePrice',createData(Bounce_Price));
-    // }
+    let T_Data=await apiDIY(suanfa.T);
+    if(T_Data){
+        await writeFile('T',createData(T_Data));
+    }
+
+    //最近单阳不破
+    let Single_Sun_Data=await apiDIY(suanfa.SingleSunKeepDays);
+    if(Single_Sun_Data){
+        await writeFile('SingleSunKeepDays',createData(Single_Sun_Data));
+    }
+
+    // 最近涨幅巨大
+    let Bounce_Price=await apiDIY(suanfa.bouncePrice);
+     if(Bounce_Price){
+        await writeFile('BouncePrice',createData(Bounce_Price));
+    }
 
     // 最近阳线突然击穿均线密集区域
     let singleSun_UpClosedAverage=await apiDIY(suanfa.singleSunUpClosedAverage);
