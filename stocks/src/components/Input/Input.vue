@@ -26,7 +26,7 @@
         @include box((lh:0.8rem, fs:0.28rem, d: flex,m:0 0 0.4rem 0));
         min-height: 0.8rem;
         @include thin(all,#e5e5e5);
-        input,textarea{
+        input,textarea,select{
             @include box(( fs:0.28rem));
             text-indent: 0.2rem;
             flex:1;

@@ -33,7 +33,7 @@ var mutations={
       state.stocksIsPlain=!state.stocksIsPlain;
     },
     ADD_ZIXUAN(state,payload){
-        let {code,comment='',name}=payload;
+        let {code,comment='',name,_time=null}=payload;
 
         if(!code){
             return false;
@@ -44,8 +44,10 @@ var mutations={
         hour=fullNum(hour);
         minute=fullNum(minute);
         second=fullNum(second);
-        let time=`${year}-${month}-${date} ${hour}:${minute}:${second}`;
+        let ymd=_time||(year+'-'+month+'-'+date);
 
+        let time=`${ymd} ${hour}:${minute}:${second}`;
+        console.log(time);
         if(!state.zixuan[code]){
             state.zixuan.lists.push(code);
             state.zixuan[code]={comments:[],time,name};

@@ -44,6 +44,11 @@
                     <router-link tag="p" to="/lists/singleSunKeepDays">最近单阳不破</router-link>
                 </li>
             </ul>
+            <ul class="navs_ul">
+                <li>
+                    <router-link tag="p" to="/lists/singleSunUpClosedAverage">最近单阳突破密集均线</router-link>
+                </li>
+            </ul>
         </div>
         <div class="tree right" :class="{fadeout:curDir!='right'}">
             <ul class="navs_ul">
@@ -80,7 +85,7 @@
                 count6:0,
                 count9:0,
                 count12:0,
-                curDir:'bottom',
+                curDir:'left',
             }
         },
         computed:{
@@ -132,6 +137,9 @@
                     this.setZixuan(body.zixuan);
                 })
             }
+            setTimeout(()=>{
+                this.curDir='bottom';
+            },1000)
         },
         components:{
             Stocks

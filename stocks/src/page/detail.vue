@@ -6,6 +6,7 @@
             <span v-text="start"></span>至<span v-text="end"></span>
             <span v-if="!zixuan[code]" class="iconfont icon-tianjia search" @click="clickAddZixuan">加入自选</span>
             <span v-if="zixuan[code]" @click="clickAddZixuan(code)">添加备注</span>
+            <span vif="zixuan[code]" @click="clickSetWarn">设置提醒</span>
         </p>
         <div class="svgWraper" id="svgWraper">
             <svg ref="svg" preserveAspectRatio="none" class="svg"  xmlns="http://www.w3.org/2000/svg" @click="resetStatus">
@@ -33,6 +34,24 @@
                 <vInput >
                     <textarea v-model="comment" cols="30" placeholder="请输入自选备注" rows="10"></textarea></vInput>
                 <Btn :label="'确定'" :click="()=>{addZixuan(code)}" :type="'red'"></Btn>
+            </div>
+        </vDialog>
+        <vDialog  :show="showWarnDialog" :close="()=>{showWarnDialog=false}">
+            <div class="dialog_wraper">
+                <p>回调至价格：</p>
+                <vInput ><input v-model="huitiao_price" type="text"></vInput>
+                <p>回调至均线：</p>
+                <vInput >
+                    <select v-model="huitiao_aver">
+                        <option value="">请选择</option>
+                        <option value="_5">5日均线</option>
+                        <option value="_10">10日均线</option>
+                        <option value="_20">20日均线</option>
+                        <option value="_30">30日均线</option>
+                        <option value="_60">60日均线</option>
+                    </select>
+                </vInput>
+                <Btn :label="'确定'" :click="()=>{addTradeWarn(code)}" :type="'red'"></Btn>
             </div>
         </vDialog>
     </div>
@@ -67,6 +86,9 @@
                     }
                 },
                 sortData:[],
+                showWarnDialog:false,//显示交易提醒设置框
+                huitiao_price:'',
+                huitiao_aver:'',
                 showDialog:false,
                 comment:'',
                 start:'',
@@ -99,9 +121,53 @@
                 }
 
             },
+            clickSetWarn(){
+                if(this.$store.state.user){
+                    this.showWarnDialog=true;
+                }else{
+                    this.$router.push('/login');
+                }
+            },
             addZixuan(code){
-                this.$store.dispatch('addZixuan',{code,name:this.historyData.name,comment:this.comment});
+                this.$store.dispatch('addZixuan',{
+                    code,
+                    name:this.historyData.name,
+                    comment:this.comment,
+                    _time:this.sortData[this.sortData.length-1][0]
+                });
                 this.showDialog=false;
+            },
+            addTradeWarn(code){
+                const {huitiao_price,huitiao_aver}=this.$data;
+                const state=this.$store.state;
+
+                if(!huitiao_price && !huitiao_aver){
+                    return ;
+                }
+
+                const params={
+                    code,
+                    user:state.user,
+                };
+                if(this.huitiao_price){
+                    params.huitiao_price=huitiao_price
+                }
+                if(this.huitiao_aver){
+                    params.huitiao_aver=huitiao_aver
+                }
+                console.log(params);
+
+                this.$http({
+                    url:'/api/addTradeWarn',
+                    method: 'get',
+                    params
+                }).then((res)=>{
+                    if(res.body.r==1){
+                        this.showWarnDialog=false;
+                    }
+                });
+
+                console.log(huitiao_price,huitiao_aver);
             },
             toggleAverageSettingStatus(){
                 this.$data.show_average_settings=!this.$data.show_average_settings;

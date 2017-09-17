@@ -63,7 +63,7 @@ function crawCode(query){
 					let times=Object.keys(historyData.dataColects).sort(function(prev,next){
 						return new Date(prev)-new Date(next);
 					});
-					let startIndex=Math.max(times.length-10,0);
+					let startIndex=Math.max(times.length-15,0);
 					start=times[startIndex];
 				}
 				// await crawHistoryDataOne(code,start);

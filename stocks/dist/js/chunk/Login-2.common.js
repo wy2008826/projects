@@ -207,7 +207,7 @@ exports = module.exports = __webpack_require__(1)();
 
 
 // module
-exports.push([module.i, "\n@charset \"UTF-8\";\n/**带边框的输入框**/\n.input_border[data-v-f95e71f0] {\n  font-size: 0.28rem;\n  line-height: 0.8rem;\n  display: flex;\n  margin: 0 0 0.4rem 0;\n  min-height: 0.8rem;\n  border: 1px solid #e5e5e5;\n}\n.input_border input[data-v-f95e71f0], .input_border textarea[data-v-f95e71f0] {\n    font-size: 0.28rem;\n    text-indent: 0.2rem;\n    flex: 1;\n}\n.input_border textarea[data-v-f95e71f0] {\n    padding: 0.2rem 0 0.2rem;\n    min-height: 1rem;\n    max-height: 2.4rem;\n}\n.input_border a[data-v-f95e71f0] {\n    width: 1.6rem;\n    color: #4992EC;\n    text-align: center;\n}\n", ""]);
+exports.push([module.i, "\n@charset \"UTF-8\";\n/**带边框的输入框**/\n.input_border[data-v-f95e71f0] {\n  font-size: 0.28rem;\n  line-height: 0.8rem;\n  display: flex;\n  margin: 0 0 0.4rem 0;\n  min-height: 0.8rem;\n  border: 1px solid #e5e5e5;\n}\n.input_border input[data-v-f95e71f0], .input_border textarea[data-v-f95e71f0], .input_border select[data-v-f95e71f0] {\n    font-size: 0.28rem;\n    text-indent: 0.2rem;\n    flex: 1;\n}\n.input_border textarea[data-v-f95e71f0] {\n    padding: 0.2rem 0 0.2rem;\n    min-height: 1rem;\n    max-height: 2.4rem;\n}\n.input_border a[data-v-f95e71f0] {\n    width: 1.6rem;\n    color: #4992EC;\n    text-align: center;\n}\n", ""]);
 
 // exports
 

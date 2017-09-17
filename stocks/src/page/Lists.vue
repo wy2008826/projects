@@ -66,6 +66,10 @@
                         label:'最近成交量暴增',
                         url:'/api/bounceVol'
                     },
+                    singleSunUpClosedAverage:{
+                        label:'最近单阳突破密集均线',
+                        url:'/api/singleSunUpClosedAverage'
+                    }
                 }
             }
         },

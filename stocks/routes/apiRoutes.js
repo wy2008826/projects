@@ -11,6 +11,7 @@ let login =require("./controllers/api/login.js");
 let online =require("./controllers/api/online.js");
 let addZixuan =require("./controllers/api/addZixuan.js");
 let getZixuan =require("./controllers/api/getZixuan.js");
+let addTradeWarn =require("./controllers/api/addTradeWarn.js");
 
 let getYMDHMS =require("./utils/getYMDHMS.js") ;
 let apiDIY =require('./controllers/apiDIY.js');
@@ -65,7 +66,11 @@ route.get("/api/getAllCodes",async function(req,res,error){
 	res.json(data);
 });
 
-
+route.get("/api/addTradeWarn",async function(req,res,error){
+    let query=req.query;
+    let result=await addTradeWarn(query);
+    res.json(result);
+});
 
 route.get("/api/getOneCodeHistoryData",async function(req,res,error){
     var query=req.query;
@@ -138,6 +143,25 @@ route.get("/api/bouncePrice",async function(req,res,error){
     res.json(data);
 
 });
+
+
+route.get("/api/singleSunUpClosedAverage",async function(req,res,error){
+
+    let lists=[];
+    let fileData=await readFile(path.resolve(__dirname,'../baseData/singleSunUpClosedAverage.json'));
+    if(fileData){
+        lists=fileData.lists;
+    }else{
+        lists=await apiDIY(suanfa.singleSunUpClosedAverage);
+    }
+    var data={
+        createTime:fileData && fileData.time,
+        lists
+    };
+    res.json(data);
+
+});
+
 
 route.get("/api/bounceVol",async function(req,res,error){
 

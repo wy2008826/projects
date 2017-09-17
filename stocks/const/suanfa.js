@@ -55,6 +55,30 @@ exports.bounceVol={
     },
 };
 
+exports.singleSunUpClosedAverage={
+    days:40,
+    strategyName:'本地数据查找最近单阳突破密集均线的股票！！',
+    baseDay:{
+        formulas:[
+            '(C-O)/O>=0.045',
+            // '(C-O)/O<=0.1',
+            'H<=C*1.007',//不能有长上影线
+            'C>_60',
+            'O*1+(C-O)*0.3>Math.max(_5,_10,_20,_40)',
+            'Math.max(_5,_10,_20,_40)<Math.min(_5,_10,_20,_40)*1.035',
+            '_5>_10'
+        ]
+    },
+    passDays:{
+        formulas:[
+            'every("(c-o)/o<0.03",5)',
+            'every("(c-o)/o>-0.02",5)',
+            // 'every("Math.max(_5,_10,_20,_40)<Math.min(_5,_10,_20,_40)*1.035",6)'
+            // 'every("_5>_10",2)',//会限制掉很多很好的票
+        ]
+    }
+}
+
 exports.downAndUpRegular={
     days:120,
     strategyName:'本地数据查找反复震荡的股票！！',

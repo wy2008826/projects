@@ -130,7 +130,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.clickAddZixuan(_vm.code)
       }
     }
-  }, [_vm._v("添加备注")]) : _vm._e()]), _vm._v(" "), _c('div', {
+  }, [_vm._v("添加备注")]) : _vm._e(), _vm._v(" "), _c('span', {
+    attrs: {
+      "vif": "zixuan[code]"
+    },
+    on: {
+      "click": _vm.clickSetWarn
+    }
+  }, [_vm._v("设置提醒")])]), _vm._v(" "), _c('div', {
     staticClass: "svgWraper",
     attrs: {
       "id": "svgWraper"
@@ -273,6 +280,84 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "label": '确定',
       "click": function () {
         _vm.addZixuan(_vm.code)
+      },
+      "type": 'red'
+    }
+  })], 1)]), _vm._v(" "), _c('vDialog', {
+    attrs: {
+      "show": _vm.showWarnDialog,
+      "close": function () {
+        _vm.showWarnDialog = false
+      }
+    }
+  }, [_c('div', {
+    staticClass: "dialog_wraper"
+  }, [_c('p', [_vm._v("回调至价格：")]), _vm._v(" "), _c('vInput', [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.huitiao_price),
+      expression: "huitiao_price"
+    }],
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.huitiao_price)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.huitiao_price = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('p', [_vm._v("回调至均线：")]), _vm._v(" "), _c('vInput', [_c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.huitiao_aver),
+      expression: "huitiao_aver"
+    }],
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.huitiao_aver = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', {
+    attrs: {
+      "value": ""
+    }
+  }, [_vm._v("请选择")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "_5"
+    }
+  }, [_vm._v("5日均线")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "_10"
+    }
+  }, [_vm._v("10日均线")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "_20"
+    }
+  }, [_vm._v("20日均线")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "_30"
+    }
+  }, [_vm._v("30日均线")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "_60"
+    }
+  }, [_vm._v("60日均线")])])]), _vm._v(" "), _c('Btn', {
+    attrs: {
+      "label": '确定',
+      "click": function () {
+        _vm.addTradeWarn(_vm.code)
       },
       "type": 'red'
     }
@@ -426,7 +511,7 @@ exports = module.exports = __webpack_require__(1)();
 
 
 // module
-exports.push([module.i, "\n@charset \"UTF-8\";\n/**带边框的输入框**/\n.input_border[data-v-f95e71f0] {\n  font-size: 0.28rem;\n  line-height: 0.8rem;\n  display: flex;\n  margin: 0 0 0.4rem 0;\n  min-height: 0.8rem;\n  border: 1px solid #e5e5e5;\n}\n.input_border input[data-v-f95e71f0], .input_border textarea[data-v-f95e71f0] {\n    font-size: 0.28rem;\n    text-indent: 0.2rem;\n    flex: 1;\n}\n.input_border textarea[data-v-f95e71f0] {\n    padding: 0.2rem 0 0.2rem;\n    min-height: 1rem;\n    max-height: 2.4rem;\n}\n.input_border a[data-v-f95e71f0] {\n    width: 1.6rem;\n    color: #4992EC;\n    text-align: center;\n}\n", ""]);
+exports.push([module.i, "\n@charset \"UTF-8\";\n/**带边框的输入框**/\n.input_border[data-v-f95e71f0] {\n  font-size: 0.28rem;\n  line-height: 0.8rem;\n  display: flex;\n  margin: 0 0 0.4rem 0;\n  min-height: 0.8rem;\n  border: 1px solid #e5e5e5;\n}\n.input_border input[data-v-f95e71f0], .input_border textarea[data-v-f95e71f0], .input_border select[data-v-f95e71f0] {\n    font-size: 0.28rem;\n    text-indent: 0.2rem;\n    flex: 1;\n}\n.input_border textarea[data-v-f95e71f0] {\n    padding: 0.2rem 0 0.2rem;\n    min-height: 1rem;\n    max-height: 2.4rem;\n}\n.input_border a[data-v-f95e71f0] {\n    width: 1.6rem;\n    color: #4992EC;\n    text-align: center;\n}\n", ""]);
 
 // exports
 
@@ -737,6 +822,25 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 var _Dialog = __webpack_require__(101);
 
@@ -777,6 +881,9 @@ exports.default = {
                 historyData: {}
             },
             sortData: [],
+            showWarnDialog: false, //显示交易提醒设置框
+            huitiao_price: '',
+            huitiao_aver: '',
             showDialog: false,
             comment: '',
             start: '',
@@ -805,9 +912,58 @@ exports.default = {
                 this.$router.push('/login');
             }
         },
+        clickSetWarn: function clickSetWarn() {
+            if (this.$store.state.user) {
+                this.showWarnDialog = true;
+            } else {
+                this.$router.push('/login');
+            }
+        },
         addZixuan: function addZixuan(code) {
-            this.$store.dispatch('addZixuan', { code: code, name: this.historyData.name, comment: this.comment });
+            this.$store.dispatch('addZixuan', {
+                code: code,
+                name: this.historyData.name,
+                comment: this.comment,
+                _time: this.sortData[this.sortData.length - 1][0]
+            });
             this.showDialog = false;
+        },
+        addTradeWarn: function addTradeWarn(code) {
+            var _this = this;
+
+            var _$data = this.$data,
+                huitiao_price = _$data.huitiao_price,
+                huitiao_aver = _$data.huitiao_aver;
+
+            var state = this.$store.state;
+
+            if (!huitiao_price && !huitiao_aver) {
+                return;
+            }
+
+            var params = {
+                code: code,
+                user: state.user
+            };
+            if (this.huitiao_price) {
+                params.huitiao_price = huitiao_price;
+            }
+            if (this.huitiao_aver) {
+                params.huitiao_aver = huitiao_aver;
+            }
+            console.log(params);
+
+            this.$http({
+                url: '/api/addTradeWarn',
+                method: 'get',
+                params: params
+            }).then(function (res) {
+                if (res.body.r == 1) {
+                    _this.showWarnDialog = false;
+                }
+            });
+
+            console.log(huitiao_price, huitiao_aver);
         },
         toggleAverageSettingStatus: function toggleAverageSettingStatus() {
             this.$data.show_average_settings = !this.$data.show_average_settings;
@@ -820,7 +976,7 @@ exports.default = {
         }
     },
     created: function created() {
-        var _this = this;
+        var _this2 = this;
 
         var self = this;
         this.$store.averLineStatus = this.$data.averLineStatus;
@@ -837,10 +993,10 @@ exports.default = {
             self.$data.sortData = data.sort(function (prev, next) {
                 return new Date(prev[0]) - new Date(next[0]);
             });
-            _this.start = _this.sortData[0][0];
-            _this.end = _this.sortData[_this.sortData.length - 1][0];
+            _this2.start = _this2.sortData[0][0];
+            _this2.end = _this2.sortData[_this2.sortData.length - 1][0];
 
-            var isZixuan = _this.zixuan[_this.code];
+            var isZixuan = _this2.zixuan[_this2.code];
             var zixuanTime = isZixuan ? isZixuan.time.split(' ')[0] : '';
 
             var length = self.$data.sortData.length;
