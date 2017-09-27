@@ -46,6 +46,11 @@
             </ul>
             <ul class="navs_ul">
                 <li>
+                    <router-link tag="p" to="/lists/jumpUpWithSpace">最近跳空上涨</router-link>
+                </li>
+            </ul>
+            <ul class="navs_ul">
+                <li>
                     <router-link tag="p" to="/lists/singleSunUpClosedAverage">最近单阳突破密集均线</router-link>
                 </li>
             </ul>

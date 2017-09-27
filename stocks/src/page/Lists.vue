@@ -69,6 +69,10 @@
                     singleSunUpClosedAverage:{
                         label:'最近单阳突破密集均线',
                         url:'/api/singleSunUpClosedAverage'
+                    },
+                    jumpUpWithSpace:{
+                        label:'最近跳空上涨',
+                        url:'/api/jumpUpWithSpace'
                     }
                 }
             }

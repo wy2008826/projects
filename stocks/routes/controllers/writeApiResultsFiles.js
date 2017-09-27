@@ -33,6 +33,12 @@ module.exports=async function(){
         await writeFile('singleSunUpClosedAverage',createData(singleSun_UpClosedAverage));
     }
 
+    // 最近跳空上涨的股票
+    let jumpUp_WithSpace=await apiDIY(suanfa.jumpUpWithSpace);
+    if(jumpUp_WithSpace){
+        await writeFile('jumpUpWithSpace',createData(jumpUp_WithSpace));
+    }
+
 }
 
 async function writeFile(file_name,data){

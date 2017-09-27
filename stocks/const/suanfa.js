@@ -79,6 +79,23 @@ exports.singleSunUpClosedAverage={
     }
 }
 
+//跳空上涨的股票
+exports.jumpUpWithSpace={
+    days:20,
+    strategyName:'本地数据查找最近跳空上涨的股票！！',
+    baseDay:{
+        formulas:[
+            '(C-O)/O>0.025'
+        ]
+    },
+    passDays:{
+        formulas:[
+            'L>max("h",1)*1.005',
+        ]
+    },
+};
+
+
 exports.downAndUpRegular={
     days:120,
     strategyName:'本地数据查找反复震荡的股票！！',

@@ -179,6 +179,22 @@ route.get("/api/bounceVol",async function(req,res,error){
     res.json(data);
 });
 
+route.get("/api/jumpUpWithSpace",async function(req,res,error){
+
+    let lists=[];
+    let fileData=await readFile(path.resolve(__dirname,'../baseData/jumpUpWithSpace.json'));
+    if(fileData){
+        lists=fileData.lists;
+    }else{
+        lists=await apiDIY(suanfa.jumpUpWithSpace);
+    }
+    var data={
+        createTime:fileData && fileData.time,
+        lists
+    };
+    res.json(data);
+});
+
 
 
 function readFile(dir){
