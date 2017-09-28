@@ -4,7 +4,7 @@ var http=require("http");
 var express=require("express");
 var hbs=require("hbs");
 var mongoose=require("mongoose");
-mongoose.connect("mongodb://wangyu:wangyu@127.0.0.1:27017/admin");
+mongoose.connect("mongodb://wangyu:wangyu@127.0.0.1:27017/admin",{useMongoClient:true});
 
 
 var app=express();
