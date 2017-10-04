@@ -78,6 +78,7 @@
     const FastClick = require('fastclick');
     const calAverageLineData=require("utils/calAverageLineData.js");
     import {mapGetters,mapActions} from 'vuex'
+    let getYMDHMS =require("../../routes/utils/getYMDHMS.js") ;
 
     window.onload=function(){
         FastClick.attach(document.body);
@@ -126,7 +127,24 @@
 
         },
         created(){
+            let {year,month,date,hour,minute,second}=getYMDHMS();
+            month=fullNum(month);
+            date=fullNum(date);
+            hour=fullNum(hour);
+            minute=fullNum(minute);
+            second=fullNum(second);
+            let time=`${year}-${month}-${date} ${hour}:${minute}:${second}`;
+            function fullNum(num){
+                return num<10?'0'+num:num;
+            }
 
+
+            this.$http.get(`/api/addVisitor?time=${time}&ua=${window.navigator.appVersion}`).then((res)=>{
+                if(!res.body.r){
+                    localStorage.setItem('user','');
+                    this.login('');
+                }
+            });
         },
         mounted(){
             if(this.user){
