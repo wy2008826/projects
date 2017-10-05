@@ -101,22 +101,24 @@ exports.jumpUpWithSpace={
     },
 };
 
-//回调至均线后开始回升的股票  有待完善
-exports.huiTiaoToAverageAndBegainUp={
+//5日线开始突破10日线  有待完善
+exports.huiTiaoToAverageAndBegainUp={//huiTiaoToAverageAndBegainUp
     days:120,
-    strategyName:'回调至均线后开始回升的股票！！',
+    strategyName:'5日线开始突破10日线！！',
     baseDay:{
         formulas:[
             'C>O',
             '_5>_10',
-            'C<_20*1.03 && C>_20',
-            'H<L*1.02'
+            'C>_30*0.097',
+            'H<L*1.02',
+            'O>_60'
         ]
     },
     passDays:{
         formulas:[
-            'max("(l-_20)/_20",15)>0.15',
-            'count("_5<_10",3)>=2'
+            // 'max("(l-_30)/_30",20)>0.15',
+            'count("_5<_10",3)>=2',
+            'every("(h-l)/l<0.02",3)',
         ]
     },
 };
