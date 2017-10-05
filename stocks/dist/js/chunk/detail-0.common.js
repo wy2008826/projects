@@ -1154,6 +1154,19 @@ var drawKLine = function () {
             rect.setAttribute("vector-effect", "non-scaling-stroke");
             self.svg.appendChild(rect);
 
+            if (_open == _close) {
+                var _line_top = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                _line_top.setAttribute("x1", x);
+                _line_top.setAttribute("y1", high);
+                _line_top.setAttribute("x2", x + self.barSize);
+                _line_top.setAttribute("y2", y);
+
+                _line_top.setAttribute("stroke", "#fff");
+                _line_top.setAttribute("stroke-width", self.strokeWidth);
+                _line_top.setAttribute("vector-effect", "non-scaling-stroke");
+                self.svg.appendChild(_line_top);
+            }
+
             var line_top = document.createElementNS("http://www.w3.org/2000/svg", "line");
             line_top.setAttribute("x1", x + self.barSize * 0.5);
             line_top.setAttribute("y1", high);

@@ -344,6 +344,19 @@
             rect.setAttribute("vector-effect","non-scaling-stroke");
             self.svg.appendChild(rect);
 
+            if(_open==_close){
+                let line_top=document.createElementNS("http://www.w3.org/2000/svg", "line");
+                line_top.setAttribute("x1",x);
+                line_top.setAttribute("y1",high);
+                line_top.setAttribute("x2",x+self.barSize);
+                line_top.setAttribute("y2",y);
+
+                line_top.setAttribute("stroke","#fff");
+                line_top.setAttribute("stroke-width",self.strokeWidth);
+                line_top.setAttribute("vector-effect","non-scaling-stroke");
+                self.svg.appendChild(line_top);
+            }
+
             let line_top=document.createElementNS("http://www.w3.org/2000/svg", "line");
             line_top.setAttribute("x1",x+self.barSize*0.5);
             line_top.setAttribute("y1",high);
