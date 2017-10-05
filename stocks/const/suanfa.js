@@ -101,6 +101,26 @@ exports.jumpUpWithSpace={
     },
 };
 
+//回调至均线后开始回升的股票  有待完善
+exports.huiTiaoToAverageAndBegainUp={
+    days:120,
+    strategyName:'回调至均线后开始回升的股票！！',
+    baseDay:{
+        formulas:[
+            'C>O',
+            '_5>_10',
+            'C<_20*1.03 && C>_20',
+            'H<L*1.02'
+        ]
+    },
+    passDays:{
+        formulas:[
+            'max("(l-_20)/_20",15)>0.15',
+            'count("_5<_10",3)>=2'
+        ]
+    },
+};
+
 
 exports.downAndUpRegular={
     days:120,
