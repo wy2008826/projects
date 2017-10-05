@@ -12,7 +12,7 @@ exports.T={
 };
 
 exports.SingleSunKeepDays={
-    days:20,
+    days:30,
     strategyName:'本地数据查找最近单阳不破的股票！！',
     baseDay:{
         formulas:[
@@ -22,10 +22,10 @@ exports.SingleSunKeepDays={
     },
     laterDays:{
         formulas:[
-            'every("(c-o)/o<=0.018",4)',
-            'every("(c-o)/o>=-0.018",4)',
-            'every("(o-O)/(C-O)>0.66",4)',
-            'every("(c-O)/(C-O)>0.66",4)',
+            'every("(c-o)/o<=0.015",4)',
+            // 'every("(c-o)/o>=-0.015",4)',
+            'min("l",4)-O>(C-O)*0.6',
+            'max("h",4)<C*1.015',
         ]
     }
 };
@@ -35,9 +35,14 @@ exports.bouncePrice={
     strategyName:'本地数据查找最近涨幅居前的股票！！',
     baseDay:{
         formulas:[
-            '(C-O)/O>0.07'
+            '(C-O)/O>=0.02'
         ]
-    }
+    },
+    passDays:{
+        formulas:[
+            'every("C>c*1.07",1)',
+        ]
+    },
 };
 
 exports.bounceVol={
@@ -85,12 +90,13 @@ exports.jumpUpWithSpace={
     strategyName:'本地数据查找最近跳空上涨的股票！！',
     baseDay:{
         formulas:[
-            '(C-O)/O>0.025'
+            '(C-L)/L>0.005',
+            'C>O'
         ]
     },
     passDays:{
         formulas:[
-            'L>max("h",1)*1.005',
+            'L>max("h",2)*1.005',
         ]
     },
 };

@@ -117,7 +117,6 @@ function searchOneCode(query,res_query){
                         for(let j=0;j<res_query.baseDay.formulas.length;j++){
                             let str=res_query.baseDay.formulas[j];
                             let _isSuit=eval(str);
-
                             isSuit=isSuit && _isSuit;
                         }
 
@@ -187,6 +186,34 @@ function searchOneCode(query,res_query){
                                 _max.push(val);
                             }
                             return Math.max.apply(null,_max);
+                        }
+
+                        function min(express,days){
+                            days=days*1;
+                            let passData;
+                            let passAverData;
+                            if(dir=='pass'){
+                                passData=historyData.slice(Math.max(i-days,0),i);
+                                passAverData=averageData.slice(Math.max(i-days,0),i);
+                            }else{
+                                passData=historyData.slice(i+1,Math.min(i+days+1,hisLength));
+                                passAverData=averageData.slice(i+1,Math.min(i+days+1,hisLength));
+                                T=passData.length && passData[passData.length-1][0];
+                            }
+                            if(dir=='later' && i+days+1>hisLength){
+                                return 1000000000;
+                            }
+
+                            let _max=[];
+
+                            for(let i=0;i<passData.length;i++){
+                                let [t,o,h,l,c,vol]=passData[i];
+                                let {_5,_10,_20,_30,_40,_60}=passAverData[i];
+                                let val=eval(express);
+                                // console.log(val);
+                                _max.push(val);
+                            }
+                            return Math.min.apply(null,_max);
                         }
 
                         function every(express,days){
