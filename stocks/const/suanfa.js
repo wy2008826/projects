@@ -11,21 +11,41 @@ exports.T={
     }
 };
 
+exports.OneDownAndOneUp={//OneDownAndOneUp
+    days:20,
+    strategyName:'本地数据查找阳包阴的股票！！',
+    baseDay:{
+        formulas:[
+            'C>O*1.028',
+            'C<O*1.065',
+            'L>O*0.092',
+            'H<C*1.006'
+        ]
+    },
+    passDays:{
+        formulas:[
+            'every("c<o",1)',
+            'every("(o-c)/(C-O)<1.15 && (o-c)/(C-O)>0.85",1)',
+        ]
+    },
+};
+
 exports.SingleSunKeepDays={
     days:30,
     strategyName:'本地数据查找最近单阳不破的股票！！',
     baseDay:{
         formulas:[
-            '(C-O)/O>0.055',
-            '(C-O)/O<0.095',
+            '(C-O)/O>0.035',
+            '(C-O)/O<0.085',
         ]
     },
     laterDays:{
         formulas:[
-            'every("(c-o)/o<=0.015",4)',
+            'every("Math.abs((c-o)/o)<=((C-O)/O)*0.25",4)',
             // 'every("(c-o)/o>=-0.015",4)',
-            'min("l",4)-O>(C-O)*0.6',
-            'max("h",4)<C*1.015',
+            'min("o",4)-O>(C-O)*0.6',
+            'max("c",4)<C*1.015',
+            'max("h",4)<C*1.022',
         ]
     }
 };

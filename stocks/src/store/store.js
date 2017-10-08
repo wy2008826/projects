@@ -76,6 +76,7 @@ var mutations={
         localStorage.setItem('zixuan',zixuan_Str);
     },
     DO_LOGIN(state,payload){
+        alert(payload);
         state.user=payload||'';
         localStorage.setItem('user',payload||'')
     }

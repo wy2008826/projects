@@ -140,10 +140,11 @@
 
 
             this.$http.get(`/api/addVisitor?time=${time}&ua=${window.navigator.appVersion}`).then((res)=>{
-                if(!res.body.r){
-                    localStorage.setItem('user','');
-                    this.login('');
-                }
+//                console.log(res.body);
+//                if(!res.body.save){
+//                    localStorage.setItem('user','');
+//                    this.login('');
+//                }
             });
         },
         mounted(){

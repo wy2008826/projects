@@ -105,6 +105,15 @@ module.exports = function () {
                 'utils':path.resolve(__dirname, './routes/utils')
             }
         },
+        plugins:[
+            new webpack.optimize.UglifyJsPlugin({//代码压缩
+                comments: false,//显示注释
+                mangle: false,//取消代码混淆
+                compress: {
+                    warnings: false//在UglifyJs删除没有用到的代码时不输出警告
+                }
+            }),
+        ]
     };
 
 
