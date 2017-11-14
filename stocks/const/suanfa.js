@@ -30,22 +30,41 @@ exports.OneDownAndOneUp={//OneDownAndOneUp
     },
 };
 
+// exports.SingleSunKeepDays={
+//     days:30,
+//     strategyName:'本地数据查找最近单阳不破的股票！！',
+//     baseDay:{
+//         formulas:[
+//             '(C-O)/O>0.035',
+//             '(C-O)/O<0.085',
+//         ]
+//     },
+//     laterDays:{
+//         formulas:[
+//             'every("Math.abs((c-o)/o)<=((C-O)/O)*0.25",4)',
+//             // 'every("(c-o)/o>=-0.015",4)',
+//             'min("o",4)-O>(C-O)*0.6',
+//             'max("c",4)<C*1.015',
+//             'max("h",4)<C*1.022',
+//         ]
+//     }
+// };
+
 exports.SingleSunKeepDays={
     days:30,
-    strategyName:'本地数据查找最近单阳不破的股票！！',
+    strategyName:'本地数据查找最近上涨后缩量回调的股票！！',
     baseDay:{
         formulas:[
-            '(C-O)/O>0.035',
-            '(C-O)/O<0.085',
+            '(C-O)/O>0.06',
         ]
     },
     laterDays:{
         formulas:[
-            'every("Math.abs((c-o)/o)<=((C-O)/O)*0.25",4)',
-            // 'every("(c-o)/o>=-0.015",4)',
-            'min("o",4)-O>(C-O)*0.6',
-            'max("c",4)<C*1.015',
-            'max("h",4)<C*1.022',
+            'max("vol",2)<VOL*0.9',
+            'min("vol",2)<VOL*0.65',
+            'every("vol<VOL",2)',
+            'min("l",2)>L',
+            'every("c<=o",2)',
         ]
     }
 };
