@@ -16,6 +16,7 @@
                 <polyline v-show="averLineStatus.aver30" id="aver30"></polyline>
                 <polyline v-show="averLineStatus.aver60" id="aver60"></polyline>
             </svg>
+            <svg ref="subSvg" class="subSvg" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"></svg>
             <ul class="average_set_ul">
                 <p @click="toggleAverageSettingStatus">均线设置</p>
                 <transition name="scaleY">
@@ -167,7 +168,6 @@
                     }
                 });
 
-                console.log(huitiao_price,huitiao_aver);
             },
             toggleAverageSettingStatus(){
                 this.$data.show_average_settings=!this.$data.show_average_settings;
@@ -202,7 +202,7 @@
                 let zixuanTime=isZixuan?isZixuan.time.split(' ')[0]:'';
 
                 let length=self.$data.sortData.length;
-                window.draw=new drawKLine(self.$refs["svg"],length>400?self.$data.sortData.slice(length-400):self.$data.sortData,zixuanTime);
+                window.draw=new drawKLine(self.$refs["svg"],self.$refs["subSvg"],length>400?self.$data.sortData.slice(length-400):self.$data.sortData,zixuanTime);
             },(res)=>{
                 console.log("error")
             });
@@ -216,9 +216,10 @@
     }
 
     class drawKLine{
-        constructor(svg,data,zixuanTime){
+        constructor(svg,subSvg,data,zixuanTime){
             let self=this;
             this.svg=window.svg=svg;
+            this.subSvg=window.subSvg=subSvg;
             this.data=data;
             this.zixuanTime=zixuanTime;
             this.averageData=calAverageLineData(this.data);
@@ -239,9 +240,12 @@
             let maxMin=this.calMaxMinVal(0,data.length);
             this.max=maxMin.max;
             this.min=maxMin.min;
+            let maxMinVol=this.calMaxMinVol(0,data.length);
+            this.maxVol=maxMinVol.max;
+            this.minVol=maxMinVol.min;
+
             this.draw();
             this.drawAverage();
-
             let start=this.length-60>=0?this.length-60:0;
             this.start=start;
             this.end=this.length;
@@ -257,6 +261,11 @@
             let height=self.height=client.width * 0.7;
             self.svg.setAttribute("height",height);
             self.svg.setAttribute("width",width );
+
+            let subClient=self.subSvg.getBoundingClientRect();
+            self.subSvg.setAttribute("height",subClient.height);
+            self.subSvg.setAttribute("width",subClient.width );
+
             this.move();
 
         }
@@ -282,6 +291,21 @@
               min
             }
         }
+        calMaxMinVol(start,end){
+            let self=this;
+            let max=0;
+            let highs=[];
+            for(let i=start;i<end;i++){
+                let day=self.data[i];
+                let vol=day[5];
+                highs.push(vol);
+            }
+            max=Math.max.apply(null,highs);
+            return {
+                max,
+                min:0
+            }
+        }
         setViewBox(start,end){
             let self=this;
 
@@ -295,13 +319,25 @@
             this.start=start;
             this.canviewCount=end-start;
             this.svg.setAttribute("viewBox",`${x} ${-max-hight*0.08} ${width} ${hight*1.16}`)
+            this.setSubViewBox(start,end)
+        }
+        setSubViewBox(start,end){
+            let self=this;
+
+            let {max,min}=this.calMaxMinVol(start,end);
+            let hight=max-min;
+            let barRelative=self.barSize+self.barGap;
+            let width=(end-start+3)*barRelative;
+            let x=start*barRelative;
+
+            this.subSvg.setAttribute("viewBox",`${x} ${-hight*1.1} ${width} ${hight*1.125}`)
         }
         draw(){
             let self=this;
             for(let i=0;i<self.barCount;i++){
                 let bar=self.data[i];
                 self.drawOneK(bar,i);
-
+                self.drawOneVol(bar,i);
             }
         }
         drawOneK(bar,index){
@@ -381,6 +417,36 @@
             line_bottom.setAttribute("vector-effect","non-scaling-stroke");
             self.svg.appendChild(line_bottom);
         }
+        drawOneVol(bar,index){
+            let self=this;
+
+            let _open=bar[1];
+            let _close=bar[4];
+            let _vol=bar[5];
+
+            let _height=_close-_open;
+
+            let x=(self.barSize+self.barGap) * index;
+            let y=-_vol;
+
+            let stroke=_height>=0?"#ff0000":"#00ffff";
+            let fill=_height>=0?"transparent":"#00ffff";
+
+            let height=_vol;
+
+            let rect=document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            rect.setAttribute("x",x);
+            rect.setAttribute("y",y);
+
+            rect.setAttribute("width",self.barSize);
+            rect.setAttribute("height",height);
+            rect.setAttribute("stroke",stroke);
+            rect.setAttribute("stroke-width",self.strokeWidth);
+            rect.setAttribute("fill",fill);
+            rect.setAttribute("vector-effect","non-scaling-stroke");
+            self.subSvg.appendChild(rect);
+
+        }
         drawAverage(){
             let avers=[5,10,20,30,60];
             for(let i=0;i<avers.length;i++){
@@ -457,6 +523,7 @@
             self.svg.appendChild(rect);
 
         }
+
         move(){
             const self=this;
             let start_x0,start_x1;
@@ -578,7 +645,14 @@
         display: block;
         width:7.5rem;
         margin:0 auto;
-        border:1px solid red;
+        background-color:#000;
+    }
+    .subSvg{
+        display: block;
+        width:7.5rem;
+        height:2rem;
+        margin:0 auto;
+        border-top:1px solid red;
         background-color:#000;
     }
     .dialog_wraper{
