@@ -55,7 +55,7 @@ exports.SingleSunKeepDays={
     strategyName:'本地数据查找最近上涨后缩量回调的股票！！',
     baseDay:{
         formulas:[
-            '(C-O)/O>0.06',
+            '(C-O)/O>0.05',
         ]
     },
     laterDays:{
