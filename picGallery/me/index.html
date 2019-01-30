@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>炫酷照片墙</title>
+
+    <style type="text/css">
+        .screen{
+            position: fixed;
+            width:900px;
+            height:900px;
+            top:10px;
+            left:50%;
+            transform:translate3d(-50%,0,0);
+        }
+        *{
+            list-style: none;
+            box-sizing:border-box;
+            margin:0;
+            padding:0;
+        }
+        .screen >ul{
+            width:100%;
+            height:20px;
+            display:flex;
+        }
+        .screen >ul > li{
+            flex:1;
+            height:100%;
+            border:1px solid #f95;
+        }
+        .screen >ul > li:hover{
+            background:#f93;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!--<audio id="audio" autoplay>-->
+        <!--<source src="music.mp3" type="audio/mp3">-->
+    <!--</audio>-->
+
+    <div class="screen" id="screen">
+
+    </div>
+
+    <script>
+        //获取到音乐的播放流数据
+        window.AudioContext = window.AudioContext || window.webkitAudioContext || window.mozAudioContext || window.msAudioContext;
+
+
+
+        let rect = [];//二维数组
+        let num =30;//正方形矩阵的尺寸
+
+        let screen =document.getElementById('screen');
+
+        for(let i=0;i<num;i++){
+            let row = [];
+
+            let rowUl = document.createElement('ul');
+            for(let i=0;i<num;i++){
+                let col = true;
+                row.push(col);
+                let li = document.createElement('li');
+                rowUl.appendChild(li)
+            }
+            rect.push(row);
+
+            screen.appendChild(rowUl)
+        }
+
+
+        console.log('rect',rect);
+    </script>
+</body>
+</html>
