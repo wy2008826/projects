@@ -5,11 +5,14 @@
     <title>炫酷照片墙</title>
 
     <style type="text/css">
+        html{
+            background: black;
+        }
         .screen{
             position: fixed;
-            width:900px;
-            height:900px;
-            top:10px;
+            width:810px;
+            height:630px;
+            top:40px;
             left:50%;
             transform:translate3d(-50%,0,0);
         }
@@ -21,58 +24,191 @@
         }
         .screen >ul{
             width:100%;
-            height:20px;
-            display:flex;
+            height:30px;
         }
         .screen >ul > li{
-            flex:1;
-            height:100%;
-            border:1px solid #f95;
+            height:30px;
+            width:30px;
+            border:1px solid red;
+            float:left;
+            background-size: contain;
+            /*position: relative;*/
         }
-        .screen >ul > li:hover{
-            background:#f93;
+        .screen >ul > li>img{
+            max-height: 80px;
+            border:2px solid white;
+
+            position: fixed;
+            top:0px;
+        }
+        .screen >ul > li>img.isRuning{
+            animation:mymove 600ms  forwards;
+        }
+        .screen >ul > li>img.isRunOut{
+            position: relative;
+        }
+        .screen >ul > li>img.odd{
+            left:0px;
+        }
+        .screen >ul > li>img.even{
+            right:0px;
+        }
+        .screen >ul > li.active{
+            background:red;
+        }
+
+        @keyframes mymove
+        {
+            0% {
+                opacity: 0;
+                transform:scale(1);
+            }
+            100% {
+                top:50%;
+                left:50%;
+                transform:rotate(-20deg) scale(5);
+                opacity: 1;
+            }
         }
 
     </style>
 </head>
 <body>
 
-    <!--<audio id="audio" autoplay>-->
-        <!--<source src="music.mp3" type="audio/mp3">-->
-    <!--</audio>-->
-
     <div class="screen" id="screen">
-
+        <audio ref="audio"  autoplay controls>
+            <source src="./music.mp3" type="audio/mp3">
+        </audio>
+        <ul v-for="(row,i) in rect">
+            <li v-for="(col,j) in row"
+                @click="clickItem(i,j)"
+                :class="{'active':col}"
+            >
+                <img v-if='col'
+                     :src="createImgUrl(i,j)"
+                     :style="createItemStyle()"
+                     :class="{odd:getImgIndex(i,j)%2==0,even:getImgIndex(i,j)%2!=0,isRuning:getImgIndex(i,j)==animationInd,isRunOut:getImgIndex(i,j)<animationInd}"
+                >
+            </li>
+        </ul>
     </div>
-
+    <script src="./jquery-3.3.1.js"></script>
+    <script src="./vue.2.6.4.js"></script>
     <script>
         //获取到音乐的播放流数据
         window.AudioContext = window.AudioContext || window.webkitAudioContext || window.mozAudioContext || window.msAudioContext;
 
-
-
         let rect = [];//二维数组
-        let num =30;//正方形矩阵的尺寸
+        let rowNum =21;//矩阵的尺寸
+        let colNum = 27;
 
-        let screen =document.getElementById('screen');
-
-        for(let i=0;i<num;i++){
+        //生成二维数据
+        for(let i=0;i<rowNum;i++){
             let row = [];
-
-            let rowUl = document.createElement('ul');
-            for(let i=0;i<num;i++){
-                let col = true;
+            for(let j=0;j<colNum;j++){
+                let col = 0;
                 row.push(col);
-                let li = document.createElement('li');
-                rowUl.appendChild(li)
             }
             rect.push(row);
-
-            screen.appendChild(rowUl)
         }
 
+        let picNum = 24;//图片数量
 
-        console.log('rect',rect);
+        //利用闭包缓存索引
+        let addIndex=function () {
+            let urlNameIndex =0;//图片的路径索引
+            let totalIndex=0;//图片的总索引
+            return function (num) {
+                if(urlNameIndex>=picNum){
+                    urlNameIndex=0
+                }
+                return {
+                    totalIndex:totalIndex+=num,
+                    urlNameIndex:urlNameIndex+=num
+                };
+            }
+        }();
+
+        let app =window.app= new Vue({
+            el:"#screen",
+            data:{
+                animationInd:0,
+                rect:[
+                    [0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0],
+                    [0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0],
+                    [0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0],
+                    [0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0],
+                    [0,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,0],
+                    [1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                    [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+                    [0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0],
+                    [0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0],
+                    [0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0],
+                    [0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0],
+                    [0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+                ]
+            },
+            mounted:function(){
+                // setInterval(()=>{
+                //     this.rect.push();
+                // },2000)
+
+                // this.$refs.audio.play();
+                let self=this;
+                (function out(){
+                    setTimeout(()=>{
+                        self.animationInd+=1;
+                        out();
+                    },1000)
+                })();
+
+            },
+            methods:{
+                clickItem:function(rowInd,colInd){
+                    this.rect[rowInd][colInd]=this.rect[rowInd][colInd]?0:1;
+                    this.rect.push();
+                },
+                createImgUrl(i,j){
+                    // let urlNameIndex = addIndex(1).urlNameIndex;
+                    // return  `./images/${urlNameIndex}.jpg`;
+
+                    let ind = this.getImgIndex(i,j);
+                    if(ind<picNum){
+                        return  `./images/${ind}.jpg`;
+                    }else{
+                        return `./images/${ind%picNum?ind%picNum:picNum}.jpg`;;
+                    }
+                },
+                getImgIndex(i,j){//从1开始
+                    let index=0;
+                    let newArr=this.rect.reduce(function (ret,row) {
+                        return ret.concat(row)
+                    },[]);
+                    let stop = i*this.rect[0].length+j
+                    for(let k=0;k<=stop;k++){
+                        if(newArr[k]){
+                            index+=1
+                        }
+                    }
+                    return index;
+                },
+                createItemStyle(){
+                    let trslRdm = 50 +(0.5-Math.random())*10;// 45% -55%区间
+                    let rotateRdm =(0.5-Math.random())*30;// 45% -55%区间
+                    return `transform:translate3d(-${trslRdm}%,-${trslRdm}%,0) rotate(${rotateRdm}deg)`
+                }
+            }
+        });
+
+
     </script>
 </body>
 </html>
