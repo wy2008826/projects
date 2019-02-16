@@ -1,3 +1,4 @@
 ﻿node_modules/*
 .gulp-scss-cache/*
 .sass-cache
+picGallery/me/a/*
